@@ -8,6 +8,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="neumorphic.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -116,18 +117,44 @@
       background: #f6f4fe;
     }
 
-    /* Clean White Educational Cards */
+    /* Neumorphic Soft UI Cards & Controls (Extruded Dual-Shadow on #f2f3f4) */
     .edu-card {
-      background: #ffffff;
-      border: 1.2px solid #eceaf6;
-      border-radius: 18px;
-      box-shadow: 0 6px 18px rgba(24, 21, 45, 0.045);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      background: #f2f3f4;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 20px;
+      box-shadow:
+        5px 5px 12px rgba(174, 181, 196, 0.55),
+        -5px -5px 12px #ffffff;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
     }
 
     .edu-card:hover {
-      border-color: #d7d1f8;
-      box-shadow: 0 10px 24px rgba(35, 22, 74, 0.08);
+      transform: translateY(-2px);
+      box-shadow:
+        7px 7px 16px rgba(174, 181, 196, 0.65),
+        -7px -7px 16px #ffffff;
+    }
+
+    .edu-card:active {
+      transform: translateY(1px) scale(0.985);
+      box-shadow:
+        inset 3px 3px 6px rgba(174, 181, 196, 0.5),
+        inset -3px -3px 6px #ffffff;
+    }
+
+    .neu-inset {
+      background: #f2f3f4 !important;
+      border: 1px solid rgba(255, 255, 255, 0.5) !important;
+      box-shadow:
+        inset 3px 3px 6px rgba(174, 181, 196, 0.45),
+        inset -3px -3px 6px #ffffff !important;
+    }
+
+    .neu-flat {
+      background: #f2f3f4;
+      box-shadow:
+        4px 4px 10px rgba(174, 181, 196, 0.45),
+        -4px -4px 10px #ffffff;
     }
 
     /* Soft Lavender Icon Badge */
@@ -407,7 +434,7 @@
         <div class="px-5 pt-1 space-y-3">
           
           <!-- Podium Hierarchy Blocks (1st, 2nd, 3rd) with Jumping Crown on Top Candidate -->
-          <div class="bg-white rounded-[26px] p-4 shadow-md border border-[#e2e5ee]">
+          <div class="edu-card p-4 rounded-[26px]">
             <div class="flex items-center justify-between mb-2">
               <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#27165c] flex items-center gap-1.5">
                 🏆 Top Candidates
@@ -467,7 +494,7 @@
           </div>
 
           <!-- Rest of the Learners Ranked List (4th - 6th) -->
-          <div class="bg-white rounded-2xl border border-[#e2e5ee] overflow-hidden shadow-sm">
+          <div class="edu-card rounded-2xl overflow-hidden">
             <div class="px-4 py-2 bg-[#f8fafc] border-b border-[#e2e5ee] flex items-center justify-between text-[10px] font-bold text-[#8b87a0] uppercase tracking-wider">
               <span>Next Contenders</span>
               <span>XP Score</span>

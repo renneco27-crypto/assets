@@ -14,12 +14,9 @@ with open(slide_android_path, "r", encoding="utf-8") as f:
 qr_match = re.search(r'src="(data:image/png;base64,[^"]+)"', android_html)
 QR_BASE64 = qr_match.group(1) if qr_match else ""
 
-# 2. Load mascot base64 (with hat for the single featured mascot, and clean mascot)
+# 2. Load mascot base64 (with hat for the single featured mascot)
 with open(os.path.join(ROOT_DIR, "assets", "mascot_with_hat.png"), "rb") as f:
     MASCOT_HAT_B64 = "data:image/png;base64," + base64.b64encode(f.read()).decode("ascii")
-
-with open(os.path.join(ROOT_DIR, "assets", "mascot_clean.png"), "rb") as f:
-    MASCOT_CLEAN_B64 = "data:image/png;base64," + base64.b64encode(f.read()).decode("ascii")
 
 AVATAR_URL = "https://lh3.googleusercontent.com/a/ACg8ocKYI4XjO8aibWhSSZVzJ3Hl8W7wIq2x5ehsRAmeNAAsfb5_I4zO=s96-c"
 

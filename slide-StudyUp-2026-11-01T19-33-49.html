@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyUp — Leaderboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #e5e6eb;
+      --coral: #eb7d57;
+      --coral-dark: #e06842;
+      --dark-indigo: #18152d;
+      --deep-purple: #1b0e3f;
+      --mid-purple: #5928c9;
+      --soft-lavender: #d7d1f8;
+      --surface-card: #ffffff;
+      --surface-muted: #f6f5fb;
+      --text-muted: #8b87a0;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      user-select: none;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-canvas);
+      background-image: radial-gradient(circle at 50% 25%, #f0f1f6 0%, #dcdfe7 100%);
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-x: hidden;
+      color: var(--dark-indigo);
+    }
+
+    /* Phone Frame Styling (99% Our Created Design System) */
+    .phone-frame {
+      width: 356px;
+      height: 768px;
+      background: #fafafe;
+      border-radius: 38px;
+      box-shadow:
+        0 26px 54px -12px rgba(24, 21, 45, 0.16),
+        0 8px 20px -4px rgba(24, 21, 45, 0.07),
+        0 0 0 1px rgba(255, 255, 255, 0.95) inset;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+    }
+
+    .phone-frame.highlight-ring {
+      box-shadow:
+        0 30px 64px -10px rgba(89, 40, 201, 0.30),
+        0 0 0 3px #eb7d57;
+    }
+
+    /* Signature Deep Royal Purple Wavy Header */
+    .purple-wave-header {
+      background: linear-gradient(155deg, #1b0e3f 0%, #311770 42%, #5928c9 78%, #6828e0 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Hero Banner Gradient */
+    .hero-banner-bg {
+      background: linear-gradient(125deg, #1b0f3e 0%, #2f1b63 52%, #5c37a0 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Active Coral Pill Glow */
+    .pill-coral-active {
+      background: linear-gradient(180deg, #f08562 0%, #e56d48 100%);
+      color: #ffffff;
+      border: 1px solid transparent;
+      box-shadow: 0 7px 16px rgba(235, 125, 87, 0.44), 0 2px 5px rgba(235, 125, 87, 0.28);
+    }
+
+    .pill-outlined {
+      background: #ffffff;
+      color: #2c2647;
+      border: 1.2px solid #e2e0ee;
+      transition: all 0.2s ease;
+    }
+
+    .pill-outlined:hover {
+      border-color: #5928c9;
+      background: #f6f4fe;
+    }
+
+    /* Clean White Educational Cards */
+    .edu-card {
+      background: #ffffff;
+      border: 1.2px solid #eceaf6;
+      border-radius: 18px;
+      box-shadow: 0 6px 18px rgba(24, 21, 45, 0.045);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .edu-card:hover {
+      border-color: #d7d1f8;
+      box-shadow: 0 10px 24px rgba(35, 22, 74, 0.08);
+    }
+
+    /* Soft Lavender Icon Badge */
+    .badge-lavender {
+      background: #ede9fe;
+      color: #4c2bc2;
+    }
+
+    .badge-coral {
+      background: #fff0eb;
+      color: #e06842;
+    }
+
+    .badge-emerald {
+      background: #e8fbf3;
+      color: #0d9462;
+    }
+
+    /* Notched Bottom Navigation Bar (Matching Uploaded Reference Image) */
+    .notched-navbar-wrap {
+      position: relative;
+      width: 100%;
+      height: 82px;
+      flex-shrink: 0;
+      z-index: 30;
+      margin-top: auto;
+    }
+
+    .notched-navbar-svg {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      filter: drop-shadow(0 -8px 20px rgba(24, 21, 45, 0.08));
+      pointer-events: none;
+    }
+
+    .notched-fab {
+      position: absolute;
+      left: 50%;
+      top: 0px;
+      transform: translateX(-50%);
+      width: 56px;
+      height: 56px;
+      border-radius: 9999px;
+      background: linear-gradient(145deg, #f28865 0%, #e56b45 100%);
+      box-shadow:
+        0 8px 20px rgba(235, 125, 87, 0.48),
+        0 2px 6px rgba(235, 125, 87, 0.30),
+        0 0 0 3px #fafafe;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      cursor: pointer;
+      z-index: 40;
+    }
+
+    .notched-nav-items {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px 8px 18px;
+      z-index: 35;
+    }
+
+    .nav-tab-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      min-width: 54px;
+      padding: 4px 2px;
+      color: #8b87a0;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .nav-tab-btn.active {
+      color: #23164a;
+      font-weight: 700;
+    }
+
+    .nav-tab-btn.active svg {
+      stroke: #eb7d57;
+    }
+
+    /* Home Indicator Bar */
+    .home-indicator {
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 116px;
+      height: 4px;
+      background-color: #18152d;
+      opacity: 0.18;
+      border-radius: 999px;
+      z-index: 45;
+      pointer-events: none;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+
+<body class="py-4 px-4">
+  
+  <!-- Top Slide Navigation Bar -->
+  <div class="my-5 flex flex-wrap items-center justify-center gap-2 bg-white/85 backdrop-blur-md px-4 py-2 rounded-full shadow-sm border border-white text-xs font-semibold text-[#18152d] z-50">
+    <a href="educational_app_ui_showcase.html" class="px-3 py-1 rounded-full bg-[#18152d] text-white font-bold">All 5 Screens Showcase</a>
+    <a href="slide-StudyUp-2026-11-01T19-33-17.html" class="px-3 py-1 rounded-full hover:bg-slate-100">1. My Library</a>
+    <a href="slide-StudyUp-2026-11-01T19-33-39.html" class="px-3 py-1 rounded-full hover:bg-slate-100">2. Public Feed</a>
+    <a href="slide-StudyUp-2026-11-01T19-33-49.html" class="px-3 py-1 rounded-full pill-coral-active">3. Leaderboard</a>
+    <a href="slide-StudyUp-2026-11-01T19-34-17.html" class="px-3 py-1 rounded-full hover:bg-slate-100">4. Android App</a>
+    <a href="slide-StudyUp-2026-11-01T19-35-38.html" class="px-3 py-1 rounded-full hover:bg-slate-100">5. Deck Study Modes</a>
+  </div>
+
+  <main class="flex items-center justify-center pb-8">
+    
+    <section id="screen3" class="phone-frame">
+      <div class="flex-1 overflow-y-auto no-scrollbar pb-3">
+        <!-- Deep Royal Purple Wavy Header -->
+        <div class="purple-wave-header pb-8">
+          
+      <div class="flex items-center justify-between px-7 pt-3.5 pb-1.5" style="color: #ffffff;">
+        <span class="text-[13px] font-bold tracking-tight">9:41</span>
+        <div class="flex items-center gap-1.5">
+          <svg width="16" height="11" viewBox="0 0 16 11" fill="none">
+            <rect x="0.5" y="7" width="2.6" height="3.5" rx="0.8" fill="#ffffff"/>
+            <rect x="4.5" y="5" width="2.6" height="5.5" rx="0.8" fill="#ffffff"/>
+            <rect x="8.5" y="2.8" width="2.6" height="7.7" rx="0.8" fill="#ffffff"/>
+            <rect x="12.5" y="0.5" width="2.6" height="10" rx="0.8" fill="#ffffff"/>
+          </svg>
+          <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+            <path d="M7.5 10.5C8.32843 10.5 9 9.82843 9 9C9 8.17157 8.32843 7.5 7.5 7.5C6.67157 7.5 6 8.17157 6 9C6 9.82843 6.67157 10.5 7.5 10.5Z" fill="#ffffff"/>
+            <path d="M4.3 6.7C5.15 5.85 6.27 5.38 7.5 5.38C8.73 5.38 9.85 5.85 10.7 6.7" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M1.8 4.1C3.33 2.57 5.35 1.72 7.5 1.72C9.65 1.72 11.67 2.57 13.2 4.1" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <svg width="23" height="11" viewBox="0 0 23 11" fill="none">
+            <rect x="0.5" y="1" width="19" height="9" rx="2.5" stroke="#ffffff" stroke-opacity="0.5"/>
+            <rect x="2" y="2.5" width="16" height="6" rx="1.3" fill="#ffffff"/>
+            <path d="M21 3.8V7.2C21.8 6.9 22.3 6.2 22.3 5.5C22.3 4.8 21.8 4.1 21 3.8Z" fill="#ffffff" fill-opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+
+          <div class="relative z-10 px-6 pt-2 flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-2">
+                <h1 class="text-white text-[21px] font-extrabold tracking-tight">Leaderboard</h1>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/15 text-[#ffb443] text-[10px] font-bold border border-white/20">
+                  🔥 3-Day Rule
+                </span>
+              </div>
+              <p class="text-[#d7d1f8] text-[11.5px] font-medium mt-0.5">
+                Real-time rankings across global study sessions
+              </p>
+            </div>
+          </div>
+
+          <!-- Segmented Metric Switcher: Streak | Mastery | Score -->
+          <div class="relative z-10 px-6 pt-3.5">
+            <div class="bg-white/15 backdrop-blur-md p-1 rounded-2xl flex items-center border border-white/20">
+              <button onclick="switchRankTab('Streak', '2d', this)" class="rank-mode-btn gsap-btn flex-1 py-1.5 rounded-xl pill-coral-active text-[11.5px] font-bold flex items-center justify-center gap-1">
+                🔥 Streak
+              </button>
+              <button onclick="switchRankTab('Mastery', '94%', this)" class="rank-mode-btn gsap-btn flex-1 py-1.5 rounded-xl text-white/80 hover:text-white text-[11.5px] font-semibold flex items-center justify-center gap-1">
+                ✨ Mastery
+              </button>
+              <button onclick="switchRankTab('Score', '1,420', this)" class="rank-mode-btn gsap-btn flex-1 py-1.5 rounded-xl text-white/80 hover:text-white text-[11.5px] font-semibold flex items-center justify-center gap-1">
+                🎯 Score
+              </button>
+            </div>
+          </div>
+
+          <svg class="absolute bottom-0 left-0 w-full h-[24px] pointer-events-none" viewBox="0 0 356 24" preserveAspectRatio="none">
+            <path d="M0,12 C110,28 240,-4 356,14 L356,24 L0,24 Z" fill="#fafafe"/>
+          </svg>
+        </div>
+
+        <div class="px-5 pt-2 space-y-3.5">
+          <!-- Featured Your Rank Card (99% Our Dark Royal Purple Card Style) -->
+          <div class="hero-banner-bg rounded-[22px] p-4 text-white shadow-lg flex items-center justify-between relative overflow-hidden">
+            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 316 96" fill="none">
+              <circle cx="275" cy="48" r="65" fill="#4c2d8f" fill-opacity="0.45"/>
+              <circle cx="275" cy="48" r="40" fill="#6441ad" fill-opacity="0.45"/>
+            </svg>
+
+            <div class="relative z-10 flex items-center gap-3.5">
+              <div class="relative">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocKYI4XjO8aibWhSSZVzJ3Hl8W7wIq2x5ehsRAmeNAAsfb5_I4zO=s96-c" alt="Lawrence Cortes" class="w-13 h-13 w-[52px] h-[52px] rounded-2xl object-cover border-2 border-[#eb7d57] shadow-md"/>
+                <span class="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-full bg-[#eb7d57] text-[9px] font-extrabold uppercase text-white shadow">
+                  You
+                </span>
+              </div>
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[#d7d1f8] text-[10px] font-bold uppercase tracking-wider">Your Rank</span>
+                  <span class="px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[12px] font-extrabold">#1</span>
+                </div>
+                <p class="text-white text-[15px] font-extrabold mt-0.5">Lawrence Cortes</p>
+              </div>
+            </div>
+
+            <div class="relative z-10 text-right">
+              <p id="rankMetricLabel" class="text-[#d7d1f8] text-[10px] uppercase font-bold tracking-wider">Day Streak</p>
+              <div class="flex items-center justify-end gap-1 text-[24px] font-extrabold text-[#ffb443] leading-tight">
+                <span>🔥</span>
+                <span id="rankMetricValue">2d</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Global Rankings List Backbone -->
+          <div class="edu-card overflow-hidden">
+            <div class="px-4 py-2.5 bg-[#f6f5fb] border-b border-[#eceaf6] flex items-center justify-between text-[11px] font-bold text-[#8b87a0] uppercase tracking-wider">
+              <span>Rank &amp; Learner</span>
+              <span id="tableMetricHeader">Streak</span>
+            </div>
+            <div class="divide-y divide-[#eceaf6]">
+              <!-- Row 1: Law****ce Cor**s (You) -->
+              <div class="px-4 py-3.5 flex items-center justify-between bg-[#faf8ff] border-l-4 border-l-[#eb7d57]">
+                <div class="flex items-center gap-3 min-w-0">
+                  <span class="w-6 h-6 rounded-full bg-amber-100 text-amber-700 font-extrabold text-[12px] flex items-center justify-center shrink-0">
+                    1
+                  </span>
+                  <img src="https://lh3.googleusercontent.com/a/ACg8ocKYI4XjO8aibWhSSZVzJ3Hl8W7wIq2x5ehsRAmeNAAsfb5_I4zO=s96-c" alt="Lawrence" class="w-8 h-8 rounded-full object-cover border border-[#d7d1f8] shrink-0"/>
+                  <div class="min-w-0 flex items-center gap-1.5">
+                    <span class="text-[13px] font-bold text-[#18152d] truncate">Law****ce Cor**s</span>
+                    <span class="px-1.5 py-0.5 rounded-md bg-[#eb7d57] text-white text-[9px] font-extrabold uppercase">You</span>
+                  </div>
+                </div>
+                <span id="row1MetricVal" class="text-[13.5px] font-extrabold text-[#e06842] flex items-center gap-1 shrink-0">
+                  🔥 2d
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+    <!-- Notched Bottom Navbar (Reference Image Style: 2 Left, Center Docked Circle Button, 2 Right) -->
+    <div class="notched-navbar-wrap">
+      <svg class="notched-navbar-svg" viewBox="0 0 356 70" preserveAspectRatio="none" fill="none">
+        <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22 L 356,70 L 0,70 Z" fill="#ffffff"/>
+        <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22" stroke="#eceaf6" stroke-width="1.2" fill="none"/>
+      </svg>
+
+      <!-- Center Circular Notch Button: Create Deck / Study Modes -->
+      <button onclick="window.location.href='slide-StudyUp-2026-11-01T19-35-38.html'" class="notched-fab gsap-btn" title="Create Deck / Study Modes">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/><path d="M12 5v14"/>
+        </svg>
+        <span class="text-[8.5px] font-bold tracking-tight leading-none mt-0.5">Create</span>
+      </button>
+
+      <div class="notched-nav-items">
+        <!-- Left 2 Nav Items -->
+        <div class="flex items-center gap-3">
+          <button onclick="window.location.href='slide-StudyUp-2026-11-01T19-33-17.html'" class="nav-tab-btn  gsap-btn" title="My Library">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+              <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            </svg>
+            <span class="text-[10px]">My Library</span>
+          </button>
+
+          <button onclick="window.location.href='slide-StudyUp-2026-11-01T19-33-39.html'" class="nav-tab-btn  gsap-btn" title="Public Feed">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+              <path d="M2 12h20"/>
+            </svg>
+            <span class="text-[10px]">Public Feed</span>
+          </button>
+        </div>
+
+        <!-- Center Spacer for Notch -->
+        <div class="w-14 shrink-0"></div>
+
+        <!-- Right 2 Nav Items -->
+        <div class="flex items-center gap-3">
+          <button onclick="window.location.href='slide-StudyUp-2026-11-01T19-33-49.html'" class="nav-tab-btn active gsap-btn" title="Leaderboard">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"/>
+              <path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"/>
+              <path d="M18 9h1.5a1 1 0 0 0 0-5H18"/><path d="M4 22h16"/>
+              <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/>
+              <path d="M6 9H4.5a1 1 0 0 1 0-5H6"/>
+            </svg>
+            <span class="text-[10px]">Leaderboard</span>
+          </button>
+
+          <button onclick="window.location.href='slide-StudyUp-2026-11-01T19-34-17.html'" class="nav-tab-btn  gsap-btn" title="Android App • Lawrence">
+            <div class="relative">
+              <img src="https://lh3.googleusercontent.com/a/ACg8ocKYI4XjO8aibWhSSZVzJ3Hl8W7wIq2x5ehsRAmeNAAsfb5_I4zO=s96-c" alt="Lawrence" class="w-5 h-5 rounded-full object-cover border border-[#5928c9]" />
+              <span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#eb7d57] ring-1 ring-white"></span>
+            </div>
+            <span class="text-[10px]">Android App</span>
+          </button>
+        </div>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+
+    </section>
+
+  </main>
+  
+  <script>
+    // Progressive Disclosure: My Library Deck Filter & Drawer
+    function toggleMoreDecks() {
+      const more = document.getElementById('moreDecksContainer');
+      const btn = document.getElementById('toggleMoreDecksBtn');
+      if (!more || !btn) return;
+      const isHidden = more.classList.contains('hidden');
+      if (isHidden) {
+        more.classList.remove('hidden');
+        btn.textContent = 'Show Fewer Decks ↑';
+        if (window.gsap) {
+          gsap.fromTo(more.children, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.28, stagger: 0.06, ease: 'power2.out' });
+        }
+      } else {
+        more.classList.add('hidden');
+        btn.textContent = 'Show 2 More Decks (Elementary Sciences & JS) ↓';
+      }
+    }
+
+    function filterLibraryDecks(cat, clickedBtn) {
+      document.querySelectorAll('.lib-filter-btn').forEach(b => {
+        b.classList.remove('pill-coral-active');
+        b.classList.add('pill-outlined');
+      });
+      if (clickedBtn) {
+        clickedBtn.classList.add('pill-coral-active');
+        clickedBtn.classList.remove('pill-outlined');
+      }
+      const more = document.getElementById('moreDecksContainer');
+      const toggleBtn = document.getElementById('toggleMoreDecksBtn');
+      if (more) more.classList.remove('hidden');
+      if (toggleBtn) toggleBtn.classList.add('hidden');
+
+      document.querySelectorAll('#libraryDecksList .deck-item').forEach(card => {
+        const match = (cat === 'all') || (card.getAttribute('data-cat') === cat);
+        card.style.display = match ? '' : 'none';
+      });
+    }
+
+    // Public Feed Search & Folder Filter
+    function selectFolderPill(btn) {
+      document.querySelectorAll('.folder-pill').forEach(b => {
+        b.classList.remove('pill-coral-active');
+        b.classList.add('pill-outlined');
+      });
+      btn.classList.add('pill-coral-active');
+      btn.classList.remove('pill-outlined');
+    }
+
+    function filterFeedCard(q) {
+      const card = document.getElementById('publicDeckCard');
+      if (!card) return;
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes((q || '').toLowerCase()) ? '' : 'none';
+    }
+
+    // Leaderboard Mode Switcher
+    function switchRankTab(label, val, btn) {
+      document.querySelectorAll('.rank-mode-btn').forEach(b => {
+        b.classList.remove('pill-coral-active');
+        b.classList.add('text-white/80');
+      });
+      btn.classList.add('pill-coral-active');
+      btn.classList.remove('text-white/80');
+      const lbl = document.getElementById('rankMetricLabel');
+      const v = document.getElementById('rankMetricValue');
+      const th = document.getElementById('tableMetricHeader');
+      const r1 = document.getElementById('row1MetricVal');
+      if (lbl) lbl.textContent = label;
+      if (v) v.textContent = val;
+      if (th) th.textContent = label;
+      if (r1) r1.textContent = (label === 'Streak' ? '🔥 ' : '✨ ') + val;
+    }
+
+    // Android Progressive Disclosure Tabs
+    function switchAndroidTab(tab, btn) {
+      document.querySelectorAll('.android-tab-btn').forEach(b => {
+        b.classList.remove('pill-coral-active');
+        b.classList.add('pill-outlined');
+      });
+      btn.classList.add('pill-coral-active');
+      btn.classList.remove('pill-outlined');
+      const qr = document.getElementById('androidTabQR');
+      const feat = document.getElementById('androidTabFeatures');
+      if (tab === 'qr') {
+        if (qr) qr.classList.remove('hidden');
+        if (feat) feat.classList.add('hidden');
+      } else {
+        if (qr) qr.classList.add('hidden');
+        if (feat) {
+          feat.classList.remove('hidden');
+          if (window.gsap) gsap.fromTo(feat.children, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.25, stagger: 0.05 });
+        }
+      }
+    }
+
+    // Deck Study Modes Progressive Disclosure Category Filter
+    function filterStudyModes(group, btn) {
+      document.querySelectorAll('.mode-cat-btn').forEach(b => {
+        b.classList.remove('pill-coral-active');
+        b.classList.add('pill-outlined');
+      });
+      btn.classList.add('pill-coral-active');
+      btn.classList.remove('pill-outlined');
+      document.querySelectorAll('#studyModesGrid .study-mode-card').forEach(card => {
+        if (card.getAttribute('data-mode-group') === group) {
+          card.classList.remove('hidden');
+          if (window.gsap) gsap.fromTo(card, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.22 });
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // GSAP Interactive Button & Mascot Animations
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!window.gsap) return;
+
+      // Subtle floating animation on the single mascot
+      const mascot = document.getElementById('mascot-screen1');
+      if (mascot) {
+        gsap.to(mascot, { y: -4, duration: 2.2, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        mascot.addEventListener('click', () => {
+          gsap.timeline()
+            .to(mascot, { scaleX: 1.12, scaleY: 0.88, duration: 0.12, ease: 'power2.out' })
+            .to(mascot, { scaleX: 0.94, scaleY: 1.08, y: -12, duration: 0.18, ease: 'power2.out' })
+            .to(mascot, { scaleX: 1, scaleY: 1, y: 0, duration: 0.45, ease: 'elastic.out(1, 0.4)' });
+        });
+      }
+
+      // Tactile Squash & Rebound Press on all .gsap-btn elements
+      document.querySelectorAll('.gsap-btn').forEach(btn => {
+        btn.addEventListener('pointerdown', () => {
+          gsap.to(btn, { scaleX: 1.05, scaleY: 0.92, duration: 0.1, ease: 'power2.out' });
+        });
+        const release = () => {
+          gsap.to(btn, { scaleX: 1, scaleY: 1, duration: 0.38, ease: 'elastic.out(1, 0.4)' });
+        };
+        btn.addEventListener('pointerup', release);
+        btn.addEventListener('pointerleave', release);
+      });
+    });
+  </script>
+
+</body>
+</html>

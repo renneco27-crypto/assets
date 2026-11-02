@@ -1324,64 +1324,64 @@ def build_showcase_html():
     let currentShowcaseMode = 'single';
     let activeScreenNum = 1;
 
-    function setShowcaseMode(mode) {
+    function setShowcaseMode(mode) {{
       currentShowcaseMode = mode;
       const btnSingle = document.getElementById('btnSingleView');
       const btnGrid = document.getElementById('btnGridView');
       const wrappers = document.querySelectorAll('.phone-wrapper');
 
-      if (mode === 'single') {
+      if (mode === 'single') {{
         btnSingle.className = 'gsap-btn px-3.5 py-1.5 rounded-full bg-[#18152d] text-white font-bold shadow-sm';
         btnGrid.className = 'gsap-btn px-3.5 py-1.5 rounded-full hover:bg-slate-100 text-[#2c2647] font-semibold';
-        wrappers.forEach((w, idx) => {
+        wrappers.forEach((w, idx) => {{
           w.classList.toggle('hidden', (idx + 1) !== activeScreenNum);
-        });
-      } else {
+        }});
+      }} else {{
         btnGrid.className = 'gsap-btn px-3.5 py-1.5 rounded-full bg-[#18152d] text-white font-bold shadow-sm';
         btnSingle.className = 'gsap-btn px-3.5 py-1.5 rounded-full hover:bg-slate-100 text-[#2c2647] font-semibold';
         wrappers.forEach(w => w.classList.remove('hidden'));
-        if (window.gsap) {
-          gsap.fromTo('.phone-wrapper', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.06, ease: 'power2.out' });
-        }
-      }
-    }
+        if (window.gsap) {{
+          gsap.fromTo('.phone-wrapper', {{ opacity: 0, y: 16 }}, {{ opacity: 1, y: 0, duration: 0.35, stagger: 0.06, ease: 'power2.out' }});
+        }}
+      }}
+    }}
 
-    function switchPhoneScreen(num) {
+    function switchPhoneScreen(num) {{
       activeScreenNum = num;
-      for (let i = 1; i <= 5; i++) {
+      for (let i = 1; i <= 5; i++) {{
         const tab = document.getElementById('topTab' + i);
-        if (tab) {
-          if (i === num) {
+        if (tab) {{
+          if (i === num) {{
             tab.classList.add('pill-coral-active');
             tab.classList.remove('pill-outlined');
-          } else {
+          }} else {{
             tab.classList.remove('pill-coral-active');
             tab.classList.add('pill-outlined');
-          }
-        }
-      }
+          }}
+        }}
+      }}
 
-      if (currentShowcaseMode === 'single') {
-        for (let i = 1; i <= 5; i++) {
+      if (currentShowcaseMode === 'single') {{
+        for (let i = 1; i <= 5; i++) {{
           const w = document.getElementById('wrapScreen' + i);
-          if (w) {
-            if (i === num) {
+          if (w) {{
+            if (i === num) {{
               w.classList.remove('hidden');
-              if (window.gsap) gsap.fromTo(w, { opacity: 0, x: 18 }, { opacity: 1, x: 0, duration: 0.28, ease: 'power2.out' });
-            } else {
+              if (window.gsap) gsap.fromTo(w, {{ opacity: 0, x: 18 }}, {{ opacity: 1, x: 0, duration: 0.28, ease: 'power2.out' }});
+            }} else {{
               w.classList.add('hidden');
-            }
-          }
-        }
-      } else {
+            }}
+          }}
+        }}
+      }} else {{
         const target = document.getElementById('screen' + num);
         document.querySelectorAll('.phone-frame').forEach(f => f.classList.remove('highlight-ring'));
-        if (target) {
+        if (target) {{
           target.classList.add('highlight-ring');
-          target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-        }
-      }
-    }
+          target.scrollIntoView({{ behavior: 'smooth', block: 'center', inline: 'center' }});
+        }}
+      }}
+    }}
   </script>
 </body>
 </html>

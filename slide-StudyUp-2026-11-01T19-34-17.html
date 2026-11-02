@@ -362,7 +362,7 @@
 
         <!-- TAB A: Quick Scan QR & Direct APK Download -->
         <div id="androidTabQR" class="px-5 space-y-3">
-          <div class="edu-card p-4 text-center flex flex-col items-center">
+          <div id="qrInstallCard" class="edu-card p-4 text-center flex flex-col items-center">
             <span class="badge-coral px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider">Quick Scan</span>
             <h2 class="text-[15px] font-extrabold text-[#18152d] mt-1">Install on Your Phone</h2>
 
@@ -610,7 +610,7 @@
       });
     }
 
-        // GSAP Core Showcase Engine (Spinning, Stagger, 3D Tilt, Elastic Press, Breathing)
+        // GSAP Core Showcase Engine (Spinning ONLY on FAB Button, 3D Tilt ONLY on QR Card)
     document.addEventListener('DOMContentLoaded', () => {
       if (!window.gsap) return;
 
@@ -638,50 +638,34 @@
           ease: 'sine.inOut'
         });
 
-        // 3. GSAP Spinning Feature on Center Action Button Click
-        fab.addEventListener('click', (e) => {
+        // 3. GSAP Spinning Feature ONLY on Center Action Button (Click & Hover)
+        const spinFab = () => {
           const icon = fab.querySelector('svg');
-          if (icon) {
+          if (icon && !gsap.isTweening(icon)) {
             gsap.to(icon, {
               rotation: '+=360_cw',
-              duration: 0.7,
-              ease: 'back.out(2)'
+              duration: 0.65,
+              ease: 'power2.out'
             });
           }
-        });
+        };
+        fab.addEventListener('click', spinFab);
+        fab.addEventListener('mouseenter', spinFab);
       }
 
-      // 4. GSAP Interactive Spinning on Badge Icons & Buttons
-      document.querySelectorAll('.spin-on-hover, .badge-lavender, .badge-coral').forEach(badge => {
-        badge.addEventListener('mouseenter', () => {
-          gsap.to(badge, {
-            rotation: '+=360_cw',
-            scale: 1.15,
-            duration: 0.6,
-            ease: 'back.out(1.8)'
-          });
-        });
-        badge.addEventListener('mouseleave', () => {
-          gsap.to(badge, {
-            scale: 1,
-            duration: 0.4,
-            ease: 'power2.out'
-          });
-        });
-      });
-
-      // 5. GSAP 3D Interactive Card Tilt
-      document.querySelectorAll('.edu-card').forEach(card => {
-        card.addEventListener('pointerenter', () => {
-          gsap.to(card, {
+      // 4. GSAP 3D Interactive Card Tilt ONLY on QR Install Card (Other cards do not wiggle in 3D)
+      const qrCard = document.getElementById('qrInstallCard');
+      if (qrCard) {
+        qrCard.addEventListener('pointerenter', () => {
+          gsap.to(qrCard, {
             y: -5,
             scale: 1.018,
             duration: 0.22,
             ease: 'power2.out'
           });
         });
-        card.addEventListener('pointerleave', () => {
-          gsap.to(card, {
+        qrCard.addEventListener('pointerleave', () => {
+          gsap.to(qrCard, {
             y: 0,
             scale: 1,
             rotationY: 0,
@@ -690,11 +674,11 @@
             ease: 'elastic.out(1, 0.4)'
           });
         });
-        card.addEventListener('pointermove', (e) => {
-          const rect = card.getBoundingClientRect();
+        qrCard.addEventListener('pointermove', (e) => {
+          const rect = qrCard.getBoundingClientRect();
           const x = e.clientX - rect.left - rect.width / 2;
           const y = e.clientY - rect.top - rect.height / 2;
-          gsap.to(card, {
+          gsap.to(qrCard, {
             rotationY: x * 0.05,
             rotationX: -y * 0.05,
             duration: 0.15,
@@ -702,9 +686,9 @@
             transformPerspective: 600
           });
         });
-      });
+      }
 
-      // 6. GSAP Tactile Squash & Elastic Rebound Button Press
+      // 5. GSAP Tactile Squash & Elastic Rebound Button Press
       document.querySelectorAll('.gsap-btn').forEach(btn => {
         btn.addEventListener('pointerdown', () => {
           gsap.to(btn, { scaleX: 1.06, scaleY: 0.90, duration: 0.09, ease: 'power2.out' });
@@ -716,7 +700,7 @@
         btn.addEventListener('pointerleave', release);
       });
 
-      // 7. GSAP Floating Mascot & Jump
+      // 6. GSAP Floating Mascot & Jump
       const mascot = document.getElementById('mascot-screen1') || document.getElementById('mascot-screen2');
       if (mascot) {
         gsap.to(mascot, { y: -6, duration: 2.2, repeat: -1, yoyo: true, ease: 'sine.inOut' });

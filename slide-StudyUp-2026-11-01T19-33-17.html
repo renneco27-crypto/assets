@@ -282,6 +282,32 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
+
+    /* Interactive Pulsing & Flickering Fire Emoji Animation */
+    @keyframes fireFlicker {
+      0%, 100% {
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 2px rgba(255, 180, 67, 0.45));
+      }
+      25% {
+        transform: scale(1.18) rotate(-6deg);
+        filter: drop-shadow(0 0 6px rgba(255, 120, 40, 0.75));
+      }
+      50% {
+        transform: scale(0.96) rotate(3deg);
+        filter: drop-shadow(0 0 3px rgba(255, 180, 67, 0.5));
+      }
+      75% {
+        transform: scale(1.16) rotate(-3deg);
+        filter: drop-shadow(0 0 7px rgba(255, 100, 30, 0.8));
+      }
+    }
+    .fire-animated {
+      display: inline-block;
+      transform-origin: 50% 85%;
+      animation: fireFlicker 1.6s ease-in-out infinite;
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -364,7 +390,7 @@
               <div class="mt-2.5 flex items-center gap-2.5">
                 <!-- Day Streak Pill -->
                 <div class="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl px-3 py-1.5 flex items-center gap-2">
-                  <span class="text-[#ffb443] text-base">🔥</span>
+                  <span class="text-[#ffb443] text-base fire-animated" title="2-Day Streak Active! 🔥">🔥</span>
                   <div>
                     <div class="text-white text-[13.5px] font-extrabold leading-none">2-Day</div>
                     <div class="text-[#d7d1f8] text-[9.5px] font-bold uppercase tracking-wider">Streak</div>
@@ -457,7 +483,7 @@
                   <span class="badge-lavender px-2 py-0.5 rounded-full text-[10px] font-bold">Mixed Sample</span>
                   <span class="badge-coral px-2 py-0.5 rounded-full text-[10px] font-bold">🔥 2 days Streak</span>
                 </div>
-                <h3 class="text-[13.5px] font-extrabold text-[#18152d] truncate mt-1">
+                <h3 class="text-[13.5px] font-extrabold text-[#18152d] leading-snug line-clamp-2 mt-1">
                   Sample Deck: Motion Basics and Python Loops
                 </h3>
                 <div class="flex items-center gap-2.5 text-[11px] text-[#8b87a0] mt-0.5">
@@ -482,7 +508,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <span class="badge-emerald px-2 py-0.5 rounded-full text-[10px] font-bold">math coding butterfly notes</span>
-                  <h3 class="text-[13px] font-extrabold text-[#18152d] line-clamp-1 mt-1">
+                  <h3 class="text-[13px] font-extrabold text-[#18152d] leading-snug line-clamp-2 mt-1">
                     Elementary Sciences: Mathematics, Coding Basics, and Butterfly Biology
                   </h3>
                   <div class="text-[11px] text-[#8b87a0] mt-0.5 font-semibold">24 cards</div>

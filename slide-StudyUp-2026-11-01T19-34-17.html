@@ -327,18 +327,16 @@
       </div>
 
           <div class="relative z-10 px-6 pt-2 flex items-center justify-between">
-            <button onclick="window.location.href='slide-StudyUp-2026-11-01T19-33-17.html'" class="gsap-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 text-white text-[11px] font-bold border border-white/20">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-              Back to StudyUp
+            <button onclick="window.location.href='slide-StudyUp-2026-11-01T19-33-17.html'" class="gsap-btn w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center border border-white/20 transition-colors" title="Exit to StudyUp">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              </svg>
             </button>
-            <span class="px-2.5 py-0.5 rounded-full bg-[#b38cd8]/25 text-[#ffb49a] text-[10px] font-bold border border-[#b38cd8]/40">
-              Mobile Study Experience
-            </span>
           </div>
 
           <div class="relative z-10 px-6 pt-3">
             <h1 class="text-white text-[19px] font-extrabold leading-tight tracking-tight">
-              Study Anywhere with <span class="text-[#ff9c7a]">StudyUp Android</span>
+              Study Anywhere with <span class="studyup-brand-title">StudyUp Android</span>
             </h1>
             <p class="text-[#d7d1f8] text-[11px] leading-relaxed mt-1">
               Full offline active recall, math solver, and coding lab on the go.
@@ -348,16 +346,6 @@
           <svg class="absolute bottom-0 left-0 w-full h-[24px] pointer-events-none" viewBox="0 0 356 24" preserveAspectRatio="none">
             <path d="M0,12 C110,28 240,-4 356,14 L356,24 L0,24 Z" fill="#f2f3f4"/>
           </svg>
-        </div>
-
-        <!-- Progressive Disclosure Switcher (Prevents dumping QR + 4 Features + 3 Steps at once) -->
-        <div class="px-5 pt-1.5 pb-3 flex items-center gap-2">
-          <button onclick="switchAndroidTab('qr', this)" class="android-tab-btn gsap-btn flex-1 py-1.5 rounded-full pill-coral-active text-[11.5px] font-bold">
-            1. Quick Scan &amp; APK
-          </button>
-          <button onclick="switchAndroidTab('features', this)" class="android-tab-btn gsap-btn flex-1 py-1.5 rounded-full pill-outlined text-[11.5px] font-semibold">
-            2. Features &amp; 3-Step Setup
-          </button>
         </div>
 
         <!-- TAB A: Quick Scan QR & Direct APK Download -->
@@ -392,7 +380,7 @@
         </div>
 
         <!-- TAB B: 4 Feature Cards & Easy 3-Step Setup (Progressive Disclosure) -->
-        <div id="androidTabFeatures" class="hidden px-5 space-y-2.5">
+        <div id="androidTabFeatures" class="px-5 space-y-2.5 mt-3">
           <div class="grid grid-cols-2 gap-2.5">
             <div class="edu-card p-3">
               <div class="w-7 h-7 rounded-xl badge-coral flex items-center justify-center font-bold text-xs mb-1.5">⚡</div>

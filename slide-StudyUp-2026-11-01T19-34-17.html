@@ -8,10 +8,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-canvas: #e5e6eb;
+      --bg-canvas: #f2f3f4;
       --coral: #eb7d57;
       --coral-dark: #e06842;
       --dark-indigo: #18152d;
@@ -34,7 +34,7 @@
       margin: 0;
       padding: 0;
       background-color: var(--bg-canvas);
-      background-image: radial-gradient(circle at 50% 25%, #f0f1f6 0%, #dcdfe7 100%);
+      background-color: #f2f3f4;
       font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       min-height: 100vh;
       display: flex;
@@ -45,11 +45,23 @@
       color: var(--dark-indigo);
     }
 
+    
+    /* StudyUp Official Brand Gradient */
+    .studyup-brand-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #638ef2 0%, #8e8ee5 25%, #b38cd8 50%, #bc81c0 75%, #ee82be 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
     /* Phone Frame Styling (99% Our Created Design System) */
     .phone-frame {
       width: 356px;
       height: 768px;
-      background: #fafafe;
+      background: #f2f3f4;
       border-radius: 38px;
       box-shadow:
         0 26px 54px -12px rgba(24, 21, 45, 0.16),
@@ -135,6 +147,7 @@
     }
 
     /* Notched Bottom Navigation Bar (Matching Uploaded Reference Image) */
+    
     .notched-navbar-wrap {
       position: relative;
       width: 100%;
@@ -150,7 +163,7 @@
       left: 0;
       width: 100%;
       height: 70px;
-      filter: drop-shadow(0 -8px 20px rgba(24, 21, 45, 0.08));
+      filter: drop-shadow(0 -8px 24px rgba(10, 8, 20, 0.35));
       pointer-events: none;
     }
 
@@ -166,7 +179,7 @@
       box-shadow:
         0 8px 20px rgba(235, 125, 87, 0.48),
         0 2px 6px rgba(235, 125, 87, 0.30),
-        0 0 0 3px #fafafe;
+        0 0 0 3.5px #13111f;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -197,13 +210,17 @@
       gap: 3px;
       min-width: 54px;
       padding: 4px 2px;
-      color: #8b87a0;
+      color: #8e8ba0;
       cursor: pointer;
       transition: color 0.2s ease;
     }
 
+    .nav-tab-btn:hover {
+      color: #dcd9e8;
+    }
+
     .nav-tab-btn.active {
-      color: #23164a;
+      color: #ffffff;
       font-weight: 700;
     }
 
@@ -219,12 +236,13 @@
       transform: translateX(-50%);
       width: 116px;
       height: 4px;
-      background-color: #18152d;
-      opacity: 0.18;
+      background-color: #ffffff;
+      opacity: 0.22;
       border-radius: 999px;
       z-index: 45;
       pointer-events: none;
     }
+
 
     .no-scrollbar::-webkit-scrollbar {
       display: none;
@@ -297,7 +315,7 @@
           </div>
 
           <svg class="absolute bottom-0 left-0 w-full h-[24px] pointer-events-none" viewBox="0 0 356 24" preserveAspectRatio="none">
-            <path d="M0,12 C110,28 240,-4 356,14 L356,24 L0,24 Z" fill="#fafafe"/>
+            <path d="M0,12 C110,28 240,-4 356,14 L356,24 L0,24 Z" fill="#f2f3f4"/>
           </svg>
         </div>
 
@@ -382,8 +400,8 @@
     <!-- Notched Bottom Navbar (Reference Image Style: 2 Left, Center Docked Circle Button, 2 Right) -->
     <div class="notched-navbar-wrap">
       <svg class="notched-navbar-svg" viewBox="0 0 356 70" preserveAspectRatio="none" fill="none">
-        <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22 L 356,70 L 0,70 Z" fill="#ffffff"/>
-        <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22" stroke="#eceaf6" stroke-width="1.2" fill="none"/>
+        <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22 L 356,70 L 0,70 Z" fill="#13111f"/>
+        <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22" stroke="#252236" stroke-width="1.2" fill="none"/>
       </svg>
 
       <!-- Center Circular Notch Button: Create Deck / Study Modes -->
@@ -442,8 +460,8 @@
       </div>
       <div class="home-indicator"></div>
     </div>
-
     </section>
+  </main>
 
   </main>
   

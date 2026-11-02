@@ -8,10 +8,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-canvas: #e5e6eb;
+      --bg-canvas: #f2f3f4;
       --coral: #eb7d57;
       --coral-dark: #e06842;
       --dark-indigo: #18152d;
@@ -34,7 +34,7 @@
       margin: 0;
       padding: 0;
       background-color: var(--bg-canvas);
-      background-image: radial-gradient(circle at 50% 25%, #f0f1f6 0%, #dcdfe7 100%);
+      background-color: #f2f3f4;
       font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       min-height: 100vh;
       display: flex;
@@ -45,11 +45,23 @@
       color: var(--dark-indigo);
     }
 
+    
+    /* StudyUp Official Brand Gradient */
+    .studyup-brand-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #638ef2 0%, #8e8ee5 25%, #b38cd8 50%, #bc81c0 75%, #ee82be 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
     /* Phone Frame Styling (99% Our Created Design System) */
     .phone-frame {
       width: 356px;
       height: 768px;
-      background: #fafafe;
+      background: #f2f3f4;
       border-radius: 38px;
       box-shadow:
         0 26px 54px -12px rgba(24, 21, 45, 0.16),
@@ -134,6 +146,81 @@
       color: #0d9462;
     }
 
+    
+    /* Jumping Crown Animation on #1 Candidate */
+    @keyframes crownJump {
+      0%, 100% {
+        transform: translateY(0) scale(1) rotate(0deg);
+      }
+      25% {
+        transform: translateY(-10px) scale(1.15) rotate(-4deg);
+      }
+      50% {
+        transform: translateY(0) scale(0.98) rotate(0deg);
+      }
+      75% {
+        transform: translateY(-4px) scale(1.05) rotate(2deg);
+      }
+    }
+
+    .crown-jumping {
+      animation: crownJump 1.4s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+      display: inline-block;
+      filter: drop-shadow(0 4px 8px rgba(245, 158, 11, 0.55));
+      transform-origin: center bottom;
+    }
+
+    /* Podium Hierarchy Blocks */
+    .podium-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 10px;
+      padding-top: 14px;
+      margin-bottom: 8px;
+    }
+
+    .podium-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      max-width: 98px;
+    }
+
+    .podium-step {
+      width: 100%;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(24, 21, 45, 0.08);
+      position: relative;
+    }
+
+    .podium-step-1 {
+      height: 98px;
+      background: linear-gradient(180deg, #27165c 0%, #170d38 100%);
+      border: 1.5px solid #f59e0b;
+      border-bottom: none;
+    }
+
+    .podium-step-2 {
+      height: 74px;
+      background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
+      border: 1.5px solid #cbd5e1;
+      border-bottom: none;
+    }
+
+    .podium-step-3 {
+      height: 56px;
+      background: linear-gradient(180deg, #ffffff 0%, #fef3c7 100%);
+      border: 1.5px solid #fcd34d;
+      border-bottom: none;
+    }
+
     /* Notched Bottom Navigation Bar (Matching Uploaded Reference Image) */
     .notched-navbar-wrap {
       position: relative;
@@ -150,7 +237,7 @@
       left: 0;
       width: 100%;
       height: 70px;
-      filter: drop-shadow(0 -8px 20px rgba(24, 21, 45, 0.08));
+      filter: drop-shadow(0 -8px 24px rgba(10, 8, 20, 0.35));
       pointer-events: none;
     }
 
@@ -166,7 +253,7 @@
       box-shadow:
         0 8px 20px rgba(235, 125, 87, 0.48),
         0 2px 6px rgba(235, 125, 87, 0.30),
-        0 0 0 3px #fafafe;
+        0 0 0 3.5px #13111f;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -197,13 +284,18 @@
       gap: 3px;
       min-width: 54px;
       padding: 4px 2px;
-      color: #8b87a0;
+      color: #8e8ba0;
+      transition: color 0.2s ease;
+    }
+
+    .nav-tab-btn:hover {
+      color: #dcd9e8;
       cursor: pointer;
       transition: color 0.2s ease;
     }
 
     .nav-tab-btn.active {
-      color: #23164a;
+      color: #ffffff;
       font-weight: 700;
     }
 
@@ -219,8 +311,8 @@
       transform: translateX(-50%);
       width: 116px;
       height: 4px;
-      background-color: #18152d;
-      opacity: 0.18;
+      background-color: #ffffff;
+      opacity: 0.22;
       border-radius: 999px;
       z-index: 45;
       pointer-events: none;
@@ -280,7 +372,7 @@
           <div class="relative z-10 px-6 pt-2 flex items-center justify-between">
             <div>
               <div class="flex items-center gap-2">
-                <h1 class="text-white text-[21px] font-extrabold tracking-tight">Leaderboard</h1>
+                <div class="flex items-center gap-2"><span class="studyup-brand-title text-[18px]">StudyUp</span><span class="text-white/40">•</span><h1 class="text-white text-[20px] font-extrabold tracking-tight">Leaderboard</h1></div>
                 <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/15 text-[#ffb443] text-[10px] font-bold border border-white/20">
                   🔥 3-Day Rule
                 </span>
@@ -307,77 +399,132 @@
           </div>
 
           <svg class="absolute bottom-0 left-0 w-full h-[24px] pointer-events-none" viewBox="0 0 356 24" preserveAspectRatio="none">
-            <path d="M0,12 C110,28 240,-4 356,14 L356,24 L0,24 Z" fill="#fafafe"/>
+            <path d="M0,12 C110,28 240,-4 356,14 L356,24 L0,24 Z" fill="#f2f3f4"/>
           </svg>
         </div>
 
-        <div class="px-5 pt-2 space-y-3.5">
-          <!-- Featured Your Rank Card (99% Our Dark Royal Purple Card Style) -->
-          <div class="hero-banner-bg rounded-[22px] p-4 text-white shadow-lg flex items-center justify-between relative overflow-hidden">
-            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 316 96" fill="none">
-              <circle cx="275" cy="48" r="65" fill="#4c2d8f" fill-opacity="0.45"/>
-              <circle cx="275" cy="48" r="40" fill="#6441ad" fill-opacity="0.45"/>
-            </svg>
-
-            <div class="relative z-10 flex items-center gap-3.5">
-              <div class="relative">
-                <img src="https://lh3.googleusercontent.com/a/ACg8ocKYI4XjO8aibWhSSZVzJ3Hl8W7wIq2x5ehsRAmeNAAsfb5_I4zO=s96-c" alt="Lawrence Cortes" class="w-13 h-13 w-[52px] h-[52px] rounded-2xl object-cover border-2 border-[#eb7d57] shadow-md"/>
-                <span class="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-full bg-[#eb7d57] text-[9px] font-extrabold uppercase text-white shadow">
-                  You
-                </span>
-              </div>
-              <div>
-                <div class="flex items-center gap-1.5">
-                  <span class="text-[#d7d1f8] text-[10px] font-bold uppercase tracking-wider">Your Rank</span>
-                  <span class="px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[12px] font-extrabold">#1</span>
-                </div>
-                <p class="text-white text-[15px] font-extrabold mt-0.5">Lawrence Cortes</p>
-              </div>
+        
+        <div class="px-5 pt-1 space-y-3">
+          
+          <!-- Podium Hierarchy Blocks (1st, 2nd, 3rd) with Jumping Crown on Top Candidate -->
+          <div class="bg-white rounded-[26px] p-4 shadow-md border border-[#e2e5ee]">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#27165c] flex items-center gap-1.5">
+                🏆 Top Candidates
+              </span>
+              <span class="text-[10px] font-bold text-[#8b87a0] bg-[#f2f3f4] px-2 py-0.5 rounded-full">
+                Global Arena
+              </span>
             </div>
 
-            <div class="relative z-10 text-right">
-              <p id="rankMetricLabel" class="text-[#d7d1f8] text-[10px] uppercase font-bold tracking-wider">Day Streak</p>
-              <div class="flex items-center justify-end gap-1 text-[24px] font-extrabold text-[#ffb443] leading-tight">
-                <span>🔥</span>
-                <span id="rankMetricValue">2d</span>
+            <div class="podium-container">
+              
+              <!-- 2nd Place: Rasty Espartero (Silver) -->
+              <div class="podium-col">
+                <div class="relative flex flex-col items-center mb-1">
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=96&h=96&fit=crop&crop=faces" alt="Rasty" class="w-11 h-11 rounded-full object-cover border-2 border-[#94a3b8] shadow-sm"/>
+                  <span class="absolute -bottom-1 -right-0.5 w-5 h-5 rounded-full bg-[#e2e8f0] text-slate-700 text-[10px] font-black flex items-center justify-center border border-white shadow-xs">2</span>
+                </div>
+                <span class="text-[11px] font-bold text-[#18152d] truncate max-w-[85px] mt-0.5">Rasty E.</span>
+                <span class="text-[9.5px] font-semibold text-[#64748b]">2,120 XP</span>
+                <div class="podium-step podium-step-2 mt-2">
+                  <span class="text-xl font-black text-slate-400">2</span>
+                  <span class="text-[9px] font-bold text-slate-500 uppercase tracking-tighter">Silver</span>
+                </div>
               </div>
+
+              <!-- 1st Place: Lawrence Cortes (Gold with Jumping Crown) -->
+              <div class="podium-col z-10">
+                <div class="relative flex flex-col items-center mb-1">
+                  <!-- Bouncing / Jumping Crown -->
+                  <div class="crown-jumping -mb-1 text-2xl select-none" title="Top Candidate">👑</div>
+                  <img src="https://lh3.googleusercontent.com/a/ACg8ocKYI4XjO8aibWhSSZVzJ3Hl8W7wIq2x5ehsRAmeNAAsfb5_I4zO=s96-c" alt="Lawrence" class="w-14 h-14 rounded-full object-cover border-[2.5px] border-[#f59e0b] shadow-md ring-2 ring-amber-300/40"/>
+                  <span class="absolute -bottom-1 px-1.5 py-0.2 rounded-full bg-[#eb7d57] text-white text-[8.5px] font-extrabold uppercase shadow-sm">You</span>
+                </div>
+                <span class="text-[12px] font-extrabold text-[#18152d] truncate max-w-[90px] mt-0.5">Lawrence</span>
+                <span class="text-[10px] font-bold text-[#eb7d57]">🔥 2,450 XP</span>
+                <div class="podium-step podium-step-1 mt-2">
+                  <span class="text-2xl font-black text-amber-400">1</span>
+                  <span class="text-[9px] font-bold text-amber-300 uppercase tracking-wider">Champion</span>
+                </div>
+              </div>
+
+              <!-- 3rd Place: Jazerlloyd (Bronze) -->
+              <div class="podium-col">
+                <div class="relative flex flex-col items-center mb-1">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&crop=faces" alt="Jazerlloyd" class="w-11 h-11 rounded-full object-cover border-2 border-[#d97706] shadow-sm"/>
+                  <span class="absolute -bottom-1 -right-0.5 w-5 h-5 rounded-full bg-[#fef3c7] text-amber-800 text-[10px] font-black flex items-center justify-center border border-white shadow-xs">3</span>
+                </div>
+                <span class="text-[11px] font-bold text-[#18152d] truncate max-w-[85px] mt-0.5">Jazerlloyd</span>
+                <span class="text-[9.5px] font-semibold text-[#b45309]">1,890 XP</span>
+                <div class="podium-step podium-step-3 mt-2">
+                  <span class="text-lg font-black text-amber-600/70">3</span>
+                  <span class="text-[8.5px] font-bold text-amber-700/80 uppercase tracking-tighter">Bronze</span>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <!-- Global Rankings List Backbone -->
-          <div class="edu-card overflow-hidden">
-            <div class="px-4 py-2.5 bg-[#f6f5fb] border-b border-[#eceaf6] flex items-center justify-between text-[11px] font-bold text-[#8b87a0] uppercase tracking-wider">
-              <span>Rank &amp; Learner</span>
-              <span id="tableMetricHeader">Streak</span>
+          <!-- Rest of the Learners Ranked List (4th - 6th) -->
+          <div class="bg-white rounded-2xl border border-[#e2e5ee] overflow-hidden shadow-sm">
+            <div class="px-4 py-2 bg-[#f8fafc] border-b border-[#e2e5ee] flex items-center justify-between text-[10px] font-bold text-[#8b87a0] uppercase tracking-wider">
+              <span>Next Contenders</span>
+              <span>XP Score</span>
             </div>
-            <div class="divide-y divide-[#eceaf6]">
-              <!-- Row 1: Law****ce Cor**s (You) -->
-              <div class="px-4 py-3.5 flex items-center justify-between bg-[#faf8ff] border-l-4 border-l-[#eb7d57]">
-                <div class="flex items-center gap-3 min-w-0">
-                  <span class="w-6 h-6 rounded-full bg-amber-100 text-amber-700 font-extrabold text-[12px] flex items-center justify-center shrink-0">
-                    1
-                  </span>
-                  <img src="https://lh3.googleusercontent.com/a/ACg8ocKYI4XjO8aibWhSSZVzJ3Hl8W7wIq2x5ehsRAmeNAAsfb5_I4zO=s96-c" alt="Lawrence" class="w-8 h-8 rounded-full object-cover border border-[#d7d1f8] shrink-0"/>
-                  <div class="min-w-0 flex items-center gap-1.5">
-                    <span class="text-[13px] font-bold text-[#18152d] truncate">Law****ce Cor**s</span>
-                    <span class="px-1.5 py-0.5 rounded-md bg-[#eb7d57] text-white text-[9px] font-extrabold uppercase">You</span>
+            
+            <div class="divide-y divide-[#edf2f7]">
+              <!-- Rank 4: Maee -->
+              <div class="px-4 py-2.5 flex items-center justify-between hover:bg-[#f8fafc] transition-colors">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-5 h-5 rounded-full bg-[#f2f3f4] text-[#64748b] text-[11px] font-bold flex items-center justify-center">4</span>
+                  <div class="w-7 h-7 rounded-full bg-purple-100 text-[#27165c] text-xs font-bold flex items-center justify-center">M</div>
+                  <div>
+                    <span class="text-xs font-bold text-[#18152d]">Maee</span>
+                    <span class="text-[10px] text-[#8b87a0] block leading-none">3d Streak • 60% Mastery</span>
                   </div>
                 </div>
-                <span id="row1MetricVal" class="text-[13.5px] font-extrabold text-[#e06842] flex items-center gap-1 shrink-0">
-                  🔥 2d
-                </span>
+                <span class="text-xs font-bold text-[#18152d]">1,640 XP</span>
+              </div>
+
+              <!-- Rank 5: Dave -->
+              <div class="px-4 py-2.5 flex items-center justify-between hover:bg-[#f8fafc] transition-colors">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-5 h-5 rounded-full bg-[#f2f3f4] text-[#64748b] text-[11px] font-bold flex items-center justify-center">5</span>
+                  <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-xs font-bold flex items-center justify-center">D</div>
+                  <div>
+                    <span class="text-xs font-bold text-[#18152d]">Dave K.</span>
+                    <span class="text-[10px] text-[#8b87a0] block leading-none">1d Streak • 40% Mastery</span>
+                  </div>
+                </div>
+                <span class="text-xs font-bold text-[#18152d]">1,420 XP</span>
+              </div>
+
+              <!-- Rank 6: Elena -->
+              <div class="px-4 py-2.5 flex items-center justify-between hover:bg-[#f8fafc] transition-colors">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-5 h-5 rounded-full bg-[#f2f3f4] text-[#64748b] text-[11px] font-bold flex items-center justify-center">6</span>
+                  <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center">E</div>
+                  <div>
+                    <span class="text-xs font-bold text-[#18152d]">Elena V.</span>
+                    <span class="text-[10px] text-[#8b87a0] block leading-none">2d Streak • 35% Mastery</span>
+                  </div>
+                </div>
+                <span class="text-xs font-bold text-[#18152d]">1,180 XP</span>
               </div>
             </div>
           </div>
+
         </div>
+
       </div>
 
       
     <!-- Notched Bottom Navbar (Reference Image Style: 2 Left, Center Docked Circle Button, 2 Right) -->
     <div class="notched-navbar-wrap">
       <svg class="notched-navbar-svg" viewBox="0 0 356 70" preserveAspectRatio="none" fill="none">
-        <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22 L 356,70 L 0,70 Z" fill="#ffffff"/>
-        <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22" stroke="#eceaf6" stroke-width="1.2" fill="none"/>
+        <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22 L 356,70 L 0,70 Z" fill="#13111f"/>
+        <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22" stroke="#252236" stroke-width="1.2" fill="none"/>
       </svg>
 
       <!-- Center Circular Notch Button: Create Deck / Study Modes -->

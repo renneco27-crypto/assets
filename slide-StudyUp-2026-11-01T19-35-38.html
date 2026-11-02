@@ -755,7 +755,7 @@
       });
     }
 
-        // GSAP Core Showcase Engine (Spinning, Stagger, 3D Tilt, Elastic Press, Breathing)
+        // GSAP Core Showcase Engine (Spinning ONLY on Center FAB Button)
     document.addEventListener('DOMContentLoaded', () => {
       if (!window.gsap) return;
 
@@ -772,7 +772,7 @@
         clearProps: 'transform'
       });
 
-      // 2. Continuous Ambient Breathing on Floating Center Action Button
+      // 2. Continuous Ambient Breathing & Exclusive Spinning ONLY on Center Action FAB Button
       const fab = document.querySelector('.notched-fab');
       if (fab) {
         gsap.to(fab, {
@@ -783,73 +783,22 @@
           ease: 'sine.inOut'
         });
 
-        // 3. GSAP Spinning Feature on Center Action Button Click
-        fab.addEventListener('click', (e) => {
+        // Spinning is strictly ONLY on this center FAB button
+        const spinFab = () => {
           const icon = fab.querySelector('svg');
-          if (icon) {
+          if (icon && !gsap.isTweening(icon)) {
             gsap.to(icon, {
               rotation: '+=360_cw',
-              duration: 0.7,
-              ease: 'back.out(2)'
+              duration: 0.65,
+              ease: 'power2.out'
             });
           }
-        });
+        };
+        fab.addEventListener('click', spinFab);
+        fab.addEventListener('mouseenter', spinFab);
       }
 
-      // 4. GSAP Interactive Spinning on Badge Icons & Buttons
-      document.querySelectorAll('.spin-on-hover, .badge-lavender, .badge-coral').forEach(badge => {
-        badge.addEventListener('mouseenter', () => {
-          gsap.to(badge, {
-            rotation: '+=360_cw',
-            scale: 1.15,
-            duration: 0.6,
-            ease: 'back.out(1.8)'
-          });
-        });
-        badge.addEventListener('mouseleave', () => {
-          gsap.to(badge, {
-            scale: 1,
-            duration: 0.4,
-            ease: 'power2.out'
-          });
-        });
-      });
-
-      // 5. GSAP 3D Interactive Card Tilt
-      document.querySelectorAll('.edu-card').forEach(card => {
-        card.addEventListener('pointerenter', () => {
-          gsap.to(card, {
-            y: -5,
-            scale: 1.018,
-            duration: 0.22,
-            ease: 'power2.out'
-          });
-        });
-        card.addEventListener('pointerleave', () => {
-          gsap.to(card, {
-            y: 0,
-            scale: 1,
-            rotationY: 0,
-            rotationX: 0,
-            duration: 0.35,
-            ease: 'elastic.out(1, 0.4)'
-          });
-        });
-        card.addEventListener('pointermove', (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left - rect.width / 2;
-          const y = e.clientY - rect.top - rect.height / 2;
-          gsap.to(card, {
-            rotationY: x * 0.05,
-            rotationX: -y * 0.05,
-            duration: 0.15,
-            ease: 'power1.out',
-            transformPerspective: 600
-          });
-        });
-      });
-
-      // 6. GSAP Tactile Squash & Elastic Rebound Button Press
+      // Tactile Squash & Elastic Rebound Button Press
       document.querySelectorAll('.gsap-btn').forEach(btn => {
         btn.addEventListener('pointerdown', () => {
           gsap.to(btn, { scaleX: 1.06, scaleY: 0.90, duration: 0.09, ease: 'power2.out' });
@@ -861,14 +810,14 @@
         btn.addEventListener('pointerleave', release);
       });
 
-      // 7. GSAP Floating Mascot & Jump
+      // Floating Mascot Bounce (Without spinning)
       const mascot = document.getElementById('mascot-screen1') || document.getElementById('mascot-screen2');
       if (mascot) {
         gsap.to(mascot, { y: -6, duration: 2.2, repeat: -1, yoyo: true, ease: 'sine.inOut' });
         mascot.addEventListener('click', () => {
           gsap.timeline()
             .to(mascot, { scaleX: 1.15, scaleY: 0.85, duration: 0.1, ease: 'power2.out' })
-            .to(mascot, { scaleX: 0.92, scaleY: 1.12, y: -16, rotation: '+=360_cw', duration: 0.5, ease: 'power2.out' })
+            .to(mascot, { scaleX: 0.95, scaleY: 1.08, y: -16, duration: 0.35, ease: 'power2.out' })
             .to(mascot, { scaleX: 1, scaleY: 1, y: 0, duration: 0.45, ease: 'elastic.out(1.1, 0.4)' });
         });
       }

@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "project": {
+    "name": "StudyUp — Purple Scholar EdTech UI",
+    "productType": "mobile-edtech-webapp",
+    "stack": ["html5", "tailwindcss", "gsap", "svg-2d"]
+  },
+  "sources": {
+    "tokens": ["purple_scholar_edtech_ui_kit_live_app_preview.html"],
+    "components": [
+      "slide-StudyUp-2026-11-01T19-33-17.html",
+      "slide-StudyUp-2026-11-01T19-33-39.html",
+      "slide-StudyUp-2026-11-01T19-33-49.html",
+      "slide-StudyUp-2026-11-01T19-34-17.html",
+      "slide-StudyUp-2026-11-01T19-35-38.html"
+    ],
+    "assets": ["assets"],
+    "instructions": []
+  },
+  "design": {
+    "colorMode": "light-with-royal-violet-header",
+    "colors": {
+      "brand-950": "#140730",
+      "brand-900": "#1E0B4B",
+      "brand-800": "#35127A",
+      "brand-700": "#4E1CA8",
+      "brand-600": "#6929D4",
+      "brand-500": "#7C3AED",
+      "brand-400": "#9F67FF",
+      "brand-300": "#C4B5FD",
+      "brand-200": "#DDD6FE",
+      "brand-100": "#EDE9FE",
+      "brand-50": "#F6F4FF",
+      "obsidian-950": "#0D0D12",
+      "obsidian-900": "#14141D",
+      "obsidian-800": "#1E1E2C",
+      "surface-canvas": "#F5F4F9",
+      "surface-card": "#FFFFFF"
+    },
+    "typography": {
+      "display": "Plus Jakarta Sans (600, 700, 800)",
+      "sans": "Inter (400, 500, 600, 700)",
+      "mono": "JetBrains Mono (400, 500, 600, 700)"
+    },
+    "spacing": {
+      "phoneWidth": "356px",
+      "phoneHeight": "768px",
+      "cardPadding": "16px"
+    },
+    "radius": {
+      "phone": "38px",
+      "card": "20px",
+      "pill": "9999px",
+      "podiumStep": "16px"
+    },
+    "shadows": {
+      "purple-soft": "0 10px 30px -5px rgba(105, 41, 212, 0.12), 0 4px 12px -2px rgba(105, 41, 212, 0.06)",
+      "purple-glow": "0 0 25px rgba(168, 85, 247, 0.55), 0 0 50px rgba(236, 72, 153, 0.35)",
+      "orb-glow": "0 6px 24px rgba(192, 132, 252, 0.65), 0 0 16px rgba(236, 72, 153, 0.5)",
+      "card-hover": "0 16px 36px -6px rgba(105, 41, 212, 0.18)"
+    },
+    "motion": {
+      "fabSpin": "Exclusive 360deg clockwise spin on .notched-fab SVG",
+      "cardEntrance": "GSAP stagger y: 20, opacity: 0, duration: 0.5",
+      "tactilePress": "scaleX: 1.04, scaleY: 0.94 with elastic rebound"
+    },
+    "density": "minimalistic-sleek"
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": [
+      "mascot-header-gradient",
+      "create-orb-gradient",
+      "edu-card (sleek white card with purple-soft glow)",
+      "podium-container (1-2-3 visual step blocks)",
+      "notched-navbar-wrap (#14141D obsidian dock with Ranks trophy tab)"
+    ],
+    "patterns": [
+      "60-30-10 color hierarchy (#F5F4F9 canvas, #FFFFFF cards, #6929D4/#9B6BFF violet-pink soft glow accents)",
+      "2D vector SVG line icons (zero emojis in core UI controls)",
+      "Interactive slide-up bottom sheet drawers inside the phone frame"
+    ]
+  },
+  "constraints": {
+    "must": [
+      "Keep purple wavy vector header (.purple-wave-header) with concentric radial circles and bottom SVG wave",
+      "Keep 1-2-3 visual podium hierarchy step boxes on Ranks screen",
+      "Label the trophy bottom navigation item 'Ranks' with the exact 20x20 trophy SVG",
+      "Use sleek flat white cards with soft purple glow (shadow-purple-soft) and 1px #EDE9FE border"
+    ],
+    "avoid": [
+      "Neumorphic 3D extruded dual-shadows (5px 5px 12px / -5px -5px 12px)",
+      "Emojis on core UI buttons or badges",
+      "Spinning animations on any element other than the center Create FAB button"
+    ]
+  },
+  "decisions": [
+    {
+      "date": "2026-11-02",
+      "summary": "Adopted Purple Scholar EdTech UI Kit tokens: #150734->#6929D4 header gradient, #F5F4F9 mobile canvas, #FFFFFF soft-glow cards, #14141D obsidian bottom dock, and renamed Leaderboard tab to Ranks."
+    }
+  ],
+  "evidence": [
+    "purple_scholar_edtech_ui_kit_live_app_preview.html",
+    "slide-StudyUp-2026-11-01T19-33-49.html"
+  ],
+  "generatedAt": "2026-11-02T09:08:00.000Z"
+}

@@ -3,24 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StudyUp — Leaderboard</title>
+  <title>StudyUp — Ranks</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              950: '#140730',
+              900: '#1E0B4B',
+              800: '#35127A',
+              700: '#4E1CA8',
+              600: '#6929D4',
+              500: '#7C3AED',
+              400: '#9F67FF',
+              300: '#C4B5FD',
+              200: '#DDD6FE',
+              100: '#EDE9FE',
+              50: '#F6F4FF',
+            },
+            obsidian: {
+              950: '#0D0D12',
+              900: '#14141D',
+              800: '#1E1E2C',
+            }
+          },
+          boxShadow: {
+            'purple-soft': '0 10px 30px -5px rgba(105, 41, 212, 0.12), 0 4px 12px -2px rgba(105, 41, 212, 0.06)',
+            'purple-glow': '0 0 25px rgba(168, 85, 247, 0.45), 0 0 50px rgba(236, 72, 153, 0.25)',
+            'orb-glow': '0 6px 24px rgba(192, 132, 252, 0.65), 0 0 16px rgba(236, 72, 153, 0.5)',
+            'card-hover': '0 16px 36px -6px rgba(105, 41, 212, 0.18)',
+          }
+        }
+      }
+    }
+  </script>
   <style>
     :root {
-      --bg-canvas: #f2f3f4;
-      --coral: #eb7d57;
-      --coral-dark: #e06842;
-      --dark-indigo: #18152d;
-      --deep-purple: #1b0e3f;
-      --mid-purple: #5928c9;
-      --soft-lavender: #d7d1f8;
-      --surface-card: #ffffff;
-      --surface-muted: #f6f5fb;
-      --text-muted: #8b87a0;
+      --bg-canvas: #F5F4F9;
+      --dark-indigo: #140730;
+      --deep-purple: #150734;
+      --mid-purple: #6929D4;
+      --soft-lavender: #DDD6FE;
+      --surface-card: #FFFFFF;
+      --text-muted: #64748B;
     }
 
     * {
@@ -33,10 +69,11 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #f2f3f4;
-      background-image: 
-        radial-gradient(ellipse 65% 85% at 98% 50%, rgba(238, 130, 190, 0.22) 0%, rgba(179, 140, 216, 0.14) 40%, rgba(99, 142, 242, 0.05) 70%, transparent 100%),
-        radial-gradient(circle at 92% 12%, rgba(238, 130, 190, 0.18) 0%, transparent 55%);
+      background-color: #FAFAFE;
+      background-image:
+        radial-gradient(ellipse 65% 85% at 98% 50%, rgba(232, 121, 249, 0.16) 0%, rgba(159, 103, 255, 0.10) 40%, rgba(103, 184, 247, 0.04) 70%, transparent 100%),
+        radial-gradient(#CBD5E1 1.25px, transparent 1.25px);
+      background-size: 100% 100%, 22px 22px;
       background-attachment: fixed;
       font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       min-height: 100vh;
@@ -48,29 +85,28 @@
       color: var(--dark-indigo);
     }
 
-    
     /* StudyUp Official Brand Gradient */
     .studyup-brand-title {
       font-family: 'Playfair Display', Georgia, serif;
       font-weight: 800;
       letter-spacing: -0.02em;
-      background: linear-gradient(90deg, #638ef2 0%, #8e8ee5 25%, #b38cd8 50%, #bc81c0 75%, #ee82be 100%);
+      background: linear-gradient(90deg, #67B8F7 0%, #9F67FF 45%, #E879F9 80%, #F472B6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       display: inline-block;
     }
 
-    /* Phone Frame Styling (99% Our Created Design System) */
+    /* Phone Frame Styling — Purple Scholar 356px Spec with Soft Glow */
     .phone-frame {
       width: 356px;
       height: 768px;
-      background-color: #f2f3f4;
-      background-image: radial-gradient(ellipse 70% 85% at 100% 50%, rgba(238, 130, 190, 0.20) 0%, rgba(179, 140, 216, 0.12) 42%, rgba(99, 142, 242, 0.04) 75%, transparent 100%);
+      background: linear-gradient(180deg, #F5F4F9 0%, #F9F5FA 55%, #F2EFF8 100%);
       border-radius: 38px;
       box-shadow:
-        0 26px 54px -12px rgba(24, 21, 45, 0.16),
-        0 8px 20px -4px rgba(24, 21, 45, 0.07),
+        0 28px 65px -12px rgba(30, 11, 75, 0.28),
+        0 0 40px -8px rgba(124, 58, 237, 0.16),
         0 0 0 1px rgba(255, 255, 255, 0.95) inset;
+      border: 4px solid rgba(255, 255, 255, 0.9);
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
@@ -80,112 +116,85 @@
       transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
     }
 
-    .phone-frame.highlight-ring {
-      box-shadow:
-        0 30px 64px -10px rgba(89, 40, 201, 0.30),
-        0 0 0 3px #eb7d57;
-    }
-
-    /* Signature Deep Royal Purple Wavy Header */
+    /* Signature Deep Royal Purple Wavy Header (Purple Scholar UI Kit) */
     .purple-wave-header {
-      background: linear-gradient(155deg, #1b0e3f 0%, #311770 42%, #5928c9 78%, #6828e0 100%);
+      background: linear-gradient(135deg, #150734 0%, #2B0F66 42%, #5218B8 78%, #6929D4 100%);
       position: relative;
       overflow: hidden;
     }
 
-    /* Hero Banner Gradient */
-    .hero-banner-bg {
-      background: linear-gradient(125deg, #1b0f3e 0%, #2f1b63 52%, #5c37a0 100%);
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Active Coral Pill Glow */
-    .pill-coral-active {
-      background: linear-gradient(135deg, #5b8df6 0%, #9084ea 45%, #ee82be 100%);
+    /* Active Create Orb & Pill Gradient with Soft Glow */
+    .pill-coral-active,
+    .create-orb-gradient {
+      background: linear-gradient(165deg, #67B8F7 0%, #9B6BFF 45%, #E879F9 80%, #F472B6 100%);
       color: #ffffff;
-      border: 1px solid transparent;
-      box-shadow: 0 7px 18px rgba(144, 132, 234, 0.45), 0 2px 5px rgba(238, 130, 190, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 6px 20px rgba(155, 107, 255, 0.48), 0 0 12px rgba(244, 114, 182, 0.32);
     }
 
     .pill-outlined {
       background: #ffffff;
-      color: #2c2647;
-      border: 1.2px solid #e2e0ee;
+      color: #1E0B4B;
+      border: 1px solid #EDE9FE;
       transition: all 0.2s ease;
     }
 
     .pill-outlined:hover {
-      border-color: #5928c9;
-      background: #f6f4fe;
+      border-color: #9F67FF;
+      background: #F6F4FF;
     }
 
-    /* Clean Modern Flat Cards (Zero 3D Neumorphic Chrome) */
+    /* Minimalistic Sleek Soft-Glow Cards (Zero 3D Neumorphic Clay) */
     .edu-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 20px;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: #FFFFFF;
+      border: 1px solid rgba(221, 214, 254, 0.85);
+      border-radius: 22px;
+      box-shadow:
+        0 10px 30px -5px rgba(105, 41, 212, 0.10),
+        0 4px 12px -2px rgba(105, 41, 212, 0.05);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
     }
 
     .edu-card:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+      border-color: #C4B5FD;
+      box-shadow:
+        0 16px 36px -6px rgba(105, 41, 212, 0.15),
+        0 4px 14px -2px rgba(159, 103, 255, 0.08);
     }
 
-    .edu-card:active {
-      transform: scale(0.99);
+    /* Ambient Pulse Ring for Header Concentric Circles */
+    @keyframes pulseRing {
+      0%, 100% { transform: scale(1); opacity: 0.28; }
+      50% { transform: scale(1.05); opacity: 0.42; }
+    }
+    .animate-pulse-ring {
+      animation: pulseRing 5s ease-in-out infinite;
     }
 
-    /* Soft Lavender Icon Badge */
-    .badge-lavender {
-      background: #ede9fe;
-      color: #4c2bc2;
-    }
-
-    .badge-coral {
-      background: #f0f2fe;
-      color: #5b8df6;
-    }
-
-    .badge-emerald {
-      background: #e8fbf3;
-      color: #0d9462;
-    }
-
-    
-    /* Jumping Crown Animation on #1 Candidate */
+    /* Floating Crown Animation */
     @keyframes crownJump {
       0%, 100% {
-        transform: translateY(0) scale(1) rotate(0deg);
-      }
-      25% {
-        transform: translateY(-10px) scale(1.15) rotate(-4deg);
+        transform: translateY(0) scale(1);
       }
       50% {
-        transform: translateY(0) scale(0.98) rotate(0deg);
-      }
-      75% {
-        transform: translateY(-4px) scale(1.05) rotate(2deg);
+        transform: translateY(-5px) scale(1.08);
       }
     }
 
     .crown-jumping {
-      animation: crownJump 1.4s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+      animation: crownJump 2s ease-in-out infinite;
       display: inline-block;
-      
       transform-origin: center bottom;
     }
 
-    /* Podium Hierarchy Blocks */
+    /* Podium Hierarchy Step Blocks (1st, 2nd, 3rd) */
     .podium-container {
       display: flex;
       align-items: flex-end;
       justify-content: center;
       gap: 10px;
-      padding-top: 14px;
-      margin-bottom: 8px;
+      padding-top: 10px;
+      margin-bottom: 2px;
     }
 
     .podium-col {
@@ -193,43 +202,60 @@
       flex-direction: column;
       align-items: center;
       flex: 1;
-      max-width: 98px;
+      max-width: 96px;
+      cursor: pointer;
     }
 
     .podium-step {
       width: 100%;
       border-top-left-radius: 16px;
       border-top-right-radius: 16px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
       position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .podium-col:hover .podium-step {
+      transform: translateY(-2px);
     }
 
     .podium-step-1 {
-      height: 98px;
-      background: linear-gradient(180deg, #27165c 0%, #170d38 100%);
-      border: 1.5px solid #f59e0b;
-      border-bottom: none;
+      height: 94px;
+      background: linear-gradient(165deg, #35127A 0%, #1E0B4B 55%, #140730 100%);
+      border: 1.5px solid rgba(251, 191, 36, 0.75);
+      box-shadow:
+        0 10px 24px -4px rgba(105, 41, 212, 0.35),
+        0 0 18px rgba(245, 158, 11, 0.15);
     }
 
     .podium-step-2 {
-      height: 74px;
-      background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
-      border: 1.5px solid #cbd5e1;
-      border-bottom: none;
+      height: 70px;
+      background: linear-gradient(180deg, #F6F4FF 0%, #EDE9FE 100%);
+      border: 1px solid #DDD6FE;
+      box-shadow: 0 4px 12px rgba(105, 41, 212, 0.06);
     }
 
     .podium-step-3 {
       height: 56px;
-      background: linear-gradient(180deg, #ffffff 0%, #fef3c7 100%);
-      border: 1.5px solid #fcd34d;
-      border-bottom: none;
+      background: linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 1px solid #FDE68A;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.06);
     }
 
-    /* Notched Bottom Navigation Bar (Matching Uploaded Reference Image) */
+    /* Slide-Up Drawer Transitions inside Phone Frame */
+    .drawer-backdrop {
+      transition: opacity 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .drawer-sheet {
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Notched Obsidian Bottom Navigation Bar (#14141D Spec) */
     .notched-navbar-wrap {
       position: relative;
       width: 100%;
@@ -245,7 +271,7 @@
       left: 0;
       width: 100%;
       height: 70px;
-      filter: drop-shadow(0 -8px 24px rgba(10, 8, 20, 0.35));
+      filter: drop-shadow(0 -8px 24px rgba(13, 13, 18, 0.28));
       pointer-events: none;
     }
 
@@ -254,14 +280,14 @@
       left: 50%;
       top: 0px;
       transform: translateX(-50%);
-      width: 56px;
-      height: 56px;
+      width: 58px;
+      height: 58px;
       border-radius: 9999px;
-      background: linear-gradient(135deg, #5b8df6 0%, #9084ea 45%, #ee82be 100%);
+      background: linear-gradient(165deg, #67B8F7 0%, #9B6BFF 45%, #E879F9 80%, #F472B6 100%);
       box-shadow:
-        0 8px 22px rgba(144, 132, 234, 0.55),
-        0 2px 6px rgba(238, 130, 190, 0.35),
-        0 0 0 3.5px #13111f;
+        0 6px 24px rgba(192, 132, 252, 0.65),
+        0 0 16px rgba(236, 72, 153, 0.5),
+        0 0 0 3.5px #14141D;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -280,7 +306,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 18px 8px 18px;
+      padding: 0 16px 8px 16px;
       z-index: 35;
     }
 
@@ -290,25 +316,25 @@
       align-items: center;
       justify-content: center;
       gap: 3px;
-      min-width: 54px;
+      min-width: 56px;
       padding: 4px 2px;
-      color: #8e8ba0;
+      color: #94A3B8;
       transition: color 0.2s ease;
     }
 
     .nav-tab-btn:hover {
-      color: #dcd9e8;
+      color: #EDE9FE;
       cursor: pointer;
-      transition: color 0.2s ease;
     }
 
     .nav-tab-btn.active {
-      color: #ffffff;
+      color: #FFFFFF;
       font-weight: 700;
     }
 
     .nav-tab-btn.active svg {
-      stroke: #b38cd8;
+      stroke: #C4B5FD;
+      filter: drop-shadow(0 0 8px rgba(196, 181, 253, 0.55));
     }
 
     /* Home Indicator Bar */
@@ -317,10 +343,10 @@
       bottom: 5px;
       left: 50%;
       transform: translateX(-50%);
-      width: 116px;
+      width: 112px;
       height: 4px;
       background-color: #ffffff;
-      opacity: 0.22;
+      opacity: 0.24;
       border-radius: 999px;
       z-index: 45;
       pointer-events: none;
@@ -333,434 +359,638 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      .crown-jumping,
+      .animate-pulse-ring {
+        animation: none !important;
+      }
+    }
   </style>
 </head>
 
 <body class="py-4 px-4">
-  
+
   <!-- Top Slide Navigation Bar -->
-  <div class="my-5 flex flex-wrap items-center justify-center gap-2 bg-white/85 backdrop-blur-md px-4 py-2 rounded-full shadow-sm border border-white text-xs font-semibold text-[#18152d] z-50">
-    <a href="educational_app_ui_showcase.html" class="px-3 py-1 rounded-full bg-[#18152d] text-white font-bold">All 5 Screens Showcase</a>
-    <a href="slide-StudyUp-2026-11-01T19-33-17.html" class="px-3 py-1 rounded-full hover:bg-slate-100">1. My Library</a>
-    <a href="slide-StudyUp-2026-11-01T19-33-39.html" class="px-3 py-1 rounded-full hover:bg-slate-100">2. Public Feed</a>
-    <a href="slide-StudyUp-2026-11-01T19-33-49.html" class="px-3 py-1 rounded-full pill-coral-active">3. Leaderboard</a>
-    <a href="slide-StudyUp-2026-11-01T19-34-17.html" class="px-3 py-1 rounded-full hover:bg-slate-100">4. Android App</a>
-    <a href="slide-StudyUp-2026-11-01T19-35-38.html" class="px-3 py-1 rounded-full hover:bg-slate-100">5. Deck Study Modes</a>
+  <nav aria-label="Screen navigation" class="my-4 flex flex-wrap items-center justify-center gap-2 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-purple-soft border border-brand-100 text-xs font-semibold text-brand-950 z-50">
+    <a href="purple_scholar_edtech_ui_kit_live_app_preview.html" class="px-3 py-1 rounded-full bg-obsidian-900 text-white font-bold hover:bg-brand-800 transition">UI Kit &amp; App</a>
+    <a href="slide-StudyUp-2026-11-01T19-33-17.html" class="px-3 py-1 rounded-full hover:bg-brand-50 text-slate-600 hover:text-brand-700 transition">1. My Library</a>
+    <a href="slide-StudyUp-2026-11-01T19-33-39.html" class="px-3 py-1 rounded-full hover:bg-brand-50 text-slate-600 hover:text-brand-700 transition">2. Public Feed</a>
+    <a href="slide-StudyUp-2026-11-01T19-33-49.html" aria-current="page" class="px-3.5 py-1 rounded-full pill-coral-active font-bold">3. Ranks</a>
+    <a href="slide-StudyUp-2026-11-01T19-34-17.html" class="px-3 py-1 rounded-full hover:bg-brand-50 text-slate-600 hover:text-brand-700 transition">4. Android App</a>
+    <a href="slide-StudyUp-2026-11-01T19-35-38.html" class="px-3 py-1 rounded-full hover:bg-brand-50 text-slate-600 hover:text-brand-700 transition">5. Study Modes</a>
+  </nav>
+
+  <!-- Toast Notification -->
+  <div id="ranks-toast" role="status" aria-live="polite" class="fixed bottom-6 right-6 z-50 pointer-events-none opacity-0 translate-y-3 transition duration-300">
+    <div class="bg-obsidian-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-brand-500/40 flex items-center gap-3 text-xs font-medium">
+      <span class="w-5 h-5 rounded-full bg-brand-600/30 border border-brand-400 text-brand-300 flex items-center justify-center">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </span>
+      <span id="ranks-toast-msg">Updated!</span>
+    </div>
   </div>
 
   <main class="flex items-center justify-center pb-8">
-    
-    <section id="screen3" class="phone-frame">
-      <div class="flex-1 overflow-y-auto no-scrollbar pb-3">
-        <!-- Deep Royal Purple Wavy Header -->
-        <div class="purple-wave-header pb-8">
-          
-      <div class="flex items-center justify-between px-7 pt-3.5 pb-1.5" style="color: #ffffff;">
-        <span class="text-[13px] font-bold tracking-tight">9:41</span>
-        <div class="flex items-center gap-1.5">
-          <svg width="16" height="11" viewBox="0 0 16 11" fill="none">
-            <rect x="0.5" y="7" width="2.6" height="3.5" rx="0.8" fill="#ffffff"/>
-            <rect x="4.5" y="5" width="2.6" height="5.5" rx="0.8" fill="#ffffff"/>
-            <rect x="8.5" y="2.8" width="2.6" height="7.7" rx="0.8" fill="#ffffff"/>
-            <rect x="12.5" y="0.5" width="2.6" height="10" rx="0.8" fill="#ffffff"/>
-          </svg>
-          <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
-            <path d="M7.5 10.5C8.32843 10.5 9 9.82843 9 9C9 8.17157 8.32843 7.5 7.5 7.5C6.67157 7.5 6 8.17157 6 9C6 9.82843 6.67157 10.5 7.5 10.5Z" fill="#ffffff"/>
-            <path d="M4.3 6.7C5.15 5.85 6.27 5.38 7.5 5.38C8.73 5.38 9.85 5.85 10.7 6.7" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M1.8 4.1C3.33 2.57 5.35 1.72 7.5 1.72C9.65 1.72 11.67 2.57 13.2 4.1" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <svg width="23" height="11" viewBox="0 0 23 11" fill="none">
-            <rect x="0.5" y="1" width="19" height="9" rx="2.5" stroke="#ffffff" stroke-opacity="0.5"/>
-            <rect x="2" y="2.5" width="16" height="6" rx="1.3" fill="#ffffff"/>
-            <path d="M21 3.8V7.2C21.8 6.9 22.3 6.2 22.3 5.5C22.3 4.8 21.8 4.1 21 3.8Z" fill="#ffffff" fill-opacity="0.5"/>
-          </svg>
-        </div>
-      </div>
 
-          <div class="relative z-10 px-6 pt-2 flex items-center justify-between">
-            <div>
-              <div class="flex items-center gap-2">
-                <div class="flex items-center gap-2"><span class="studyup-brand-title text-[18px]">StudyUp</span><span class="text-white/40">•</span><h1 class="text-white text-[20px] font-extrabold tracking-tight">Leaderboard</h1></div>
-              </div>
-              <p class="text-[#d7d1f8] text-[11.5px] font-medium mt-0.5">
-                Real-time rankings across global study sessions
-              </p>
+    <section id="screen3" class="phone-frame" aria-label="StudyUp Ranks Mobile Preview">
+      <div class="flex-1 overflow-y-auto no-scrollbar pb-3">
+
+        <!-- =============================================================== -->
+        <!-- 1. DEEP ROYAL PURPLE WAVY HEADER (PURPLE SCHOLAR UI KIT)        -->
+        <!-- =============================================================== -->
+        <div class="purple-wave-header pb-7">
+          <!-- Concentric Radial Violet Circles on Right (From Purple Scholar UI Kit) -->
+          <div class="absolute -right-12 -top-10 w-[220px] h-[220px] rounded-full bg-[#4E1CA8]/35 pointer-events-none animate-pulse-ring"></div>
+          <div class="absolute -right-4 -top-2 w-[166px] h-[166px] rounded-full bg-[#6929D4]/45 pointer-events-none"></div>
+          <div class="absolute right-4 top-6 w-[114px] h-[114px] rounded-full bg-[#7C3AED]/50 pointer-events-none"></div>
+
+          <!-- iOS Status Bar -->
+          <div class="relative z-20 flex items-center justify-between px-7 pt-3.5 pb-1 text-white">
+            <span class="text-[12.5px] font-bold tracking-tight">9:41</span>
+            <div class="flex items-center gap-1.5">
+              <svg width="16" height="11" viewBox="0 0 16 11" fill="none" aria-hidden="true">
+                <rect x="0.5" y="7" width="2.6" height="3.5" rx="0.8" fill="#ffffff"/>
+                <rect x="4.5" y="5" width="2.6" height="5.5" rx="0.8" fill="#ffffff"/>
+                <rect x="8.5" y="2.8" width="2.6" height="7.7" rx="0.8" fill="#ffffff"/>
+                <rect x="12.5" y="0.5" width="2.6" height="10" rx="0.8" fill="#ffffff"/>
+              </svg>
+              <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true">
+                <path d="M7.5 10.5C8.32843 10.5 9 9.82843 9 9C9 8.17157 8.32843 7.5 7.5 7.5C6.67157 7.5 6 8.17157 6 9C6 9.82843 6.67157 10.5 7.5 10.5Z" fill="#ffffff"/>
+                <path d="M4.3 6.7C5.15 5.85 6.27 5.38 7.5 5.38C8.73 5.38 9.85 5.85 10.7 6.7" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M1.8 4.1C3.33 2.57 5.35 1.72 7.5 1.72C9.65 1.72 11.67 2.57 13.2 4.1" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <svg width="23" height="11" viewBox="0 0 23 11" fill="none" aria-hidden="true">
+                <rect x="0.5" y="1" width="19" height="9" rx="2.5" stroke="#ffffff" stroke-opacity="0.5"/>
+                <rect x="2" y="2.5" width="16" height="6" rx="1.3" fill="#ffffff"/>
+                <path d="M21 3.8V7.2C21.8 6.9 22.3 6.2 22.3 5.5C22.3 4.8 21.8 4.1 21 3.8Z" fill="#ffffff" fill-opacity="0.5"/>
+              </svg>
             </div>
           </div>
 
-          <!-- Segmented Metric Switcher: Streak | Mastery | Score -->
-          <div class="relative z-10 px-6 pt-3.5">
-            <div class="bg-white/15 backdrop-blur-md p-1 rounded-2xl flex items-center border border-white/20">
-              <button onclick="switchRankTab('Streak', '2d', this)" class="rank-mode-btn gsap-btn flex-1 py-1.5 rounded-xl pill-coral-active text-[11.5px] font-bold flex items-center justify-center gap-1.5">
+          <!-- Header Title & Interactive League Tier Badge -->
+          <div class="relative z-20 px-5 pt-1.5 flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="studyup-brand-title text-[17px]">StudyUp</span>
+                <span class="text-white/30">•</span>
+                <h1 class="font-display text-white text-[19px] font-extrabold tracking-tight">Ranks</h1>
+              </div>
+              <p class="text-brand-200/90 text-[11px] font-medium mt-0.5">
+                Diamond Scholar League • Top 3% Global
+              </p>
+            </div>
+
+            <!-- Interactive Diamond League Badge (Opens League Perks Drawer) -->
+            <button
+              type="button"
+              onclick="openLeagueDrawer('perks')"
+              class="gsap-btn px-2.5 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-sm transition"
+              title="View Diamond League Perks"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#67B8F7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 3h12l4 6-10 13L2 9Z"/>
+                <path d="M11 3 8 9l4 13 4-13-3-6"/>
+                <path d="M2 9h20"/>
+              </svg>
+              <span>Diamond</span>
+            </button>
+          </div>
+
+          <!-- Segmented Metric Switcher: Streak | Mastery | XP Score (Uniform Grid) -->
+          <div class="relative z-20 px-5 pt-3" role="tablist" aria-label="Ranking metric filter">
+            <div class="bg-obsidian-950/35 backdrop-blur-md p-1 rounded-2xl grid grid-cols-3 gap-1 border border-white/15">
+              <button
+                type="button"
+                role="tab"
+                aria-selected="true"
+                onclick="switchRankTab('Streak', this)"
+                class="rank-mode-btn gsap-btn py-1.5 rounded-xl pill-coral-active text-[11px] font-bold flex items-center justify-center gap-1.5 transition"
+              >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
                 </svg>
                 <span>Streak</span>
               </button>
-              <button onclick="switchRankTab('Mastery', '94%', this)" class="rank-mode-btn gsap-btn flex-1 py-1.5 rounded-xl text-white/80 hover:text-white text-[11.5px] font-semibold flex items-center justify-center gap-1.5">
+
+              <button
+                type="button"
+                role="tab"
+                aria-selected="false"
+                onclick="switchRankTab('Mastery', this)"
+                class="rank-mode-btn gsap-btn py-1.5 rounded-xl text-purple-200/85 hover:text-white text-[11px] font-semibold flex items-center justify-center gap-1.5 transition"
+              >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                 </svg>
                 <span>Mastery</span>
               </button>
-              <button onclick="switchRankTab('Score', '1,420', this)" class="rank-mode-btn gsap-btn flex-1 py-1.5 rounded-xl text-white/80 hover:text-white text-[11.5px] font-semibold flex items-center justify-center gap-1.5">
+
+              <button
+                type="button"
+                role="tab"
+                aria-selected="false"
+                onclick="switchRankTab('Score', this)"
+                class="rank-mode-btn gsap-btn py-1.5 rounded-xl text-purple-200/85 hover:text-white text-[11px] font-semibold flex items-center justify-center gap-1.5 transition"
+              >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"/><circle cx="12" cy="6"/><circle cx="12" cy="2"/>
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
                 </svg>
-                <span>Score</span>
+                <span>XP Score</span>
               </button>
             </div>
           </div>
 
-          <svg class="absolute bottom-0 left-0 w-full h-[24px] pointer-events-none" viewBox="0 0 356 24" preserveAspectRatio="none">
-            <path d="M0,12 C110,28 240,-4 356,14 L356,24 L0,24 Z" fill="#f2f3f4"/>
+          <!-- Signature Layered Wavy Vector Cutout at Bottom of Header -->
+          <svg class="absolute bottom-0 left-0 w-full h-[26px] text-[#F5F4F9] pointer-events-none" viewBox="0 0 356 28" fill="currentColor" preserveAspectRatio="none">
+            <path d="M0 14 Q95 26 195 10 T356 16 L356 28 L0 28 Z" fill-opacity="0.32"/>
+            <path d="M0,16 C110,30 240,-2 356,16 L356,28 L0,28 Z" fill="#F5F4F9"/>
           </svg>
         </div>
 
-        
-        <div class="px-5 pt-1 space-y-3">
-          
-          <!-- Podium Hierarchy Blocks (1st, 2nd, 3rd) with Jumping Crown on Top Candidate -->
-          <div class="edu-card p-4 rounded-[26px]">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#27165c] flex items-center gap-1.5">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
-                  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
-                  <path d="M4 22h16"/>
-                  <path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1 .45-1 1v1h12v-1c0-.55-.45-1-1-1h-2c-.55 0-1-.45-1-1v-2.34"/>
-                  <path d="M6 9a6 6 0 0 0 12 0V4H6v5z"/>
+        <!-- =============================================================== -->
+        <!-- 2. MAIN RANKS CONTENT (PODIUM HIERARCHY & CONTENDERS LIST)      -->
+        <!-- =============================================================== -->
+        <div class="px-4 pt-1 space-y-3">
+
+          <!-- CARD 1: 1-2-3 PODIUM HIERARCHY BLOCKS WITH SOFT GLOW -->
+          <div class="edu-card p-3.5 relative overflow-hidden">
+            <!-- Subtle Ambient Violet Glow Behind 1st Place -->
+            <div class="absolute top-6 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full bg-brand-400/15 blur-2xl pointer-events-none"></div>
+
+            <div class="relative z-10 flex items-center justify-between mb-1.5">
+              <span class="text-[10.5px] font-extrabold uppercase tracking-wider text-brand-800 flex items-center gap-1.5">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6929D4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"></path>
+                  <path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"></path>
+                  <path d="M18 9h1.5a1 1 0 0 0 0-5H18"></path><path d="M4 22h16"></path>
+                  <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"></path>
+                  <path d="M6 9H4.5a1 1 0 0 1 0-5H6"></path>
                 </svg>
-                <span>Top Candidates</span>
+                <span>Top Scholars Podium</span>
               </span>
-              <span class="text-[10px] font-bold text-[#8b87a0] bg-[#f2f3f4] px-2 py-0.5 rounded-full">
-                Global Arena
+
+              <span class="font-mono text-[9.5px] font-semibold text-brand-700 bg-brand-50 border border-brand-200/80 px-2 py-0.5 rounded-full flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse"></span>
+                <span>2d 14h left</span>
               </span>
             </div>
 
-            <div class="podium-container">
-              
-              <!-- 2nd Place: Rasty Espartero (Silver) -->
-              <div class="podium-col">
-                <div class="relative flex flex-col items-center mb-1">
-                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=96&h=96&fit=crop&crop=faces" alt="Rasty" class="w-11 h-11 rounded-full object-cover border-2 border-[#94a3b8] shadow-sm"/>
-                  <span class="absolute -bottom-1 -right-0.5 w-5 h-5 rounded-full bg-[#e2e8f0] text-slate-700 text-[10px] font-black flex items-center justify-center border border-white shadow-xs">2</span>
-                </div>
-                <span class="text-[11px] font-bold text-[#18152d] truncate max-w-[85px] mt-0.5">Rasty E.</span>
-                <span class="text-[9.5px] font-semibold text-[#64748b]">2,120 XP</span>
-                <div class="podium-step podium-step-2 mt-2">
-                  <span class="text-xl font-black text-slate-400">2</span>
-                  <span class="text-[9px] font-bold text-slate-500 uppercase tracking-tighter">Silver</span>
-                </div>
-              </div>
+            <!-- 3-Column Visual Podium Step Boxes -->
+            <div class="podium-container relative z-10">
 
-              <!-- 1st Place: Lawrence Cortes (Gold with Jumping Crown) -->
-              <div class="podium-col z-10">
+              <!-- 2nd Place: Rasty Espartero (Silver) -->
+              <button type="button" class="podium-col" onclick="openScholarDrawer('Rasty Espartero', 2, '2,120 XP', '9d Streak', '91% Mastery', '42 Cards/day')" aria-label="Inspect 2nd place Rasty Espartero">
                 <div class="relative flex flex-col items-center mb-1">
-                  <!-- Bouncing / Jumping Crown Badge (2D Vector SVG) -->
-                  <div class="crown-jumping -mb-1 select-none flex items-center justify-center text-amber-400" title="Top Candidate">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#f59e0b" stroke="#d97706" stroke-width="1.5">
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=96&h=96&fit=crop&crop=faces" alt="Rasty Espartero" class="w-11 h-11 rounded-full object-cover border-2 border-slate-300 shadow-sm"/>
+                  <span class="absolute -bottom-1 -right-0.5 w-4.5 h-4.5 px-1 rounded-full bg-slate-200 text-slate-800 font-mono text-[9.5px] font-bold flex items-center justify-center border border-white">2</span>
+                </div>
+                <span class="font-display text-[11px] font-bold text-slate-900 truncate max-w-[84px] mt-0.5">Rasty E.</span>
+                <span id="podium2Metric" class="font-mono text-[9.5px] font-semibold text-brand-700">9d Streak</span>
+                <div class="podium-step podium-step-2 mt-1.5">
+                  <span class="font-display text-lg font-extrabold text-brand-800 leading-none">2</span>
+                  <span class="text-[8.5px] font-bold text-brand-600 uppercase tracking-wider mt-0.5">Silver</span>
+                </div>
+              </button>
+
+              <!-- 1st Place: Lawrence Cortes (Champion with Jumping 2D Crown) -->
+              <button type="button" class="podium-col z-10" onclick="openScholarDrawer('Lawrence Cortes (You)', 1, '2,450 XP', '14d Streak', '96% Mastery', '58 Cards/day')" aria-label="Inspect 1st place Lawrence Cortes">
+                <div class="relative flex flex-col items-center mb-1">
+                  <!-- Floating 2D Vector SVG Crown -->
+                  <div class="crown-jumping -mb-1 select-none flex items-center justify-center text-amber-400" title="Rank #1 Champion">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#FBBF24" stroke="#D97706" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M2 4l3 12h14l3-12-6 7-4-11-4 11-6-7z"/>
                     </svg>
                   </div>
-                  <img src="https://lh3.googleusercontent.com/a/ACg8ocKYI4XjO8aibWhSSZVzJ3Hl8W7wIq2x5ehsRAmeNAAsfb5_I4zO=s96-c" alt="Lawrence" class="w-14 h-14 rounded-full object-cover border-[2.5px] border-[#f59e0b] shadow-md ring-2 ring-amber-300/40"/>
-                  <span class="absolute -bottom-1 px-1.5 py-0.2 rounded-full bg-[#b38cd8] text-white text-[8.5px] font-extrabold uppercase shadow-sm">You</span>
+                  <div class="relative">
+                    <img src="https://lh3.googleusercontent.com/a/ACg8ocKYI4XjO8aibWhSSZVzJ3Hl8W7wIq2x5ehsRAmeNAAsfb5_I4zO=s96-c" alt="Lawrence Cortes" class="w-14 h-14 rounded-full object-cover border-[2.5px] border-amber-400 shadow-md ring-4 ring-brand-400/25"/>
+                    <span class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 px-2 py-0.2 rounded-full create-orb-gradient text-white text-[8px] font-extrabold uppercase tracking-wider shadow-sm">YOU</span>
+                  </div>
                 </div>
-                <span class="text-[12px] font-extrabold text-[#18152d] truncate max-w-[90px] mt-0.5">Lawrence</span>
-                <span class="text-[10px] font-bold text-[#5928c9] flex items-center justify-center gap-1">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
-                    </svg>
-                    <span>2,450 XP</span>
-                  </span>
-                <div class="podium-step podium-step-1 mt-2">
-                  <span class="text-2xl font-black text-amber-400">1</span>
-                  <span class="text-[9px] font-bold text-amber-300 uppercase tracking-wider">Champion</span>
+                <span class="font-display text-[12px] font-extrabold text-obsidian-950 truncate max-w-[92px] mt-1">Lawrence</span>
+                <span class="font-mono text-[10px] font-bold text-brand-600 flex items-center justify-center gap-1">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                  </svg>
+                  <span id="podium1Metric">14d Streak</span>
+                </span>
+                <div class="podium-step podium-step-1 mt-1.5">
+                  <span class="font-display text-2xl font-black text-amber-300 leading-none">1</span>
+                  <span class="text-[8.5px] font-bold text-purple-200 uppercase tracking-widest mt-0.5">Champion</span>
                 </div>
-              </div>
+              </button>
 
               <!-- 3rd Place: Jazerlloyd (Bronze) -->
-              <div class="podium-col">
+              <button type="button" class="podium-col" onclick="openScholarDrawer('Jazerlloyd', 3, '1,890 XP', '7d Streak', '88% Mastery', '34 Cards/day')" aria-label="Inspect 3rd place Jazerlloyd">
                 <div class="relative flex flex-col items-center mb-1">
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&crop=faces" alt="Jazerlloyd" class="w-11 h-11 rounded-full object-cover border-2 border-[#d97706] shadow-sm"/>
-                  <span class="absolute -bottom-1 -right-0.5 w-5 h-5 rounded-full bg-[#fef3c7] text-amber-800 text-[10px] font-black flex items-center justify-center border border-white shadow-xs">3</span>
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&crop=faces" alt="Jazerlloyd" class="w-11 h-11 rounded-full object-cover border-2 border-amber-500/80 shadow-sm"/>
+                  <span class="absolute -bottom-1 -right-0.5 w-4.5 h-4.5 px-1 rounded-full bg-amber-100 text-amber-900 font-mono text-[9.5px] font-bold flex items-center justify-center border border-white">3</span>
                 </div>
-                <span class="text-[11px] font-bold text-[#18152d] truncate max-w-[85px] mt-0.5">Jazerlloyd</span>
-                <span class="text-[9.5px] font-semibold text-[#b45309]">1,890 XP</span>
-                <div class="podium-step podium-step-3 mt-2">
-                  <span class="text-lg font-black text-amber-600/70">3</span>
-                  <span class="text-[8.5px] font-bold text-amber-700/80 uppercase tracking-tighter">Bronze</span>
+                <span class="font-display text-[11px] font-bold text-slate-900 truncate max-w-[84px] mt-0.5">Jazerlloyd</span>
+                <span id="podium3Metric" class="font-mono text-[9.5px] font-semibold text-amber-700">7d Streak</span>
+                <div class="podium-step podium-step-3 mt-1.5">
+                  <span class="font-display text-lg font-extrabold text-amber-800 leading-none">3</span>
+                  <span class="text-[8.5px] font-bold text-amber-700 uppercase tracking-wider mt-0.5">Bronze</span>
                 </div>
-              </div>
+              </button>
 
             </div>
           </div>
 
-          <!-- Rest of the Learners Ranked List (4th - 6th) -->
-          <div class="edu-card rounded-2xl overflow-hidden">
-            <div class="px-4 py-2 bg-[#f8fafc] border-b border-[#e2e5ee] flex items-center justify-between text-[10px] font-bold text-[#8b87a0] uppercase tracking-wider">
-              <span>Next Contenders</span>
-              <span>XP Score</span>
+          <!-- CARD 2: PROMOTION ZONE & CONTENDERS LIST (4TH – 6TH) -->
+          <div class="edu-card overflow-hidden">
+            <div class="px-4 py-2 bg-brand-50/70 border-b border-brand-100/90 flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m18 15-6-6-6 6"/>
+                </svg>
+                <span class="text-[10px] font-extrabold text-brand-900 uppercase tracking-wider">Promotion Zone • Top 5</span>
+              </div>
+              <span id="tableMetricHeader" class="text-[9.5px] font-bold text-brand-600 uppercase tracking-wider">Streak</span>
             </div>
-            
-            <div class="divide-y divide-[#edf2f7]">
+
+            <div class="divide-y divide-brand-100/60" id="contendersList">
               <!-- Rank 4: Maee -->
-              <div class="px-4 py-2.5 flex items-center justify-between hover:bg-[#f8fafc] transition-colors">
+              <button type="button" onclick="openScholarDrawer('Maee', 4, '1,640 XP', '5d Streak', '82% Mastery', '29 Cards/day')" class="w-full text-left px-3.5 py-2.5 flex items-center justify-between hover:bg-brand-50/50 transition cursor-pointer">
                 <div class="flex items-center gap-2.5">
-                  <span class="w-5 h-5 rounded-full bg-[#f2f3f4] text-[#64748b] text-[11px] font-bold flex items-center justify-center">4</span>
-                  <div class="w-7 h-7 rounded-full bg-purple-100 text-[#27165c] text-xs font-bold flex items-center justify-center">M</div>
+                  <span class="w-5 h-5 rounded-full bg-brand-100 text-brand-800 font-mono text-[10px] font-bold flex items-center justify-center">4</span>
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-700 to-brand-400 text-white text-xs font-bold flex items-center justify-center shadow-2xs">M</div>
                   <div>
-                    <span class="text-xs font-bold text-[#18152d]">Maee</span>
-                    <span class="text-[10px] text-[#8b87a0] block leading-none">3d Streak • 60% Mastery</span>
+                    <div class="flex items-center gap-1.5">
+                      <span class="font-display text-xs font-bold text-slate-900">Maee</span>
+                      <span class="px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700 font-mono text-[9px] font-bold flex items-center">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>2
+                      </span>
+                    </div>
+                    <div class="w-24 h-1.5 rounded-full bg-brand-100 overflow-hidden mt-1">
+                      <div class="h-full rounded-full bg-gradient-to-r from-brand-600 to-pink-500 w-[82%]"></div>
+                    </div>
                   </div>
                 </div>
-                <span class="text-xs font-bold text-[#18152d]">1,640 XP</span>
-              </div>
+                <div class="text-right">
+                  <span id="row4Metric" class="font-mono text-xs font-bold text-brand-700 block">5d Streak</span>
+                  <span class="text-[9.5px] text-slate-400 font-medium">1,640 XP</span>
+                </div>
+              </button>
 
-              <!-- Rank 5: Dave -->
-              <div class="px-4 py-2.5 flex items-center justify-between hover:bg-[#f8fafc] transition-colors">
+              <!-- Rank 5: Dave K. -->
+              <button type="button" onclick="openScholarDrawer('Dave K.', 5, '1,420 XP', '4d Streak', '74% Mastery', '22 Cards/day')" class="w-full text-left px-3.5 py-2.5 flex items-center justify-between hover:bg-brand-50/50 transition cursor-pointer">
                 <div class="flex items-center gap-2.5">
-                  <span class="w-5 h-5 rounded-full bg-[#f2f3f4] text-[#64748b] text-[11px] font-bold flex items-center justify-center">5</span>
-                  <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-xs font-bold flex items-center justify-center">D</div>
+                  <span class="w-5 h-5 rounded-full bg-brand-100 text-brand-800 font-mono text-[10px] font-bold flex items-center justify-center">5</span>
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-600 to-indigo-400 text-white text-xs font-bold flex items-center justify-center shadow-2xs">D</div>
                   <div>
-                    <span class="text-xs font-bold text-[#18152d]">Dave K.</span>
-                    <span class="text-[10px] text-[#8b87a0] block leading-none">1d Streak • 40% Mastery</span>
+                    <div class="flex items-center gap-1.5">
+                      <span class="font-display text-xs font-bold text-slate-900">Dave K.</span>
+                      <span class="px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700 font-mono text-[9px] font-bold flex items-center">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>1
+                      </span>
+                    </div>
+                    <div class="w-24 h-1.5 rounded-full bg-brand-100 overflow-hidden mt-1">
+                      <div class="h-full rounded-full bg-gradient-to-r from-brand-600 to-pink-500 w-[74%]"></div>
+                    </div>
                   </div>
                 </div>
-                <span class="text-xs font-bold text-[#18152d]">1,420 XP</span>
-              </div>
+                <div class="text-right">
+                  <span id="row5Metric" class="font-mono text-xs font-bold text-brand-700 block">4d Streak</span>
+                  <span class="text-[9.5px] text-slate-400 font-medium">1,420 XP</span>
+                </div>
+              </button>
 
-              <!-- Rank 6: Elena -->
-              <div class="px-4 py-2.5 flex items-center justify-between hover:bg-[#f8fafc] transition-colors">
+              <!-- Rank 6: Elena V. -->
+              <button type="button" onclick="openScholarDrawer('Elena V.', 6, '1,180 XP', '2d Streak', '65% Mastery', '18 Cards/day')" class="w-full text-left px-3.5 py-2.5 flex items-center justify-between hover:bg-brand-50/50 transition cursor-pointer">
                 <div class="flex items-center gap-2.5">
-                  <span class="w-5 h-5 rounded-full bg-[#f2f3f4] text-[#64748b] text-[11px] font-bold flex items-center justify-center">6</span>
-                  <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center">E</div>
+                  <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 font-mono text-[10px] font-bold flex items-center justify-center">6</span>
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-pink-600 to-rose-400 text-white text-xs font-bold flex items-center justify-center shadow-2xs">E</div>
                   <div>
-                    <span class="text-xs font-bold text-[#18152d]">Elena V.</span>
-                    <span class="text-[10px] text-[#8b87a0] block leading-none">2d Streak • 35% Mastery</span>
+                    <div class="flex items-center gap-1.5">
+                      <span class="font-display text-xs font-bold text-slate-800">Elena V.</span>
+                      <span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-500 font-mono text-[9px] font-semibold">HOLD</span>
+                    </div>
+                    <div class="w-24 h-1.5 rounded-full bg-slate-100 overflow-hidden mt-1">
+                      <div class="h-full rounded-full bg-slate-400 w-[65%]"></div>
+                    </div>
                   </div>
                 </div>
-                <span class="text-xs font-bold text-[#18152d]">1,180 XP</span>
+                <div class="text-right">
+                  <span id="row6Metric" class="font-mono text-xs font-semibold text-slate-700 block">2d Streak</span>
+                  <span class="text-[9.5px] text-slate-400 font-medium">1,180 XP</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- COMPACT DAILY RANK BOOST STRIP (From UI Kit Banner Pattern) -->
+          <div class="p-3 rounded-2xl purple-wave-header text-white shadow-purple-soft flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-white/15 border border-white/15 flex items-center justify-center text-brand-200 shrink-0">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              </div>
+              <div>
+                <p class="font-display text-[11px] font-bold leading-tight">Defend #1 Champion Spot</p>
+                <p id="leadGapSubtitle" class="text-[10px] text-brand-200">330 XP ahead of Rasty E. • +50 XP Blitz</p>
               </div>
             </div>
+            <button
+              type="button"
+              onclick="claimRankBoost()"
+              class="gsap-btn px-3 py-1.5 rounded-xl create-orb-gradient text-white font-extrabold text-[10px] shadow-sm whitespace-nowrap"
+            >
+              +50 XP Boost
+            </button>
           </div>
 
         </div>
 
       </div>
 
-      
-    <!-- Notched Bottom Navbar (Reference Image Style: 2 Left, Center Docked Circle Button, 2 Right) -->
-    <div class="notched-navbar-wrap">
-      <svg class="notched-navbar-svg" viewBox="0 0 356 70" preserveAspectRatio="none" fill="none">
-        <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22 L 356,70 L 0,70 Z" fill="#13111f"/>
-        <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22" stroke="#252236" stroke-width="1.2" fill="none"/>
-      </svg>
+      <!-- =============================================================== -->
+      <!-- 3. INTERACTIVE SLIDE-UP BOTTOM DRAWER INSIDE PHONE FRAME        -->
+      <!-- =============================================================== -->
+      <button type="button" id="phone-drawer-backdrop" aria-label="Close drawer" onclick="closePhoneDrawer()" class="drawer-backdrop absolute inset-0 w-full h-full bg-obsidian-950/60 backdrop-blur-[2px] z-30 opacity-0 pointer-events-none border-0"></button>
 
-      <!-- Center Circular Notch Button: Create Deck / Study Modes -->
-      <button onclick="window.location.href='slide-StudyUp-2026-11-01T19-35-38.html'" class="notched-fab gsap-btn" title="Create Deck / Study Modes">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14"/><path d="M12 5v14"/>
-        </svg>
-        <span class="text-[8.5px] font-bold tracking-tight leading-none mt-0.5">Create</span>
-      </button>
-
-      <div class="notched-nav-items">
-        <!-- Left 2 Nav Items -->
-        <div class="flex items-center gap-3">
-          <button onclick="window.location.href='slide-StudyUp-2026-11-01T19-33-17.html'" class="nav-tab-btn  gsap-btn" title="My Library">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
-              <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-            </svg>
-            <span class="text-[10px]">My Library</span>
-          </button>
-
-          <button onclick="window.location.href='slide-StudyUp-2026-11-01T19-33-39.html'" class="nav-tab-btn  gsap-btn" title="Public Feed">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
-              <path d="M2 12h20"/>
-            </svg>
-            <span class="text-[10px]">Public Feed</span>
-          </button>
-        </div>
-
-        <!-- Center Spacer for Notch -->
-        <div class="w-14 shrink-0"></div>
-
-        <!-- Right 2 Nav Items -->
-        <div class="flex items-center gap-3">
-          <button onclick="window.location.href='slide-StudyUp-2026-11-01T19-33-49.html'" class="nav-tab-btn active gsap-btn" title="Leaderboard">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"/>
-              <path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"/>
-              <path d="M18 9h1.5a1 1 0 0 0 0-5H18"/><path d="M4 22h16"/>
-              <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/>
-              <path d="M6 9H4.5a1 1 0 0 1 0-5H6"/>
-            </svg>
-            <span class="text-[10px]">Leaderboard</span>
-          </button>
-
-          <button onclick="window.location.href='slide-StudyUp-2026-11-01T19-34-17.html'" class="nav-tab-btn  gsap-btn" title="Android App • Lawrence">
-            <div class="relative">
-              <img src="https://lh3.googleusercontent.com/a/ACg8ocKYI4XjO8aibWhSSZVzJ3Hl8W7wIq2x5ehsRAmeNAAsfb5_I4zO=s96-c" alt="Lawrence" class="w-5 h-5 rounded-full object-cover border border-[#5928c9]" />
-              <span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#b38cd8] ring-1 ring-white"></span>
-            </div>
-            <span class="text-[10px]">Android App</span>
-          </button>
-        </div>
+      <div id="phone-drawer-sheet" role="dialog" aria-modal="true" aria-label="Scholar Rank Details" class="drawer-sheet absolute bottom-0 left-0 right-0 z-40 bg-white rounded-t-[28px] shadow-2xl border-t border-brand-100 p-5 translate-y-full max-h-[78%] overflow-y-auto no-scrollbar">
+        <div class="w-10 h-1.5 bg-slate-200 rounded-full mx-auto mb-3"></div>
+        <div id="phone-drawer-content"></div>
       </div>
-      <div class="home-indicator"></div>
-    </div>
+
+      <!-- =============================================================== -->
+      <!-- 4. FLOATING DARK OBSIDIAN NOTCHED BOTTOM NAVBAR (#14141D SPEC)  -->
+      <!-- =============================================================== -->
+      <div class="notched-navbar-wrap">
+        <svg class="notched-navbar-svg" viewBox="0 0 356 70" preserveAspectRatio="none" fill="none" aria-hidden="true">
+          <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22 L 356,70 L 0,70 Z" fill="#14141D"/>
+          <path d="M 0,22 Q 0,0 22,0 L 118,0 C 136,0 142,38 178,38 C 214,38 220,0 238,0 L 334,0 Q 356,0 356,22" stroke="#2D2B42" stroke-width="1.2" fill="none"/>
+        </svg>
+
+        <!-- Center Circular Notch Button: Create Deck / Study Modes -->
+        <button type="button" onclick="window.location.href='slide-StudyUp-2026-11-01T19-35-38.html'" class="notched-fab gsap-btn" title="Create Deck / Study Modes">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/><path d="M12 5v14"/>
+          </svg>
+          <span class="text-[8.5px] font-bold tracking-tight leading-none mt-0.5">Create</span>
+        </button>
+
+        <div class="notched-nav-items">
+          <!-- Left 2 Nav Items -->
+          <div class="flex items-center gap-3">
+            <button type="button" onclick="window.location.href='slide-StudyUp-2026-11-01T19-33-17.html'" class="nav-tab-btn gsap-btn" title="My Library">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+                <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              </svg>
+              <span class="text-[10px]">My Library</span>
+            </button>
+
+            <button type="button" onclick="window.location.href='slide-StudyUp-2026-11-01T19-33-39.html'" class="nav-tab-btn gsap-btn" title="Public Feed">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                <path d="M2 12h20"/>
+              </svg>
+              <span class="text-[10px]">Public Feed</span>
+            </button>
+          </div>
+
+          <!-- Center Spacer for Notch -->
+          <div class="w-14 shrink-0"></div>
+
+          <!-- Right 2 Nav Items -->
+          <div class="flex items-center gap-3">
+            <button type="button" onclick="window.location.href='slide-StudyUp-2026-11-01T19-33-49.html'" class="nav-tab-btn active gsap-btn" title="Ranks">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"></path>
+                <path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"></path>
+                <path d="M18 9h1.5a1 1 0 0 0 0-5H18"></path><path d="M4 22h16"></path>
+                <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"></path>
+                <path d="M6 9H4.5a1 1 0 0 1 0-5H6"></path>
+              </svg>
+              <span class="text-[10px]">Ranks</span>
+            </button>
+
+            <button type="button" onclick="window.location.href='slide-StudyUp-2026-11-01T19-34-17.html'" class="nav-tab-btn gsap-btn" title="Android App • Lawrence">
+              <div class="relative">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocKYI4XjO8aibWhSSZVzJ3Hl8W7wIq2x5ehsRAmeNAAsfb5_I4zO=s96-c" alt="Lawrence" class="w-5 h-5 rounded-full object-cover border border-brand-400" />
+                <span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-brand-400 ring-1 ring-obsidian-900"></span>
+              </div>
+              <span class="text-[10px]">Android App</span>
+            </button>
+          </div>
+        </div>
+        <div class="home-indicator"></div>
+      </div>
 
     </section>
 
   </main>
-  
+
   <script>
-    // Progressive Disclosure: My Library Deck Filter & Drawer
-    function toggleMoreDecks() {
-      const more = document.getElementById('moreDecksContainer');
-      const btn = document.getElementById('toggleMoreDecksBtn');
-      if (!more || !btn) return;
-      const isHidden = more.classList.contains('hidden');
-      if (isHidden) {
-        more.classList.remove('hidden');
-        btn.textContent = 'Show Fewer Decks ↑';
-        if (window.gsap) {
-          gsap.fromTo(more.children, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.28, stagger: 0.06, ease: 'power2.out' });
-        }
-      } else {
-        more.classList.add('hidden');
-        btn.textContent = 'Show 2 More Decks (Elementary Sciences & JS) ↓';
+    let lawrenceXP = 2450;
+    let currentMetricMode = 'Streak';
+
+    const rankMetricsData = {
+      Streak: {
+        header: 'Streak',
+        p1: '14d Streak',
+        p2: '9d Streak',
+        p3: '7d Streak',
+        r4: '5d Streak',
+        r5: '4d Streak',
+        r6: '2d Streak'
+      },
+      Mastery: {
+        header: 'Mastery',
+        p1: '96% Mastery',
+        p2: '91% Mastery',
+        p3: '88% Mastery',
+        r4: '82% Mastery',
+        r5: '74% Mastery',
+        r6: '65% Mastery'
+      },
+      Score: {
+        header: 'XP Score',
+        get p1() { return lawrenceXP.toLocaleString() + ' XP'; },
+        p2: '2,120 XP',
+        p3: '1,890 XP',
+        r4: '1,640 XP',
+        r5: '1,420 XP',
+        r6: '1,180 XP'
       }
-    }
+    };
 
-    function filterLibraryDecks(cat, clickedBtn) {
-      document.querySelectorAll('.lib-filter-btn').forEach(b => {
-        b.classList.remove('pill-coral-active');
-        b.classList.add('pill-outlined');
-      });
-      if (clickedBtn) {
-        clickedBtn.classList.add('pill-coral-active');
-        clickedBtn.classList.remove('pill-outlined');
-      }
-      const more = document.getElementById('moreDecksContainer');
-      const toggleBtn = document.getElementById('toggleMoreDecksBtn');
-      if (more) more.classList.remove('hidden');
-      if (toggleBtn) toggleBtn.classList.add('hidden');
-
-      document.querySelectorAll('#libraryDecksList .deck-item').forEach(card => {
-        const match = (cat === 'all') || (card.getAttribute('data-cat') === cat);
-        card.style.display = match ? '' : 'none';
-      });
-    }
-
-    // Public Feed Search & Folder Filter
-    function selectFolderPill(btn) {
-      document.querySelectorAll('.folder-pill').forEach(b => {
-        b.classList.remove('pill-coral-active');
-        b.classList.add('pill-outlined');
-      });
-      btn.classList.add('pill-coral-active');
-      btn.classList.remove('pill-outlined');
-    }
-
-    function filterFeedCard(q) {
-      const card = document.getElementById('publicDeckCard');
-      if (!card) return;
-      const text = card.innerText.toLowerCase();
-      card.style.display = text.includes((q || '').toLowerCase()) ? '' : 'none';
-    }
-
-    // Leaderboard Mode Switcher
-    function switchRankTab(label, val, btn) {
+    function switchRankTab(mode, btn) {
+      currentMetricMode = mode;
       document.querySelectorAll('.rank-mode-btn').forEach(b => {
-        b.classList.remove('pill-coral-active');
-        b.classList.add('text-white/80');
+        b.classList.remove('pill-coral-active', 'font-bold');
+        b.classList.add('text-purple-200/85', 'font-semibold');
+        b.setAttribute('aria-selected', 'false');
       });
-      btn.classList.add('pill-coral-active');
-      btn.classList.remove('text-white/80');
-      const lbl = document.getElementById('rankMetricLabel');
-      const v = document.getElementById('rankMetricValue');
-      const th = document.getElementById('tableMetricHeader');
-      const r1 = document.getElementById('row1MetricVal');
-      if (lbl) lbl.textContent = label;
-      if (v) v.textContent = val;
-      if (th) th.textContent = label;
-      if (r1) r1.textContent = val + (label === 'Streak' ? ' Active' : ' Mastered');
+      btn.classList.add('pill-coral-active', 'font-bold');
+      btn.classList.remove('text-purple-200/85', 'font-semibold');
+      btn.setAttribute('aria-selected', 'true');
+
+      const data = rankMetricsData[mode];
+      if (!data) return;
+
+      const ids = [
+        ['tableMetricHeader', data.header],
+        ['podium1Metric', data.p1],
+        ['podium2Metric', data.p2],
+        ['podium3Metric', data.p3],
+        ['row4Metric', data.r4],
+        ['row5Metric', data.r5],
+        ['row6Metric', data.r6]
+      ];
+
+      ids.forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.textContent = val;
+          if (window.gsap) {
+            gsap.fromTo(el, { opacity: 0.2, y: 4 }, { opacity: 1, y: 0, duration: 0.24, ease: 'power2.out' });
+          }
+        }
+      });
     }
 
-    // Android Progressive Disclosure Tabs
-    function switchAndroidTab(tab, btn) {
-      document.querySelectorAll('.android-tab-btn').forEach(b => {
-        b.classList.remove('pill-coral-active');
-        b.classList.add('pill-outlined');
-      });
-      btn.classList.add('pill-coral-active');
-      btn.classList.remove('pill-outlined');
-      const qr = document.getElementById('androidTabQR');
-      const feat = document.getElementById('androidTabFeatures');
-      if (tab === 'qr') {
-        if (qr) qr.classList.remove('hidden');
-        if (feat) feat.classList.add('hidden');
-      } else {
-        if (qr) qr.classList.add('hidden');
-        if (feat) {
-          feat.classList.remove('hidden');
-          if (window.gsap) gsap.fromTo(feat.children, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.25, stagger: 0.05 });
-        }
+    function claimRankBoost() {
+      lawrenceXP += 50;
+      const gap = lawrenceXP - 2120;
+      const sub = document.getElementById('leadGapSubtitle');
+      if (sub) {
+        sub.textContent = `${gap.toLocaleString()} XP ahead of Rasty E. • Boost Active!`;
       }
+      if (currentMetricMode === 'Score') {
+        const p1 = document.getElementById('podium1Metric');
+        if (p1) p1.textContent = lawrenceXP.toLocaleString() + ' XP';
+      }
+      showRanksToast(`+50 XP Added! You now have ${lawrenceXP.toLocaleString()} XP`);
     }
 
-    // Deck Study Modes Progressive Disclosure Category Filter
-    function filterStudyModes(group, btn) {
-      document.querySelectorAll('.mode-cat-btn').forEach(b => {
-        b.classList.remove('pill-coral-active');
-        b.classList.add('pill-outlined');
-      });
-      btn.classList.add('pill-coral-active');
-      btn.classList.remove('pill-outlined');
-      document.querySelectorAll('#studyModesGrid .study-mode-card').forEach(card => {
-        if (card.getAttribute('data-mode-group') === group) {
-          card.classList.remove('hidden');
-          if (window.gsap) gsap.fromTo(card, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.22 });
-        } else {
-          card.classList.add('hidden');
-        }
-      });
+    function openScholarDrawer(name, rank, xp, streak, mastery, pace) {
+      const backdrop = document.getElementById('phone-drawer-backdrop');
+      const sheet = document.getElementById('phone-drawer-sheet');
+      const content = document.getElementById('phone-drawer-content');
+
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      sheet.classList.remove('translate-y-full');
+
+      content.innerHTML = `
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-brand-100 text-brand-800 font-mono font-bold text-[10px] uppercase">Rank #${rank}</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-brand-600">Scholar Telemetry</span>
+          </div>
+          <button type="button" onclick="closePhoneDrawer()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold flex items-center justify-center">✕</button>
+        </div>
+
+        <h3 class="font-display font-extrabold text-base text-slate-900 mb-3">${name}</h3>
+
+        <div class="grid grid-cols-2 gap-2.5 mb-4">
+          <div class="p-3 rounded-2xl bg-brand-50/80 border border-brand-100">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-brand-600 block">Weekly XP</span>
+            <span class="font-mono font-bold text-sm text-brand-950 mt-0.5 block">${xp}</span>
+          </div>
+          <div class="p-3 rounded-2xl bg-brand-50/80 border border-brand-100">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-brand-600 block">Active Streak</span>
+            <span class="font-mono font-bold text-sm text-brand-950 mt-0.5 block">${streak}</span>
+          </div>
+          <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200/80">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Deck Mastery</span>
+            <span class="font-mono font-bold text-sm text-slate-800 mt-0.5 block">${mastery}</span>
+          </div>
+          <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200/80">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Recall Pace</span>
+            <span class="font-mono font-bold text-sm text-slate-800 mt-0.5 block">${pace}</span>
+          </div>
+        </div>
+
+        <button type="button" onclick="closePhoneDrawer(); showRanksToast('Sent study challenge to ${name.replace(/'/g, "\\'")}!');" class="w-full py-2.5 rounded-xl create-orb-gradient text-white font-bold text-xs shadow-sm">
+          Challenge Scholar to 60s Blitz
+        </button>
+      `;
     }
 
-        // GSAP Core Showcase Engine (Spinning ONLY on Center FAB Button)
+    function openLeagueDrawer() {
+      const backdrop = document.getElementById('phone-drawer-backdrop');
+      const sheet = document.getElementById('phone-drawer-sheet');
+      const content = document.getElementById('phone-drawer-content');
+
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      sheet.classList.remove('translate-y-full');
+
+      content.innerHTML = `
+        <div class="flex items-center justify-between mb-3">
+          <span class="px-2.5 py-0.5 rounded-full bg-brand-100 text-brand-800 font-bold text-[10px] uppercase tracking-wider">Diamond Scholar League</span>
+          <button type="button" onclick="closePhoneDrawer()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold flex items-center justify-center">✕</button>
+        </div>
+
+        <h3 class="font-display font-extrabold text-base text-slate-900 mb-1">Weekly League Perks</h3>
+        <p class="text-xs text-slate-500 mb-3">Finish in the Top 5 by Sunday 11:59 PM to unlock Grandmaster Scholar rewards.</p>
+
+        <div class="space-y-2 mb-4 text-xs">
+          <div class="p-3 rounded-xl bg-brand-50/90 border border-brand-200 flex items-center justify-between">
+            <span class="font-bold text-brand-950">1st Place Champion Crown</span>
+            <span class="font-mono font-bold text-brand-700">+250 Bonus XP</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+            <span class="font-semibold text-slate-800">2nd – 3rd Podium Finish</span>
+            <span class="font-mono font-semibold text-slate-600">Streak Shield ×2</span>
+          </div>
+        </div>
+
+        <button type="button" onclick="closePhoneDrawer()" class="w-full py-2.5 rounded-xl bg-obsidian-900 text-white font-bold text-xs">
+          Got It
+        </button>
+      `;
+    }
+
+    function closePhoneDrawer() {
+      const backdrop = document.getElementById('phone-drawer-backdrop');
+      const sheet = document.getElementById('phone-drawer-sheet');
+      if (backdrop) backdrop.classList.add('opacity-0', 'pointer-events-none');
+      if (sheet) sheet.classList.add('translate-y-full');
+    }
+
+    let toastTimeout = null;
+    function showRanksToast(msg) {
+      const toast = document.getElementById('ranks-toast');
+      const text = document.getElementById('ranks-toast-msg');
+      if (!toast || !text) return;
+      text.textContent = msg;
+      toast.classList.remove('opacity-0', 'translate-y-3');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-3');
+      }, 2400);
+    }
+
+    // GSAP Core Showcase Engine (Spinning ONLY on Center FAB Button)
     document.addEventListener('DOMContentLoaded', () => {
       if (!window.gsap) return;
 
       // 1. GSAP Stagger Entrance for Cards
       gsap.from('.edu-card', {
-        y: 28,
+        y: 22,
         opacity: 0,
-        duration: 0.65,
-        stagger: {
-          each: 0.09,
-          from: 'start'
-        },
-        ease: 'back.out(1.5)',
-        clearProps: 'transform'
+        duration: 0.55,
+        stagger: 0.08,
+        ease: 'power3.out',
+        clearProps: 'transform,opacity'
       });
 
       // 2. Continuous Ambient Breathing & Exclusive Spinning ONLY on Center Action FAB Button
       const fab = document.querySelector('.notched-fab');
       if (fab) {
         gsap.to(fab, {
-          scale: 1.06,
-          duration: 1.7,
+          scale: 1.05,
+          duration: 1.8,
           repeat: -1,
           yoyo: true,
           ease: 'sine.inOut'
         });
 
-        // Spinning is strictly ONLY on this center FAB button
         const spinFab = () => {
           const icon = fab.querySelector('svg');
           if (icon && !gsap.isTweening(icon)) {
@@ -775,29 +1005,17 @@
         fab.addEventListener('mouseenter', spinFab);
       }
 
-      // Tactile Squash & Elastic Rebound Button Press
+      // 3. Tactile Squash & Elastic Rebound Button Press
       document.querySelectorAll('.gsap-btn').forEach(btn => {
         btn.addEventListener('pointerdown', () => {
-          gsap.to(btn, { scaleX: 1.06, scaleY: 0.90, duration: 0.09, ease: 'power2.out' });
+          gsap.to(btn, { scaleX: 1.05, scaleY: 0.92, duration: 0.09, ease: 'power2.out' });
         });
         const release = () => {
-          gsap.to(btn, { scaleX: 1, scaleY: 1, duration: 0.4, ease: 'elastic.out(1.3, 0.35)' });
+          gsap.to(btn, { scaleX: 1, scaleY: 1, duration: 0.38, ease: 'elastic.out(1.2, 0.4)' });
         };
         btn.addEventListener('pointerup', release);
         btn.addEventListener('pointerleave', release);
       });
-
-      // Floating Mascot Bounce (Without spinning)
-      const mascot = document.getElementById('mascot-screen1') || document.getElementById('mascot-screen2');
-      if (mascot) {
-        gsap.to(mascot, { y: -6, duration: 2.2, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-        mascot.addEventListener('click', () => {
-          gsap.timeline()
-            .to(mascot, { scaleX: 1.15, scaleY: 0.85, duration: 0.1, ease: 'power2.out' })
-            .to(mascot, { scaleX: 0.95, scaleY: 1.08, y: -16, duration: 0.35, ease: 'power2.out' })
-            .to(mascot, { scaleX: 1, scaleY: 1, y: 0, duration: 0.45, ease: 'elastic.out(1.1, 0.4)' });
-        });
-      }
     });
   </script>
 

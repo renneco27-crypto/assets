@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PurrLearn — UI Kit Elements & Live Mobile App Design System</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              950: '#140730',
+              900: '#1E0B4B',
+              800: '#35127A',
+              700: '#4E1CA8',
+              600: '#6929D4',
+              500: '#7C3AED',
+              400: '#9F67FF',
+              300: '#C4B5FD',
+              200: '#DDD6FE',
+              100: '#EDE9FE',
+              50: '#F6F4FF',
+            },
+            obsidian: {
+              950: '#0D0D12',
+              900: '#14141D',
+              800: '#1E1E2C',
+            }
+          },
+          boxShadow: {
+            'purple-soft': '0 10px 30px -5px rgba(105, 41, 212, 0.12), 0 4px 12px -2px rgba(105, 41, 212, 0.06)',
+            'purple-glow': '0 0 25px rgba(168, 85, 247, 0.55), 0 0 50px rgba(236, 72, 153, 0.35)',
+            'orb-glow': '0 6px 24px rgba(192, 132, 252, 0.65), 0 0 16px rgba(236, 72, 153, 0.5)',
+            'card-hover': '0 16px 36px -6px rgba(105, 41, 212, 0.18)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Dotted Grid Background inspired by Reference Image 2 */
+    .bg-dot-grid {
+      background-color: #FAFAFE;
+      background-image: radial-gradient(#CBD5E1 1.35px, transparent 1.35px);
+      background-size: 22px 22px;
+    }
+
+    /* Reference Image 1 Header Gradient */
+    .mascot-header-gradient {
+      background: linear-gradient(135deg, #150734 0%, #2B0F66 42%, #5218B8 78%, #6929D4 100%);
+    }
+
+    /* Reference Image 1 Mobile Surface Gradient */
+    .mobile-surface-bg {
+      background: linear-gradient(180deg, #F5F4F9 0%, #F9F5FA 55%, #F2EFF8 100%);
+    }
+
+    /* Center 'Create' Orb Gradient from Reference Image 1 */
+    .create-orb-gradient {
+      background: linear-gradient(165deg, #67B8F7 0%, #9B6BFF 45%, #E879F9 80%, #F472B6 100%);
+    }
+
+    /* Custom Scrollbar for Phone & Drawers */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Floating Animation for Mascot & 4-Point Stars */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(1.5deg); }
+    }
+    @keyframes pulseRing {
+      0%, 100% { transform: scale(1); opacity: 0.22; }
+      50% { transform: scale(1.06); opacity: 0.34; }
+    }
+    .animate-float {
+      animation: floatSlow 4.5s ease-in-out infinite;
+    }
+    .animate-pulse-ring {
+      animation: pulseRing 5s ease-in-out infinite;
+    }
+
+    /* Smooth drawer transitions */
+    .drawer-backdrop {
+      transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .drawer-sheet {
+      transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+  </style>
+</head>
+<body class="bg-dot-grid text-slate-800 antialiased selection:bg-brand-500 selection:text-white min-h-screen">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-white/85 border-b border-brand-100/80 shadow-sm">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+      <!-- Brand Identity -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl mascot-header-gradient flex items-center justify-center shadow-md relative overflow-hidden">
+          <span class="text-lg">🎓</span>
+          <div class="absolute -bottom-2 -right-2 w-5 h-5 rounded-full bg-pink-400/40 blur-sm"></div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-display font-extrabold text-lg tracking-tight text-slate-900">PurrLearn UI Kit</h1>
+            <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-100 text-brand-700 border border-brand-200">v2.4 System</span>
+          </div>
+          <p class="text-xs text-slate-500 hidden sm:block">EdTech Mascot Theme • 356×686 Mobile Spec & Interactive Component Library</p>
+        </div>
+      </div>
+
+      <!-- Quick Section Jump Pills -->
+      <nav class="hidden xl:flex items-center gap-1 bg-slate-100/90 p-1 rounded-xl border border-slate-200/70 text-xs font-semibold">
+        <a href="#section-elements" class="px-3 py-1.5 rounded-lg text-brand-700 bg-white shadow-sm transition">UI Kit Elements</a>
+        <a href="#section-buttons" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-brand-700 hover:bg-white/60 transition">Buttons</a>
+        <a href="#section-cards" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-brand-700 hover:bg-white/60 transition">Cards</a>
+        <a href="#section-banners" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-brand-700 hover:bg-white/60 transition">Banners</a>
+        <a href="#section-drawers" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-brand-700 hover:bg-white/60 transition">Drawers & Nav</a>
+      </nav>
+
+      <!-- Interactive Actions -->
+      <div class="flex items-center gap-2.5">
+        <button onclick="triggerPhoneDrawer('create')" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-white create-orb-gradient shadow-md hover:opacity-95 active:scale-95 transition flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 4v16m8-8H4"/></svg>
+          <span>Test 'Create' Drawer</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Toast Notification for Copy / Actions -->
+  <div id="toast-notification" class="fixed bottom-6 right-6 z-50 pointer-events-none opacity-0 translate-y-3 transition-all duration-300">
+    <div class="bg-obsidian-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-brand-500/40 flex items-center gap-3 text-xs font-medium">
+      <span class="w-6 h-6 rounded-full bg-brand-600/30 border border-brand-400 text-brand-300 flex items-center justify-center">✓</span>
+      <span id="toast-message">Copied to clipboard!</span>
+    </div>
+  </div>
+
+  <!-- Main Workspace Container -->
+  <main class="max-w-[1440px] mx-auto px-4 sm:px-8 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- =================================================================== -->
+      <!-- LEFT / CENTER COLUMN: COMPREHENSIVE INTERACTIVE UI KIT (7 COLS)     -->
+      <!-- =================================================================== -->
+      <div class="lg:col-span-7 xl:col-span-8 space-y-10">
+
+        <!-- 0. COLOR TOKENS & THEME STRIP -->
+        <section class="bg-white/90 backdrop-blur-sm rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-purple-soft">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-widest text-brand-600">01 • Foundation</span>
+              <h2 class="font-display font-bold text-xl text-slate-900">Brand Color Palette & Surface Tokens</h2>
+            </div>
+            <span class="text-xs text-slate-500">Click any swatch to copy HEX</span>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+            <!-- Deep Midnight Indigo -->
+            <button onclick="copyToken('#150734', 'Midnight Indigo')" class="group text-left rounded-2xl p-2.5 border border-slate-200/80 hover:border-brand-400 transition bg-slate-50/50">
+              <div class="h-12 rounded-xl bg-[#150734] shadow-inner mb-2 group-hover:scale-[1.02] transition"></div>
+              <p class="font-semibold text-xs text-slate-800">Midnight</p>
+              <p class="font-mono text-[11px] text-slate-500">#150734</p>
+            </button>
+            <!-- Electric Violet -->
+            <button onclick="copyToken('#6929D4', 'Electric Violet')" class="group text-left rounded-2xl p-2.5 border border-slate-200/80 hover:border-brand-400 transition bg-slate-50/50">
+              <div class="h-12 rounded-xl bg-[#6929D4] shadow-inner mb-2 group-hover:scale-[1.02] transition"></div>
+              <p class="font-semibold text-xs text-slate-800">Royal Violet</p>
+              <p class="font-mono text-[11px] text-slate-500">#6929D4</p>
+            </button>
+            <!-- Mascot Lavender -->
+            <button onclick="copyToken('#9F67FF', 'Mascot Lavender')" class="group text-left rounded-2xl p-2.5 border border-slate-200/80 hover:border-brand-400 transition bg-slate-50/50">
+              <div class="h-12 rounded-xl bg-[#9F67FF] shadow-inner mb-2 group-hover:scale-[1.02] transition"></div>
+              <p class="font-semibold text-xs text-slate-800">Mascot Fur</p>
+              <p class="font-mono text-[11px] text-slate-500">#9F67FF</p>
+            </button>
+            <!-- Create Orb Gradient -->
+            <button onclick="copyToken('linear-gradient(165deg, #67B8F7, #9B6BFF, #F472B6)', 'Create Orb Gradient')" class="group text-left rounded-2xl p-2.5 border border-slate-200/80 hover:border-brand-400 transition bg-slate-50/50">
+              <div class="h-12 rounded-xl create-orb-gradient shadow-inner mb-2 group-hover:scale-[1.02] transition"></div>
+              <p class="font-semibold text-xs text-slate-800">Create Orb</p>
+              <p class="font-mono text-[11px] text-slate-500">Orb Glow</p>
+            </button>
+            <!-- Obsidian Dock -->
+            <button onclick="copyToken('#14141D', 'Obsidian Dock')" class="group text-left rounded-2xl p-2.5 border border-slate-200/80 hover:border-brand-400 transition bg-slate-50/50">
+              <div class="h-12 rounded-xl bg-[#14141D] shadow-inner mb-2 group-hover:scale-[1.02] transition"></div>
+              <p class="font-semibold text-xs text-slate-800">Nav Dock</p>
+              <p class="font-mono text-[11px] text-slate-500">#14141D</p>
+            </button>
+            <!-- App Canvas -->
+            <button onclick="copyToken('#F5F4F9', 'Soft Lavender Canvas')" class="group text-left rounded-2xl p-2.5 border border-slate-200/80 hover:border-brand-400 transition bg-slate-50/50">
+              <div class="h-12 rounded-xl bg-[#F5F4F9] border border-slate-200 mb-2 group-hover:scale-[1.02] transition"></div>
+              <p class="font-semibold text-xs text-slate-800">App Surface</p>
+              <p class="font-mono text-[11px] text-slate-500">#F5F4F9</p>
+            </button>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- 1. UI KITS ELEMENTS BOARD (EXACT LAYOUT OF REFERENCE IMAGE 2)       -->
+        <!-- =================================================================== -->
+        <section id="section-elements" class="relative bg-white/95 rounded-[32px] p-6 sm:p-10 border border-slate-200/90 shadow-purple-soft overflow-hidden bg-dot-grid">
+          <!-- Decorative 3D Sparkle Star Left (Like Reference Image 2) -->
+          <div class="hidden sm:block absolute top-16 left-5 pointer-events-none animate-float">
+            <svg width="54" height="54" viewBox="0 0 64 64" fill="none">
+              <defs>
+                <linearGradient id="starGrad1" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#38BDF8"/>
+                  <stop offset="50%" stop-color="#6929D4"/>
+                  <stop offset="100%" stop-color="#1E0B4B"/>
+                </linearGradient>
+              </defs>
+              <path d="M32 2C34 22 42 30 62 32C42 34 34 42 32 62C30 42 22 34 2 32C22 30 30 22 32 2Z" fill="url(#starGrad1)" stroke="#1E1B4B" stroke-width="1.5"/>
+              <path d="M32 10C33 24 39 30 53 32C39 34 33 40 32 54" stroke="#BAE6FD" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+            </svg>
+          </div>
+
+          <!-- Decorative 3D Sparkle Star Right (Like Reference Image 2) -->
+          <div class="hidden sm:block absolute bottom-10 right-4 pointer-events-none animate-float" style="animation-delay: 1.5s;">
+            <svg width="62" height="62" viewBox="0 0 64 64" fill="none">
+              <path d="M32 2C34 22 42 30 62 32C42 34 34 42 32 62C30 42 22 34 2 32C22 30 30 22 32 2Z" fill="url(#starGrad1)" stroke="#1E1B4B" stroke-width="1.5"/>
+              <circle cx="32" cy="32" r="4" fill="#F472B6"/>
+            </svg>
+          </div>
+
+          <!-- Header Title matching Reference Image 2 -->
+          <div class="text-center mb-9">
+            <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-brand-600 bg-brand-50 border border-brand-200 px-3 py-1 rounded-full mb-2">02 • Form Controls & Micro-Elements</span>
+            <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-obsidian-950 tracking-tight">UI Kits Elements</h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">Adapted from your reference sheet into the Purple Scholar EdTech visual language</p>
+          </div>
+
+          <!-- ROW 1 & 2: TEXT INPUT STATES (2x2 Grid) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-7">
+            <!-- 1. Placeholder Input -->
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Default / Placeholder</label>
+              <div class="relative">
+                <input
+                  type="text"
+                  placeholder="Placeholder (e.g., Search flashcards...)"
+                  class="w-full h-[52px] px-4 rounded-xl bg-white border border-slate-200 text-slate-800 placeholder-slate-300 text-sm font-medium focus:outline-none focus:border-brand-600 focus:ring-4 focus:ring-brand-500/10 transition"
+                />
+              </div>
+            </div>
+
+            <!-- 2. Filled / Focused Input -->
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-brand-600 mb-1.5">Active / Filled Input</label>
+              <div class="relative">
+                <input
+                  type="text"
+                  value="Filled Input — Quantum Biology 101"
+                  class="w-full h-[52px] px-4 rounded-xl bg-white border-[1.75px] border-brand-600 text-slate-800 text-sm font-medium shadow-sm focus:outline-none focus:ring-4 focus:ring-brand-500/15 transition"
+                />
+              </div>
+            </div>
+
+            <!-- 3. Success Input -->
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-emerald-600 mb-1.5">Validated State</label>
+              <div class="relative flex items-center">
+                <input
+                  type="text"
+                  value="Success — Deck Name Available"
+                  class="w-full h-[52px] pl-4 pr-11 rounded-xl bg-white border border-slate-200/90 text-slate-800 text-sm font-medium focus:outline-none focus:border-brand-600 transition"
+                />
+                <!-- Checkmark Circle Icon (Purple-Emerald themed) -->
+                <span class="absolute right-3.5 text-brand-600" title="Valid input">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- 4. Error Input -->
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-rose-600 mb-1.5">Error / Warning State</label>
+              <div class="relative flex items-center">
+                <input
+                  type="text"
+                  value="Error — Minimum 5 flashcards required"
+                  class="w-full h-[52px] pl-4 pr-11 rounded-xl bg-white border-[1.5px] border-rose-400/80 text-slate-800 text-sm font-medium focus:outline-none focus:border-rose-500 transition"
+                />
+                <!-- Warning Triangle Icon -->
+                <span class="absolute right-3.5 text-rose-500" title="Validation error">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ROW 3: SELECT DROPDOWN (Interactive) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+            <div class="relative" id="custom-dropdown-container">
+              <span class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-2">SELECT</span>
+              <button
+                type="button"
+                onclick="toggleKitDropdown()"
+                class="w-full h-[52px] px-4 rounded-xl bg-white border border-slate-300 hover:border-brand-500 text-slate-800 text-sm font-medium flex items-center justify-between transition shadow-sm"
+              >
+                <span id="kit-dropdown-selected">Dropdown (Study Mode: Spaced Repetition)</span>
+                <svg id="kit-dropdown-chevron" class="w-5 h-5 text-brand-600 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </button>
+              <!-- Dropdown Menu Options -->
+              <div id="kit-dropdown-menu" class="hidden absolute left-0 right-0 mt-2 bg-white rounded-2xl border border-brand-200 shadow-purple-soft py-2 z-30">
+                <button onclick="selectKitDropdown('Dropdown (Study Mode: Spaced Repetition)')" class="w-full px-4 py-2.5 text-left text-sm hover:bg-brand-50 text-brand-700 font-semibold flex items-center justify-between">
+                  <span>Spaced Repetition (Recommended)</span>
+                  <span class="text-xs bg-brand-100 text-brand-700 px-2 py-0.5 rounded-full">AI</span>
+                </button>
+                <button onclick="selectKitDropdown('Flashcard Speed Blitz (60s)')" class="w-full px-4 py-2.5 text-left text-sm hover:bg-brand-50 text-slate-700 flex items-center justify-between">
+                  <span>Flashcard Speed Blitz (60s)</span>
+                  <span class="text-xs text-slate-400">⚡ Timed</span>
+                </button>
+                <button onclick="selectKitDropdown('Practice Exam & Quiz Mode')" class="w-full px-4 py-2.5 text-left text-sm hover:bg-brand-50 text-slate-700">
+                  <span>Practice Exam & Quiz Mode</span>
+                </button>
+                <button onclick="selectKitDropdown('Public Community Challenge')" class="w-full px-4 py-2.5 text-left text-sm hover:bg-brand-50 text-slate-700">
+                  <span>Public Community Challenge</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Search Input with Shortcut Badge (Bonus companion input) -->
+            <div>
+              <span class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-2">SEARCH BAR</span>
+              <div class="relative flex items-center">
+                <svg class="w-4 h-4 text-brand-500 absolute left-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Search library, tags, or creators..."
+                  oninput="filterMobileDecksFromKit(this.value)"
+                  class="w-full h-[52px] pl-10 pr-20 rounded-xl bg-brand-50/60 border border-brand-200/80 text-slate-800 placeholder-slate-400 text-sm font-medium focus:bg-white focus:outline-none focus:border-brand-600 transition"
+                />
+                <span class="absolute right-3 text-[11px] font-mono font-semibold text-brand-600 bg-white px-2 py-1 rounded-lg border border-brand-200 shadow-2xs">Live Sync</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ROW 4: CHECKBOX, RADIO BUTTON, TOGGLE BUTTON (Interactive) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-9 pt-2">
+            <!-- CHECKBOX COLUMN -->
+            <div>
+              <span class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3.5">CHECKBOX</span>
+              <div class="space-y-3.5">
+                <!-- Default Checkbox -->
+                <label class="flex items-center gap-3 cursor-pointer group select-none" onclick="toggleCheckbox(this, false)">
+                  <div class="kit-checkbox w-6 h-6 rounded-md border border-slate-300 bg-white flex items-center justify-center transition group-hover:border-brand-500">
+                    <svg class="w-4 h-4 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <span class="text-sm font-medium text-slate-700">Default</span>
+                </label>
+
+                <!-- Checked Checkbox -->
+                <label class="flex items-center gap-3 cursor-pointer group select-none" onclick="toggleCheckbox(this, true)">
+                  <div class="kit-checkbox w-6 h-6 rounded-md border border-brand-600 bg-brand-600 flex items-center justify-center transition shadow-xs">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <span class="text-sm font-medium text-slate-800">Checked</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- RADIO BUTTON COLUMN -->
+            <div>
+              <span class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3.5">RADIO BUTTON</span>
+              <div class="space-y-3.5" id="kit-radio-group">
+                <!-- Default Radio -->
+                <label class="flex items-center gap-3 cursor-pointer group select-none" onclick="selectRadio(0)">
+                  <div id="kit-radio-0" class="w-6 h-6 rounded-full border border-slate-300 bg-white flex items-center justify-center transition group-hover:border-brand-500">
+                    <div class="w-3 h-3 rounded-full bg-brand-600 scale-0 transition-transform"></div>
+                  </div>
+                  <span id="kit-radio-label-0" class="text-sm font-medium text-slate-700">Default</span>
+                </label>
+
+                <!-- Selected Radio -->
+                <label class="flex items-center gap-3 cursor-pointer group select-none" onclick="selectRadio(1)">
+                  <div id="kit-radio-1" class="w-6 h-6 rounded-full border-2 border-brand-600 bg-white flex items-center justify-center transition shadow-2xs">
+                    <div class="w-3 h-3 rounded-full bg-brand-600 scale-100 transition-transform"></div>
+                  </div>
+                  <span id="kit-radio-label-1" class="text-sm font-medium text-slate-800">Selected</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- TOGGLE BUTTON COLUMN -->
+            <div>
+              <span class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3.5">TOGGLE BUTTON</span>
+              <div class="space-y-3.5">
+                <!-- Off Toggle -->
+                <div class="flex items-center gap-3 cursor-pointer select-none" onclick="flipToggle(this)">
+                  <button type="button" data-on="false" class="w-12 h-7 rounded-full bg-slate-200/90 border border-slate-300/80 p-0.5 flex items-center transition-colors duration-200">
+                    <span class="w-5 h-5 rounded-full bg-white shadow-sm transform translate-x-0 transition-transform duration-200"></span>
+                  </button>
+                  <span class="toggle-text text-sm font-medium text-slate-700">Off</span>
+                </div>
+
+                <!-- On Toggle -->
+                <div class="flex items-center gap-3 cursor-pointer select-none" onclick="flipToggle(this)">
+                  <button type="button" data-on="true" class="w-12 h-7 rounded-full bg-brand-600 border border-brand-600 p-0.5 flex items-center transition-colors duration-200">
+                    <span class="w-5 h-5 rounded-full bg-white shadow-sm transform translate-x-5 transition-transform duration-200"></span>
+                  </button>
+                  <span class="toggle-text text-sm font-medium text-slate-800">On</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ROW 5: TOOLTIP & TAGS (Exact match to Reference Image 2 bottom row) -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pt-2 border-t border-slate-200/60">
+            <!-- TOOL TIP -->
+            <div class="md:col-span-4">
+              <span class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">TOOL TIP</span>
+              <div class="inline-flex flex-col items-center">
+                <!-- Dark Floating Tooltip Box -->
+                <div id="interactive-tooltip" class="relative bg-obsidian-900 text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-lg mb-2.5 transition-transform duration-200 hover:-translate-y-0.5">
+                  <span id="tooltip-text">Helper Text: Streak Shield Active</span>
+                  <!-- Bottom Pointer Triangle -->
+                  <div class="w-3 h-3 bg-obsidian-900 rotate-45 absolute -bottom-1.5 left-1/2 -translate-x-1/2"></div>
+                </div>
+                <!-- Question Mark Trigger Icon -->
+                <button
+                  type="button"
+                  onclick="cycleTooltipText()"
+                  class="w-7 h-7 rounded-full border-2 border-obsidian-900 text-obsidian-900 font-bold text-xs flex items-center justify-center hover:bg-brand-600 hover:border-brand-600 hover:text-white transition"
+                  title="Click to test tooltip states"
+                >
+                  ?
+                </button>
+              </div>
+            </div>
+
+            <!-- TAGS / BADGES -->
+            <div class="md:col-span-8">
+              <span class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">TAGS & STATUS PILLS (CLICK TO FILTER APP)</span>
+              <div class="flex flex-wrap items-center gap-2.5 pb-1">
+                <!-- Tag 1: 1 OF 12 (Soft Lavender Pill) -->
+                <button onclick="filterByTag('progress')" class="px-4 py-2 rounded-full bg-brand-100/90 hover:bg-brand-200 text-brand-900 font-bold text-xs tracking-wider uppercase transition active:scale-95">
+                  1 OF 12
+                </button>
+
+                <!-- Tag 2: FAVORITE (Vibrant Purple Solid Pill) -->
+                <button onclick="filterByTag('favorite')" class="px-4 py-2 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs tracking-wider uppercase shadow-sm transition active:scale-95">
+                  FAVORITE
+                </button>
+
+                <!-- Tag 3: CATEGORY (Dark Obsidian Solid Pill) -->
+                <button onclick="filterByTag('all')" class="px-4 py-2 rounded-full bg-obsidian-900 hover:bg-obsidian-800 text-white font-bold text-xs tracking-wider uppercase shadow-sm transition active:scale-95">
+                  CATEGORY
+                </button>
+
+                <!-- Tag 4: SHARED (Outlined Pill with Share Node Icon) -->
+                <button onclick="filterByTag('shared')" class="px-4 py-2 rounded-full bg-white hover:bg-brand-50 text-brand-700 border border-slate-300 hover:border-brand-400 font-bold text-xs tracking-wider uppercase flex items-center gap-1.5 transition active:scale-95">
+                  <svg class="w-3.5 h-3.5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                  </svg>
+                  <span>SHARED</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- 2. BUTTONS SYSTEM & INTERACTIVE CTA HIERARCHY                       -->
+        <!-- =================================================================== -->
+        <section id="section-buttons" class="bg-white/95 rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-purple-soft">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-widest text-brand-600">03 • Action Components</span>
+              <h2 class="font-display font-bold text-xl text-slate-900">Buttons & Floating Orb Hierarchy</h2>
+            </div>
+            <span class="text-xs text-slate-500">Includes the signature glowing "Create" orb from the bottom dock</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            <!-- Standard Button Variants -->
+            <div class="space-y-4 bg-slate-50/70 p-5 rounded-2xl border border-slate-200/70">
+              <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Primary, Secondary & Ghost States</p>
+              <div class="flex flex-wrap items-center gap-3">
+                <!-- Primary Royal Gradient -->
+                <button onclick="showToast('Triggered Primary Study Action!')" class="px-5 py-3 rounded-xl font-semibold text-xs text-white mascot-header-gradient shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 transition flex items-center gap-2">
+                  <span>Start Study Session</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+
+                <!-- Glowing Create Gradient Button -->
+                <button onclick="triggerPhoneDrawer('create')" class="px-5 py-3 rounded-xl font-bold text-xs text-white create-orb-gradient shadow-orb-glow hover:opacity-95 active:scale-95 transition flex items-center gap-1.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                  <span>Create Flashcards</span>
+                </button>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-3 pt-1">
+                <!-- Soft Lavender Secondary -->
+                <button onclick="showToast('Saved to My Library!')" class="px-4 py-2.5 rounded-xl font-semibold text-xs text-brand-700 bg-brand-100 hover:bg-brand-200 transition active:scale-95">
+                  Save to Library
+                </button>
+
+                <!-- Outlined Ghost -->
+                <button onclick="triggerPhoneDrawer('filter')" class="px-4 py-2.5 rounded-xl font-semibold text-xs text-slate-700 bg-white border border-slate-300 hover:border-brand-500 hover:text-brand-600 transition flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                  <span>Filter Deck</span>
+                </button>
+
+                <!-- Disabled -->
+                <button disabled class="px-4 py-2.5 rounded-xl font-semibold text-xs text-slate-400 bg-slate-200/70 cursor-not-allowed">
+                  Locked Level
+                </button>
+              </div>
+            </div>
+
+            <!-- Signature Center Create Orb Showcase (from Reference Image 1) -->
+            <div class="bg-obsidian-900 rounded-2xl p-5 text-white flex items-center justify-between gap-4 relative overflow-hidden">
+              <div class="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-brand-500/20 blur-2xl pointer-events-none"></div>
+              <div class="space-y-1 max-w-[220px]">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-pink-400">Signature Component</span>
+                <h3 class="font-display font-bold text-base">Floating "Create" Orb</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">Protrudes 18px above the dark obsidian bottom dock with a multi-stop cyan-violet-pink bloom.</p>
+              </div>
+
+              <!-- Actual Interactive Orb Button -->
+              <div class="flex flex-col items-center pr-2">
+                <button
+                  onclick="triggerPhoneDrawer('create')"
+                  class="w-16 h-16 rounded-full p-1 bg-obsidian-950 border-2 border-obsidian-800 shadow-orb-glow hover:scale-105 active:scale-95 transition group relative"
+                >
+                  <div class="w-full h-full rounded-full create-orb-gradient flex flex-col items-center justify-center text-white">
+                    <svg class="w-5 h-5 mb-0.5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    <span class="text-[10px] font-bold tracking-tight leading-none">Create</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- 3. CARDS SYSTEM (STUDY DECK, PROGRESS & LEADERBOARD CARDS)          -->
+        <!-- =================================================================== -->
+        <section id="section-cards" class="bg-white/95 rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-purple-soft">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-widest text-brand-600">04 • Content Containers</span>
+              <h2 class="font-display font-bold text-xl text-slate-900">Cards System (Study Decks & Gamified Leaderboard)</h2>
+            </div>
+            <span class="text-xs text-slate-500">Designed to sit on the #F5F4F9 mobile canvas</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- CARD TYPE A: Study Deck Card (Uses Tags from Reference Image 2) -->
+            <div class="rounded-2xl bg-white p-5 border border-brand-100 shadow-purple-soft hover:shadow-card-hover transition group">
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-1 rounded-full bg-brand-100 text-brand-800 font-bold text-[10px] tracking-wider uppercase">1 OF 12</span>
+                  <span class="px-2.5 py-1 rounded-full bg-obsidian-900 text-white font-bold text-[10px] tracking-wider uppercase">BIOLOGY</span>
+                </div>
+                <button onclick="toggleCardFavorite(this)" class="px-2.5 py-1 rounded-full bg-brand-600 text-white font-bold text-[10px] tracking-wider uppercase hover:bg-brand-700 transition">
+                  ★ FAVORITE
+                </button>
+              </div>
+
+              <h3 class="font-display font-bold text-base text-slate-900 group-hover:text-brand-600 transition">Cellular Respiration & ATP Synthesis</h3>
+              <p class="text-xs text-slate-500 mt-1 mb-4">48 Interactive Flashcards • Includes 3D Krebs Cycle diagrams & audio hints</p>
+
+              <!-- Progress Bar -->
+              <div class="mb-4">
+                <div class="flex justify-between text-[11px] font-semibold mb-1.5">
+                  <span class="text-brand-700">Mastery Progress</span>
+                  <span class="text-slate-700">78% (37/48)</span>
+                </div>
+                <div class="w-full h-2.5 rounded-full bg-brand-100 overflow-hidden">
+                  <div class="h-full rounded-full bg-gradient-to-r from-brand-600 to-pink-500 w-[78%]"></div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between pt-3 border-t border-slate-100">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-full bg-brand-600 text-white text-[10px] font-bold flex items-center justify-center">Dr</div>
+                  <span class="text-xs font-medium text-slate-600">Prof. Whiskers</span>
+                </div>
+                <button onclick="switchPhoneTab('library'); showToast('Opened deck in Mobile Preview!')" class="text-xs font-bold text-brand-600 hover:text-brand-800 flex items-center gap-1">
+                  <span>Practice Now</span>
+                  <span>→</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- CARD TYPE B: Leaderboard / Streak Card (Matches Trophy Nav Item) -->
+            <div class="rounded-2xl bg-white p-5 border border-brand-100 shadow-purple-soft flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full flex items-center gap-1">
+                    <span>🏆</span> Weekly League
+                  </span>
+                  <span class="text-xs font-semibold text-brand-600">Top 3% Scholar</span>
+                </div>
+
+                <!-- Mini Podium Row -->
+                <div class="space-y-2.5 my-2">
+                  <div class="flex items-center justify-between p-2.5 rounded-xl bg-brand-50/90 border border-brand-200">
+                    <div class="flex items-center gap-3">
+                      <span class="w-6 h-6 rounded-full bg-amber-400 text-obsidian-950 font-extrabold text-xs flex items-center justify-center">1</span>
+                      <div class="w-8 h-8 rounded-full mascot-header-gradient flex items-center justify-center text-sm">🐱</div>
+                      <div>
+                        <p class="text-xs font-bold text-slate-900">You (Scholar Cat)</p>
+                        <p class="text-[10px] text-brand-600 font-semibold">14-Day Streak 🔥</p>
+                      </div>
+                    </div>
+                    <span class="font-mono font-bold text-xs text-brand-700">2,840 XP</span>
+                  </div>
+
+                  <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200/70">
+                    <div class="flex items-center gap-3">
+                      <span class="w-6 h-6 rounded-full bg-slate-300 text-slate-700 font-bold text-xs flex items-center justify-center">2</span>
+                      <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-sm">🦊</div>
+                      <div>
+                        <p class="text-xs font-semibold text-slate-800">Aria Chen</p>
+                        <p class="text-[10px] text-slate-500">9-Day Streak</p>
+                      </div>
+                    </div>
+                    <span class="font-mono font-semibold text-xs text-slate-600">2,610 XP</span>
+                  </div>
+                </div>
+              </div>
+
+              <button onclick="switchPhoneTab('leaderboard')" class="mt-3 w-full py-2.5 rounded-xl bg-obsidian-900 hover:bg-obsidian-800 text-white font-semibold text-xs transition flex items-center justify-center gap-2">
+                <span>View Full Leaderboard in Phone</span>
+                <span>↗</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- 4. BANNERS SYSTEM (MASCOT HERO BANNER & STATUS ALERTS)              -->
+        <!-- =================================================================== -->
+        <section id="section-banners" class="bg-white/95 rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-purple-soft space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-widest text-brand-600">05 • Promotional & Feedback Banners</span>
+              <h2 class="font-display font-bold text-xl text-slate-900">Mascot Hero Wave Banner & Alert Strips</h2>
+            </div>
+            <span class="text-xs text-slate-500">Directly inspired by the top of Reference Image 1</span>
+          </div>
+
+          <!-- MASCOT PROMOTIONAL BANNER (Replicating Reference Image 1's Header Style) -->
+          <div class="relative rounded-3xl mascot-header-gradient text-white p-6 sm:p-7 overflow-hidden shadow-lg">
+            <!-- Concentric Radial Circles on Right (Exact match to Reference Image 1) -->
+            <div class="absolute -right-12 -top-12 w-72 h-72 rounded-full bg-brand-500/20 pointer-events-none animate-pulse-ring"></div>
+            <div class="absolute -right-4 -top-4 w-52 h-52 rounded-full bg-brand-400/25 pointer-events-none"></div>
+            <div class="absolute right-6 top-6 w-32 h-32 rounded-full bg-brand-300/20 pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+              <div class="space-y-2.5 max-w-md text-center sm:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-xs text-[11px] font-bold uppercase tracking-wider text-purple-200">
+                  <span>✨ Prof. Purr's Daily Challenge</span>
+                </div>
+                <h3 class="font-display font-extrabold text-xl sm:text-2xl leading-tight">
+                  Ready to ace your Finals? Complete 12 cards for +150 XP!
+                </h3>
+                <p class="text-xs sm:text-sm text-purple-200/90">
+                  Your scholar mascot keeps your streak safe when you review at least 1 deck a day.
+                </p>
+                <div class="pt-1 flex flex-wrap justify-center sm:justify-start gap-2.5">
+                  <button onclick="triggerPhoneDrawer('quiz')" class="px-4 py-2.5 rounded-xl font-bold text-xs text-white create-orb-gradient shadow-md hover:opacity-95 transition">
+                    Launch Daily Quiz
+                  </button>
+                  <button onclick="showToast('Streak Reminder Snoozed for 2h')" class="px-4 py-2.5 rounded-xl font-semibold text-xs text-purple-100 bg-white/10 hover:bg-white/20 transition">
+                    Remind Me Later
+                  </button>
+                </div>
+              </div>
+
+              <!-- Cute Fluffy Purple Scholar Cat SVG Illustration (Matching Reference Image 1) -->
+              <div class="w-32 h-32 sm:w-36 sm:h-36 shrink-0 animate-float">
+                <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-xl">
+                  <!-- Concentric Glow Behind Mascot -->
+                  <circle cx="105" cy="105" r="78" fill="#8B5CF6" opacity="0.22"/>
+                  <circle cx="105" cy="105" r="58" fill="#A855F7" opacity="0.28"/>
+                  <!-- Curled Tail -->
+                  <path d="M55 142 C25 140, 22 108, 40 105 C50 104, 52 118, 42 122" stroke="#9F67FF" stroke-width="12" stroke-linecap="round" fill="none"/>
+                  <!-- Little Feet -->
+                  <ellipse cx="82" cy="168" rx="12" ry="8" fill="#8B5CF6"/>
+                  <ellipse cx="126" cy="168" rx="12" ry="8" fill="#8B5CF6"/>
+                  <!-- Fluffy Purple Body (Spiky Fur Silhouette) -->
+                  <path d="M62 72 Q52 60 66 54 Q76 48 86 58 Q105 52 124 58 Q138 48 144 56 Q154 64 144 76 Q160 92 152 115 Q160 135 144 150 Q130 166 105 166 Q78 166 64 150 Q48 135 56 115 Q48 92 62 72 Z" fill="url(#mascotFurGrad)"/>
+                  <defs>
+                    <radialGradient id="mascotFurGrad" cx="45%" cy="38%" r="60%">
+                      <stop offset="0%" stop-color="#C4B5FD"/>
+                      <stop offset="55%" stop-color="#9F67FF"/>
+                      <stop offset="100%" stop-color="#6D28D9"/>
+                    </radialGradient>
+                  </defs>
+                  <!-- Waving Left Arm (Viewer's Right) -->
+                  <path d="M145 112 C164 102, 172 86, 162 78 C154 72, 144 88, 138 98" fill="#9F67FF"/>
+                  <circle cx="161" cy="81" r="7" fill="#C4B5FD"/>
+                  <!-- Right Arm holding Pencil -->
+                  <ellipse cx="78" cy="130" rx="13" ry="9" transform="rotate(-20 78 130)" fill="#8B5CF6"/>
+                  <!-- Cute Orange Pencil -->
+                  <g transform="rotate(28 84 128)">
+                    <rect x="78" y="106" width="8" height="32" rx="2" fill="#F59E0B"/>
+                    <polygon points="78,138 86,138 82,147" fill="#FDE68A"/>
+                    <polygon points="80.5,143 83.5,143 82,147" fill="#1E1B4B"/>
+                    <rect x="78" y="101" width="8" height="6" rx="2" fill="#F472B6"/>
+                  </g>
+                  <!-- Big Expressive Eyes -->
+                  <circle cx="88" cy="100" r="13" fill="#FFFFFF"/>
+                  <circle cx="122" cy="96" r="13" fill="#FFFFFF"/>
+                  <circle cx="90" cy="100" r="8" fill="#2E1065"/>
+                  <circle cx="120" cy="96" r="8" fill="#2E1065"/>
+                  <!-- Eye Sparkles -->
+                  <circle cx="87" cy="96" r="3" fill="#FFFFFF"/>
+                  <circle cx="117" cy="92" r="3" fill="#FFFFFF"/>
+                  <!-- Round Wireframe Scholar Glasses -->
+                  <circle cx="88" cy="100" r="15" fill="none" stroke="#1E1B4B" stroke-width="2.6"/>
+                  <circle cx="122" cy="96" r="15" fill="none" stroke="#1E1B4B" stroke-width="2.6"/>
+                  <path d="M103 99 L107 98" stroke="#1E1B4B" stroke-width="2.6" stroke-linecap="round"/>
+                  <!-- Happy Open Cat Mouth & Tongue -->
+                  <path d="M98 112 Q105 110 112 112 Q114 126 105 126 Q96 126 98 112 Z" fill="#4C0519"/>
+                  <path d="M100 120 Q105 116 110 120 Q108 126 105 126 Q102 126 100 120 Z" fill="#FB7185"/>
+                  <!-- Little Fang -->
+                  <polygon points="100,112 103,112 101.5,116" fill="#FFFFFF"/>
+                  <!-- Graduation Cap (Mortarboard) -->
+                  <polygon points="52,55 104,36 154,50 102,68" fill="#1E1B4B" stroke="#4C1D95" stroke-width="1.5"/>
+                  <path d="M76 60 L76 74 C76 80, 128 78, 128 70 L128 57" fill="#2E1065"/>
+                  <!-- Gold Tassel -->
+                  <path d="M104 51 L138 45 L146 65" stroke="#FBBF24" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                  <circle cx="146" cy="66" r="3.5" fill="#F59E0B"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inline Status / Toast Alert Banners -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Success Banner -->
+            <div class="flex items-center justify-between p-4 rounded-2xl bg-emerald-50/90 border border-emerald-200 text-emerald-900">
+              <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-sm shrink-0">✓</span>
+                <div>
+                  <p class="text-xs font-bold">Deck Synced Offline</p>
+                  <p class="text-[11px] text-emerald-700">All 48 cards are ready for airplane mode study.</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-white text-emerald-700">Ready</span>
+            </div>
+
+            <!-- Error / Warning Streak Banner -->
+            <div class="flex items-center justify-between p-4 rounded-2xl bg-rose-50/90 border border-rose-200 text-rose-900">
+              <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-rose-500 text-white flex items-center justify-center font-bold text-sm shrink-0">!</span>
+                <div>
+                  <p class="text-xs font-bold">Streak Freeze Expiring</p>
+                  <p class="text-[11px] text-rose-700">Review 5 cards in the next 2 hours to keep Day 14.</p>
+                </div>
+              </div>
+              <button onclick="triggerPhoneDrawer('quiz')" class="text-[11px] font-bold px-2.5 py-1.5 rounded-lg bg-rose-600 text-white hover:bg-rose-700 transition">Fix</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- 5. DRAWERS & BOTTOM NAVIGATION BAR SYSTEM                           -->
+        <!-- =================================================================== -->
+        <section id="section-drawers" class="bg-white/95 rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-purple-soft">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-widest text-brand-600">06 • Overlays & Navigation Architecture</span>
+              <h2 class="font-display font-bold text-xl text-slate-900">Interactive Bottom Drawers & Floating 5-Tab Dock</h2>
+            </div>
+            <span class="text-xs text-slate-500">Click any button below to launch the drawer directly inside the phone frame</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <!-- Trigger 1: Create Study Set Drawer -->
+            <button onclick="triggerPhoneDrawer('create')" class="p-4 rounded-2xl border border-brand-200 bg-brand-50/50 hover:bg-brand-100/60 text-left transition group">
+              <div class="w-9 h-9 rounded-xl create-orb-gradient text-white flex items-center justify-center font-bold mb-3 shadow-sm group-hover:scale-105 transition">＋</div>
+              <h3 class="font-display font-bold text-sm text-slate-900">1. "Create" Bottom Sheet</h3>
+              <p class="text-xs text-slate-500 mt-1">Slide-up drawer with AI Flashcard Generator, deck title input, & category selector.</p>
+            </button>
+
+            <!-- Trigger 2: Filter & Tag Drawer -->
+            <button onclick="triggerPhoneDrawer('filter')" class="p-4 rounded-2xl border border-slate-200 bg-slate-50/70 hover:border-brand-300 text-left transition group">
+              <div class="w-9 h-9 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold mb-3 shadow-sm group-hover:scale-105 transition">⚙</div>
+              <h3 class="font-display font-bold text-sm text-slate-900">2. Filter & Preferences Sheet</h3>
+              <p class="text-xs text-slate-500 mt-1">Uses the UI Kit Checkboxes, Radio buttons, Toggles, and Tags inside a drawer.</p>
+            </button>
+
+            <!-- Trigger 3: Quick Flashcard Quiz Drawer -->
+            <button onclick="triggerPhoneDrawer('quiz')" class="p-4 rounded-2xl border border-slate-200 bg-slate-50/70 hover:border-brand-300 text-left transition group">
+              <div class="w-9 h-9 rounded-xl bg-obsidian-900 text-white flex items-center justify-center font-bold mb-3 shadow-sm group-hover:scale-105 transition">⚡</div>
+              <h3 class="font-display font-bold text-sm text-slate-900">3. Interactive Flashcard Sheet</h3>
+              <p class="text-xs text-slate-500 mt-1">Flip flashcards, track 1 OF 12 badge progress, and earn mascot XP.</p>
+            </button>
+          </div>
+
+          <!-- Isolated Component Spec of the Bottom Navigation Bar from Reference Image 1 -->
+          <div class="bg-slate-100/90 rounded-2xl p-5 border border-slate-200/80">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-bold uppercase tracking-widest text-slate-500">ISOLATED DOCK SPEC (FROM REFERENCE IMAGE 1)</span>
+              <span class="font-mono text-[11px] text-brand-700 font-semibold">356px Width • #14141D Surface</span>
+            </div>
+
+            <div class="max-w-md mx-auto pt-4">
+              <div class="relative bg-obsidian-900 h-[74px] rounded-[26px] px-4 flex items-center justify-between text-slate-400 shadow-xl border border-white/5">
+                <!-- Tab 1: My Library -->
+                <button onclick="switchPhoneTab('library')" class="flex flex-col items-center justify-center gap-1 text-brand-300 w-14">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                  <span class="text-[10px] font-semibold leading-tight text-white text-center">My<br>Library</span>
+                </button>
+                <!-- Tab 2: Public Feed -->
+                <button onclick="switchPhoneTab('feed')" class="flex flex-col items-center justify-center gap-1 hover:text-white transition w-14">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                  <span class="text-[10px] font-medium leading-tight text-center">Public<br>Feed</span>
+                </button>
+                <!-- Tab 3: Center Protruding Create Button -->
+                <div class="relative -top-4 flex flex-col items-center">
+                  <button onclick="triggerPhoneDrawer('create')" class="w-16 h-16 rounded-full p-1 bg-obsidian-900 border-[3px] border-obsidian-950 shadow-orb-glow hover:scale-105 transition">
+                    <div class="w-full h-full rounded-full create-orb-gradient flex flex-col items-center justify-center text-white">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                      <span class="text-[10px] font-bold tracking-tight">Create</span>
+                    </div>
+                  </button>
+                </div>
+                <!-- Tab 4: Ranks -->
+                <button onclick="switchPhoneTab('leaderboard')" class="flex flex-col items-center justify-center gap-1 hover:text-white transition w-16">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"></path>
+                    <path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"></path>
+                    <path d="M18 9h1.5a1 1 0 0 0 0-5H18"></path><path d="M4 22h16"></path>
+                    <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"></path>
+                    <path d="M6 9H4.5a1 1 0 0 1 0-5H6"></path>
+                  </svg>
+                  <span class="text-[10px] font-medium leading-tight text-center">Ranks</span>
+                </button>
+                <!-- Tab 5: Android App -->
+                <button onclick="switchPhoneTab('app')" class="flex flex-col items-center justify-center gap-1 hover:text-white transition w-14">
+                  <div class="relative">
+                    <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-brand-800 to-brand-400 border border-slate-500 flex items-center justify-center text-[11px]">🐱</div>
+                    <span class="w-2.5 h-2.5 rounded-full bg-brand-300 border-2 border-obsidian-900 absolute -bottom-0.5 -right-0.5"></span>
+                  </div>
+                  <span class="text-[10px] font-medium leading-tight text-center">Android<br>App</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- RIGHT COLUMN: LIVE INTERACTIVE MOBILE APP PREVIEW (356 x 686 SPEC)  -->
+      <!-- =================================================================== -->
+      <div class="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24 flex flex-col items-center">
+
+        <!-- Blueprint Dimension Label (Matching Reference Image 1's blue "356 Fill x 686" badge) -->
+        <div class="mb-3 flex items-center gap-2">
+          <span class="px-3 py-1 rounded-md bg-[#1890FF] text-white font-mono font-bold text-xs shadow-sm">
+            356 Fill × 686 • Live App Prototype
+          </span>
+          <span class="text-xs text-slate-500 font-medium">Interactive</span>
+        </div>
+
+        <!-- PHONE FRAME CONTAINER (Exact 356px width x 686px height proportion from Reference Image 1) -->
+        <div class="relative w-[356px] h-[686px] rounded-[40px] bg-white shadow-[0_25px_70px_-15px_rgba(30,11,75,0.38)] border-[5px] border-[#1F93FF]/80 overflow-hidden flex flex-col select-none">
+
+          <!-- Figma Corner Handles (Visual nod to Reference Image 1) -->
+          <div class="w-2.5 h-2.5 bg-white border-2 border-[#1890FF] absolute top-0 left-0 z-50 pointer-events-none"></div>
+          <div class="w-2.5 h-2.5 bg-white border-2 border-[#1890FF] absolute top-0 right-0 z-50 pointer-events-none"></div>
+
+          <!-- =============================================================== -->
+          <!-- 1. TOP PURPLE MASCOT HEADER WITH CURVED WAVE (Ref Image 1)      -->
+          <!-- =============================================================== -->
+          <div class="relative h-[205px] shrink-0 mascot-header-gradient text-white overflow-hidden">
+            <!-- Concentric Radial Violet Circles on Right (Exact match to Ref Image 1) -->
+            <div class="absolute -right-12 -top-10 w-[230px] h-[230px] rounded-full bg-[#4E1CA8]/35"></div>
+            <div class="absolute -right-4 -top-2 w-[176px] h-[176px] rounded-full bg-[#6929D4]/45"></div>
+            <div class="absolute right-4 top-6 w-[124px] h-[124px] rounded-full bg-[#7C3AED]/55"></div>
+
+            <!-- iOS Status Bar (9:41 + Signal/WiFi/Battery) -->
+            <div class="relative z-20 px-6 pt-3 pb-1 flex items-center justify-between text-xs font-semibold tracking-tight text-white/95">
+              <span>9:41</span>
+              <div class="flex items-center gap-1.5">
+                <!-- Cellular Bars -->
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 16 16">
+                  <rect x="1" y="10" width="2.2" height="4" rx="0.6"/>
+                  <rect x="4.5" y="8" width="2.2" height="6" rx="0.6"/>
+                  <rect x="8" y="5.5" width="2.2" height="8.5" rx="0.6"/>
+                  <rect x="11.5" y="3" width="2.2" height="11" rx="0.6" opacity="0.45"/>
+                </svg>
+                <!-- WiFi -->
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/>
+                </svg>
+                <!-- Battery -->
+                <div class="w-5 h-2.5 rounded-[3px] border border-white/70 p-[1.5px] flex items-center">
+                  <div class="w-full h-full bg-white rounded-[1px]"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Header Greeting + Streak Pill (Left side of Mascot) -->
+            <div class="relative z-20 px-5 pt-2 max-w-[215px]">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-xs text-[10px] font-bold text-purple-200 mb-1.5 border border-white/10">
+                <span>🔥 14-Day Streak</span>
+                <span class="text-amber-300">• 2,840 XP</span>
+              </div>
+              <h2 id="phone-header-title" class="font-display font-extrabold text-[19px] leading-snug tracking-tight">
+                Hi Scholar! Ready for today's review?
+              </h2>
+              <p id="phone-header-subtitle" class="text-[11px] text-purple-200/90 mt-0.5">
+                3 study decks due for spaced recall
+              </p>
+            </div>
+
+            <!-- Fluffy Purple Scholar Mascot Positioned Right (Exact match to Ref Image 1) -->
+            <div onclick="triggerPhoneDrawer('quiz')" class="cursor-pointer absolute right-2 top-7 w-[122px] h-[122px] z-20 animate-float" title="Click Prof. Purr for a Quick Quiz!">
+              <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-lg">
+                <!-- Curled Tail -->
+                <path d="M55 142 C25 140, 22 108, 40 105 C50 104, 52 118, 42 122" stroke="#9F67FF" stroke-width="12" stroke-linecap="round" fill="none"/>
+                <!-- Feet -->
+                <ellipse cx="82" cy="168" rx="12" ry="8" fill="#8B5CF6"/>
+                <ellipse cx="126" cy="168" rx="12" ry="8" fill="#8B5CF6"/>
+                <!-- Fluffy Purple Body -->
+                <path d="M62 72 Q52 60 66 54 Q76 48 86 58 Q105 52 124 58 Q138 48 144 56 Q154 64 144 76 Q160 92 152 115 Q160 135 144 150 Q130 166 105 166 Q78 166 64 150 Q48 135 56 115 Q48 92 62 72 Z" fill="url(#mascotFurGrad)"/>
+                <!-- Waving Left Arm -->
+                <path d="M145 112 C164 102, 172 86, 162 78 C154 72, 144 88, 138 98" fill="#9F67FF"/>
+                <circle cx="161" cy="81" r="7" fill="#C4B5FD"/>
+                <!-- Right Arm & Pencil -->
+                <ellipse cx="78" cy="130" rx="13" ry="9" transform="rotate(-20 78 130)" fill="#8B5CF6"/>
+                <g transform="rotate(28 84 128)">
+                  <rect x="78" y="106" width="8" height="32" rx="2" fill="#F59E0B"/>
+                  <polygon points="78,138 86,138 82,147" fill="#FDE68A"/>
+                  <polygon points="80.5,143 83.5,143 82,147" fill="#1E1B4B"/>
+                  <rect x="78" y="101" width="8" height="6" rx="2" fill="#F472B6"/>
+                </g>
+                <!-- Eyes -->
+                <circle cx="88" cy="100" r="13" fill="#FFFFFF"/>
+                <circle cx="122" cy="96" r="13" fill="#FFFFFF"/>
+                <circle cx="90" cy="100" r="8" fill="#2E1065"/>
+                <circle cx="120" cy="96" r="8" fill="#2E1065"/>
+                <circle cx="87" cy="96" r="3" fill="#FFFFFF"/>
+                <circle cx="117" cy="92" r="3" fill="#FFFFFF"/>
+                <!-- Glasses -->
+                <circle cx="88" cy="100" r="15" fill="none" stroke="#1E1B4B" stroke-width="2.6"/>
+                <circle cx="122" cy="96" r="15" fill="none" stroke="#1E1B4B" stroke-width="2.6"/>
+                <path d="M103 99 L107 98" stroke="#1E1B4B" stroke-width="2.6" stroke-linecap="round"/>
+                <!-- Smile -->
+                <path d="M98 112 Q105 110 112 112 Q114 126 105 126 Q96 126 98 112 Z" fill="#4C0519"/>
+                <path d="M100 120 Q105 116 110 120 Q108 126 105 126 Q102 126 100 120 Z" fill="#FB7185"/>
+                <!-- Graduation Cap -->
+                <polygon points="52,55 104,36 154,50 102,68" fill="#1E1B4B" stroke="#4C1D95" stroke-width="1.5"/>
+                <path d="M76 60 L76 74 C76 80, 128 78, 128 70 L128 57" fill="#2E1065"/>
+                <path d="M104 51 L138 45 L146 65" stroke="#FBBF24" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <circle cx="146" cy="66" r="3.5" fill="#F59E0B"/>
+              </svg>
+            </div>
+
+            <!-- Smooth White-Lavender Wave Divider at Bottom of Header (Exact match to Ref Image 1) -->
+            <svg class="absolute bottom-0 left-0 w-full h-7 text-[#F5F4F9]" viewBox="0 0 356 32" fill="currentColor" preserveAspectRatio="none">
+              <path d="M0 18 Q95 28 195 14 T356 18 L356 32 L0 32 Z" fill-opacity="0.35"/>
+              <path d="M0 24 Q110 34 215 16 T356 22 L356 32 L0 32 Z"/>
+            </svg>
+          </div>
+
+          <!-- =============================================================== -->
+          <!-- 2. SCROLLABLE MOBILE BODY (FILLS THE BLANK CANVAS IN REF 1)     -->
+          <!-- =============================================================== -->
+          <div id="phone-scroll-body" class="flex-1 mobile-surface-bg px-4 pt-1 pb-24 overflow-y-auto no-scrollbar space-y-3.5">
+
+            <!-- Search + Filter Bar (Uses UI Kit Input & Filter Button) -->
+            <div class="flex items-center gap-2">
+              <div class="relative flex-1">
+                <svg class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input
+                  id="phone-search-input"
+                  type="text"
+                  placeholder="Search study sets..."
+                  oninput="filterMobileDecks(this.value)"
+                  class="w-full h-9 pl-8 pr-3 rounded-xl bg-white border border-slate-200/90 text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-600 shadow-2xs"
+                />
+              </div>
+              <button
+                onclick="triggerPhoneDrawer('filter')"
+                class="h-9 px-3 rounded-xl bg-white border border-slate-200/90 hover:border-brand-500 text-brand-700 text-xs font-semibold flex items-center gap-1 shadow-2xs"
+                title="Open Filter Drawer"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                <span>Filter</span>
+              </button>
+            </div>
+
+            <!-- Interactive Tag Pills Strip (Exact Reference Image 2 Tags inside the App) -->
+            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+              <button onclick="filterByTag('all')" id="phone-tag-all" class="shrink-0 px-3 py-1 rounded-full bg-obsidian-900 text-white font-bold text-[10px] tracking-wider uppercase shadow-2xs">
+                ALL SETS
+              </button>
+              <button onclick="filterByTag('favorite')" id="phone-tag-favorite" class="shrink-0 px-3 py-1 rounded-full bg-brand-600 text-white font-bold text-[10px] tracking-wider uppercase">
+                FAVORITE
+              </button>
+              <button onclick="filterByTag('progress')" id="phone-tag-progress" class="shrink-0 px-3 py-1 rounded-full bg-brand-100 text-brand-900 font-bold text-[10px] tracking-wider uppercase">
+                1 OF 12
+              </button>
+              <button onclick="filterByTag('shared')" id="phone-tag-shared" class="shrink-0 px-3 py-1 rounded-full bg-white text-brand-700 border border-slate-300 font-bold text-[10px] tracking-wider uppercase flex items-center gap-1">
+                <span>🔗</span> SHARED
+              </button>
+            </div>
+
+            <!-- Compact Daily Goal Banner -->
+            <div class="p-3 rounded-2xl bg-gradient-to-r from-brand-600 to-brand-800 text-white shadow-sm flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-white/15 flex items-center justify-center text-base">⚡</div>
+                <div>
+                  <p class="text-[11px] font-bold leading-tight">Daily Blitz Quiz Ready</p>
+                  <p class="text-[10px] text-purple-200">Earn +50 bonus XP in 60 seconds</p>
+                </div>
+              </div>
+              <button onclick="triggerPhoneDrawer('quiz')" class="px-2.5 py-1.5 rounded-lg bg-white text-brand-800 font-extrabold text-[10px] shadow-xs hover:bg-purple-50 transition">
+                Start
+              </button>
+            </div>
+
+            <!-- Dynamic Tab Content Container -->
+            <div id="phone-cards-list" class="space-y-2.5">
+              <!-- Populated dynamically by JS so tabs, search, tags, and new deck creation all work live -->
+            </div>
+
+          </div>
+
+          <!-- =============================================================== -->
+          <!-- 3. SLIDE-UP BOTTOM DRAWER OVERLAY (INSIDE PHONE FRAME)          -->
+          <!-- =============================================================== -->
+          <div id="phone-drawer-backdrop" onclick="closePhoneDrawer()" class="drawer-backdrop absolute inset-0 bg-obsidian-950/60 backdrop-blur-[2px] z-30 opacity-0 pointer-events-none"></div>
+
+          <div id="phone-drawer-sheet" class="drawer-sheet absolute bottom-0 left-0 right-0 z-40 bg-white rounded-t-[30px] shadow-2xl border-t border-brand-100 p-5 translate-y-full max-h-[82%] overflow-y-auto no-scrollbar">
+            <!-- Drag Handle -->
+            <div class="w-10 h-1.5 bg-slate-200 rounded-full mx-auto mb-3"></div>
+            <!-- Dynamic Drawer Body -->
+            <div id="phone-drawer-content"></div>
+          </div>
+
+          <!-- =============================================================== -->
+          <!-- 4. FLOATING DARK OBSIDIAN BOTTOM NAV BAR (Exact Ref Image 1)    -->
+          <!-- =============================================================== -->
+          <div class="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
+            <div class="bg-obsidian-900 h-[72px] rounded-t-[24px] rounded-b-[34px] px-3 flex items-center justify-between text-slate-400 shadow-2xl pointer-events-auto relative">
+
+              <!-- Nav 1: My Library -->
+              <button onclick="switchPhoneTab('library')" id="nav-btn-library" class="flex flex-col items-center justify-center gap-0.5 text-brand-300 w-14 py-1 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+                <span class="text-[9.5px] font-semibold leading-[1.1] text-white text-center">My<br>Library</span>
+              </button>
+
+              <!-- Nav 2: Public Feed -->
+              <button onclick="switchPhoneTab('feed')" id="nav-btn-feed" class="flex flex-col items-center justify-center gap-0.5 hover:text-white w-14 py-1 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                </svg>
+                <span class="text-[9.5px] font-medium leading-[1.1] text-center">Public<br>Feed</span>
+              </button>
+
+              <!-- Nav 3: Center Protruding 'Create' Orb (Exact match to Reference Image 1) -->
+              <div class="relative -top-4 flex flex-col items-center">
+                <button
+                  onclick="triggerPhoneDrawer('create')"
+                  class="w-[62px] h-[62px] rounded-full p-1 bg-obsidian-900 border-[3px] border-obsidian-950 shadow-orb-glow hover:scale-105 active:scale-95 transition"
+                  title="Create New Study Deck"
+                >
+                  <div class="w-full h-full rounded-full create-orb-gradient flex flex-col items-center justify-center text-white">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    <span class="text-[9.5px] font-bold tracking-tight leading-none mt-0.5">Create</span>
+                  </div>
+                </button>
+              </div>
+
+              <!-- Nav 4: Ranks -->
+              <button onclick="switchPhoneTab('leaderboard')" id="nav-btn-leaderboard" class="flex flex-col items-center justify-center gap-1 hover:text-white w-15 py-1 transition">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"></path>
+                  <path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"></path>
+                  <path d="M18 9h1.5a1 1 0 0 0 0-5H18"></path><path d="M4 22h16"></path>
+                  <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"></path>
+                  <path d="M6 9H4.5a1 1 0 0 1 0-5H6"></path>
+                </svg>
+                <span class="text-[9.5px] font-medium leading-none text-center">Ranks</span>
+              </button>
+
+              <!-- Nav 5: Android App -->
+              <button onclick="switchPhoneTab('app')" id="nav-btn-app" class="flex flex-col items-center justify-center gap-0.5 hover:text-white w-14 py-1 transition">
+                <div class="relative">
+                  <div class="w-5 h-5 rounded-full bg-gradient-to-tr from-obsidian-800 to-brand-500 border border-slate-500 flex items-center justify-center text-[10px]">
+                    🐱
+                  </div>
+                  <span class="w-2 h-2 rounded-full bg-brand-300 border border-obsidian-900 absolute -bottom-0.5 -right-0.5"></span>
+                </div>
+                <span class="text-[9.5px] font-medium leading-[1.1] text-center">Android<br>App</span>
+              </button>
+
+              <!-- iOS Home Indicator Bar -->
+              <div class="w-28 h-1 bg-white/25 rounded-full absolute bottom-1.5 left-1/2 -translate-x-1/2"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Helper Caption Under Phone -->
+        <p class="text-xs text-slate-500 mt-3 text-center max-w-xs">
+          💡 Click the glowing <strong class="text-brand-600">Create</strong> orb, switch bottom tabs, or click <strong class="text-brand-600">Prof. Purr</strong> in the header to test drawers!
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- INTERACTIVE JAVASCRIPT LOGIC FOR UI KIT & MOBILE APP PROTOTYPE        -->
+  <!-- ===================================================================== -->
+  <script>
+    // Initial Study Decks Data for the Mobile App
+    const studyDecks = [
+      {
+        id: 1,
+        title: 'Cellular Respiration & ATP',
+        category: 'BIOLOGY',
+        stepTag: '1 OF 12',
+        cardsCount: 48,
+        progress: 78,
+        favorite: true,
+        shared: true,
+        author: 'Prof. Whiskers'
+      },
+      {
+        id: 2,
+        title: 'Organic Chemistry Functional Groups',
+        category: 'CHEMISTRY',
+        stepTag: '4 OF 12',
+        cardsCount: 36,
+        progress: 45,
+        favorite: true,
+        shared: false,
+        author: 'Aria Chen'
+      },
+      {
+        id: 3,
+        title: 'UI/UX Design Tokens & Heuristics',
+        category: 'DESIGN',
+        stepTag: '9 OF 12',
+        cardsCount: 24,
+        progress: 92,
+        favorite: false,
+        shared: true,
+        author: 'DesignMonks'
+      },
+      {
+        id: 4,
+        title: 'Astrophysics & Stellar Evolution',
+        category: 'PHYSICS',
+        stepTag: '2 OF 12',
+        cardsCount: 60,
+        progress: 25,
+        favorite: false,
+        shared: true,
+        author: 'Dr. Nova'
+      }
+    ];
+
+    let currentTab = 'library';
+    let currentTagFilter = 'all';
+    let currentSearchQuery = '';
+    let activeQuizIndex = 0;
+    let quizFlipped = false;
+
+    const sampleFlashcards = [
+      {
+        q: 'What organelle is known as the powerhouse of the eukaryotic cell, generating most chemical energy (ATP)?',
+        a: 'The Mitochondrion — site of the citric acid cycle and oxidative phosphorylation.'
+      },
+      {
+        q: 'How many net ATP molecules are produced during cytoplasmic Glycolysis per glucose molecule?',
+        a: '2 net ATP molecules (4 produced minus 2 invested) + 2 NADH.'
+      },
+      {
+        q: 'Which pigment molecule in chloroplasts absorbs photon energy during the light-dependent reactions?',
+        a: 'Chlorophyll a (primarily absorbing violet-blue and orange-red wavelengths).'
+      }
+    ];
+
+    // Render Mobile Screen Content based on Tab & Filters
+    function renderMobileScreen() {
+      const container = document.getElementById('phone-cards-list');
+      const headerTitle = document.getElementById('phone-header-title');
+      const headerSubtitle = document.getElementById('phone-header-subtitle');
+
+      if (currentTab === 'library' || currentTab === 'feed') {
+        headerTitle.textContent = currentTab === 'library'
+          ? "Hi Scholar! Ready for today's review?"
+          : "Public Community Study Feed";
+        headerSubtitle.textContent = currentTab === 'library'
+          ? `${studyDecks.length} study decks in your personal library`
+          : "Trending flashcards shared by top scholars";
+
+        const filtered = studyDecks.filter(deck => {
+          const matchesSearch = deck.title.toLowerCase().includes(currentSearchQuery.toLowerCase()) ||
+                                deck.category.toLowerCase().includes(currentSearchQuery.toLowerCase());
+          if (!matchesSearch) return false;
+          if (currentTagFilter === 'favorite') return deck.favorite;
+          if (currentTagFilter === 'shared') return deck.shared;
+          if (currentTagFilter === 'progress') return deck.progress < 85;
+          return true;
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div class="bg-white rounded-2xl p-6 text-center border border-slate-200/80 my-2">
+              <div class="text-2xl mb-1">🐾</div>
+              <p class="text-xs font-bold text-slate-800">No matching study decks</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Try clearing filters or click 'Create' below!</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = filtered.map(deck => `
+          <div class="bg-white rounded-2xl p-3.5 border border-brand-100/90 shadow-purple-soft hover:border-brand-300 transition">
+            <div class="flex items-center justify-between gap-1.5 mb-2">
+              <div class="flex items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded-full bg-brand-100 text-brand-800 font-bold text-[9px] tracking-wider uppercase">${deck.stepTag}</span>
+                <span class="px-2 py-0.5 rounded-full bg-obsidian-900 text-white font-bold text-[9px] tracking-wider uppercase">${deck.category}</span>
+                ${deck.shared ? `<span class="px-2 py-0.5 rounded-full bg-white border border-slate-200 text-brand-700 font-bold text-[9px] uppercase">SHARED</span>` : ''}
+              </div>
+              <button onclick="toggleMobileDeckFav(${deck.id})" class="px-2 py-0.5 rounded-full ${deck.favorite ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-500'} font-bold text-[9px] uppercase transition">
+                ${deck.favorite ? '★ FAV' : '☆ FAV'}
+              </button>
+            </div>
+
+            <h4 class="font-display font-bold text-xs text-slate-900">${deck.title}</h4>
+            <p class="text-[10px] text-slate-500 mt-0.5 mb-2.5">${deck.cardsCount} Flashcards • By ${deck.author}</p>
+
+            <div class="w-full h-1.5 rounded-full bg-brand-100 overflow-hidden mb-2">
+              <div class="h-full rounded-full bg-gradient-to-r from-brand-600 to-pink-500" style="width: ${deck.progress}%"></div>
+            </div>
+
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="font-semibold text-brand-700">${deck.progress}% Mastered</span>
+              <button onclick="triggerPhoneDrawer('quiz')" class="font-bold text-brand-600 hover:underline">Study Deck →</button>
+            </div>
+          </div>
+        `).join('');
+
+      } else if (currentTab === 'leaderboard') {
+        headerTitle.textContent = "Global Scholar Ranks 🏆";
+        headerSubtitle.textContent = "Diamond League • Top 10 advance Sunday";
+
+        container.innerHTML = `
+          <!-- Visual 1-2-3 Podium Card -->
+          <div class="bg-white rounded-2xl p-3.5 border border-brand-100/90 shadow-purple-soft">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded-full bg-brand-100 text-brand-800 font-bold text-[9px] tracking-wider uppercase">TOP 3 PODIUM</span>
+              <span class="font-mono text-[9.5px] font-bold text-brand-600">2D : 14H LEFT</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2 items-end pt-3 pb-1 text-center">
+              <!-- #2 Silver -->
+              <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-brand-50 border-2 border-brand-300 flex items-center justify-center text-sm shadow-xs mb-1">🦊</div>
+                <p class="text-[10px] font-bold text-slate-800 truncate w-full">Aria Chen</p>
+                <span class="font-mono text-[9px] font-bold text-brand-600 mb-1">2,610 XP</span>
+                <div class="w-full h-11 rounded-t-xl bg-gradient-to-b from-white to-brand-50 border border-brand-100 flex items-center justify-center font-display font-black text-base text-brand-400">2</div>
+              </div>
+              <!-- #1 Gold Champion -->
+              <div class="flex flex-col items-center">
+                <span class="text-xs -mb-0.5">👑</span>
+                <div class="w-12 h-12 rounded-full bg-amber-50 border-2 border-amber-400 flex items-center justify-center text-base shadow-md mb-1">🐱</div>
+                <p class="text-[10.5px] font-extrabold text-slate-900 truncate w-full">Prof. Purr</p>
+                <span class="px-1.5 py-0.5 rounded-full create-orb-gradient text-white font-mono text-[9px] font-bold mb-1">2,840 XP</span>
+                <div class="w-full h-14 rounded-t-xl bg-gradient-to-b from-amber-50/90 to-brand-50 border border-amber-300/80 flex items-center justify-center font-display font-black text-xl text-amber-500">1</div>
+              </div>
+              <!-- #3 Bronze -->
+              <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-orange-50 border-2 border-amber-500/70 flex items-center justify-center text-sm shadow-xs mb-1">🦉</div>
+                <p class="text-[10px] font-bold text-slate-800 truncate w-full">Liam O'C</p>
+                <span class="font-mono text-[9px] font-bold text-amber-700 mb-1">2,390 XP</span>
+                <div class="w-full h-9 rounded-t-xl bg-gradient-to-b from-white to-orange-50/50 border border-orange-200/80 flex items-center justify-center font-display font-black text-sm text-amber-700/70">3</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Promotion Zone List -->
+          <div class="bg-white rounded-2xl p-3.5 border border-brand-100/90 shadow-purple-soft space-y-2">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+              <span class="text-[9.5px] font-bold uppercase tracking-wider text-brand-600">Promotion Zone</span>
+              <span class="text-[9.5px] font-bold uppercase tracking-wider text-emerald-600">▲ Top 10</span>
+            </div>
+            ${[
+              { rank: '04', name: 'Sora Takahashi', xp: '1,980 XP', streak: '19d 🔥', highlight: 'bg-white border-slate-100' },
+              { rank: '05', name: 'You (Alex R.)', xp: '1,845 XP', streak: '14d 🔥', highlight: 'bg-brand-50/90 border-brand-300' },
+              { rank: '06', name: 'Maya Lin', xp: '1,720 XP', streak: '11d 🔥', highlight: 'bg-white border-slate-100' }
+            ].map(u => `
+              <div class="flex items-center justify-between p-2 rounded-xl border ${u.highlight}">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-5 h-5 rounded-lg bg-obsidian-900 text-white font-mono font-bold text-[9.5px] flex items-center justify-center">${u.rank}</span>
+                  <div>
+                    <p class="text-xs font-bold text-slate-800">${u.name}</p>
+                    <p class="text-[9.5px] text-slate-500">Streak: ${u.streak}</p>
+                  </div>
+                </div>
+                <span class="font-mono font-bold text-xs text-brand-700">${u.xp}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (currentTab === 'app') {
+        headerTitle.textContent = "PurrLearn Android Companion";
+        headerSubtitle.textContent = "Offline widgets & lock-screen flashcards";
+
+        container.innerHTML = `
+          <div class="bg-white rounded-2xl p-4 border border-brand-100 shadow-purple-soft space-y-3 text-center">
+            <div class="w-12 h-12 rounded-2xl mascot-header-gradient text-white mx-auto flex items-center justify-center text-2xl shadow-md">🤖</div>
+            <h4 class="font-display font-bold text-sm text-slate-900">Sync with Android Widget</h4>
+            <p class="text-[11px] text-slate-500 leading-relaxed">
+              Add Prof. Purr to your Android home screen to practice flashcards without opening the app.
+            </p>
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-brand-50 text-left">
+              <div>
+                <p class="text-[11px] font-bold text-brand-900">Push Streak Reminders</p>
+                <p class="text-[10px] text-brand-600">Every evening at 8:00 PM</p>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-brand-600 text-white text-[10px] font-bold">ACTIVE</span>
+            </div>
+            <button onclick="showToast('Android APK Sync Link Copied!')" class="w-full py-2.5 rounded-xl create-orb-gradient text-white font-bold text-xs shadow-sm">
+              Send APK Link to Phone
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    // Switch Bottom Navigation Tabs inside Phone
+    function switchPhoneTab(tab) {
+      currentTab = tab;
+      closePhoneDrawer();
+      ['library', 'feed', 'leaderboard', 'app'].forEach(t => {
+        const btn = document.getElementById(`nav-btn-${t}`);
+        if (!btn) return;
+        if (t === tab) {
+          btn.classList.add('text-brand-300');
+          btn.classList.remove('text-slate-400');
+        } else {
+          btn.classList.remove('text-brand-300');
+          btn.classList.add('text-slate-400');
+        }
+      });
+      renderMobileScreen();
+    }
+
+    // Filter Mobile Decks by Tag
+    function filterByTag(tag) {
+      currentTagFilter = tag;
+      currentTab = 'library';
+      renderMobileScreen();
+      showToast(`Filtered Mobile Preview by: ${tag.toUpperCase()}`);
+    }
+
+    // Search Filter
+    function filterMobileDecks(query) {
+      currentSearchQuery = query;
+      renderMobileScreen();
+    }
+    function filterMobileDecksFromKit(query) {
+      const phoneInput = document.getElementById('phone-search-input');
+      if (phoneInput) phoneInput.value = query;
+      currentSearchQuery = query;
+      renderMobileScreen();
+    }
+
+    // Toggle Favorite on Mobile Deck
+    function toggleMobileDeckFav(id) {
+      const deck = studyDecks.find(d => d.id === id);
+      if (deck) {
+        deck.favorite = !deck.favorite;
+        renderMobileScreen();
+        showToast(deck.favorite ? 'Added to Favorites ★' : 'Removed from Favorites');
+      }
+    }
+
+    // Open Slide-Up Drawer inside Phone Frame
+    function triggerPhoneDrawer(mode) {
+      const backdrop = document.getElementById('phone-drawer-backdrop');
+      const sheet = document.getElementById('phone-drawer-sheet');
+      const content = document.getElementById('phone-drawer-content');
+
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      sheet.classList.remove('translate-y-full');
+
+      if (mode === 'create') {
+        content.innerHTML = `
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-brand-600">New Study Set</span>
+              <h3 class="font-display font-extrabold text-base text-slate-900">Create Flashcard Deck</h3>
+            </div>
+            <button onclick="closePhoneDrawer()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 text-xs font-bold">✕</button>
+          </div>
+
+          <form onsubmit="handleCreateDeck(event)" class="space-y-3">
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Deck Title</label>
+              <input id="new-deck-title" type="text" required placeholder="e.g., Neuroscience Synapses" class="w-full h-10 px-3 rounded-xl border border-brand-500 text-xs font-medium text-slate-800 focus:outline-none" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Category Tag</label>
+                <select id="new-deck-cat" class="w-full h-10 px-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 bg-white">
+                  <option value="BIOLOGY">BIOLOGY</option>
+                  <option value="COMPUTER SCI">COMPUTER SCI</option>
+                  <option value="MEDICINE">MEDICINE</option>
+                  <option value="LANGUAGES">LANGUAGES</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Visibility</label>
+                <div class="h-10 px-3 rounded-xl border border-slate-200 flex items-center justify-between">
+                  <span class="text-xs font-medium text-slate-700">Shared</span>
+                  <input id="new-deck-shared" type="checkbox" checked class="accent-brand-600 w-4 h-4 rounded" />
+                </div>
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-brand-50 border border-brand-100 flex items-center gap-2">
+              <span class="text-base">✨</span>
+              <p class="text-[10px] text-brand-800 font-medium leading-tight">Prof. Purr AI will auto-generate 12 starter flashcards from your title.</p>
+            </div>
+
+            <button type="submit" class="w-full py-3 rounded-xl create-orb-gradient text-white font-bold text-xs shadow-md hover:opacity-95 transition">
+              ＋ Publish Deck to Library
+            </button>
+          </form>
+        `;
+      } else if (mode === 'filter') {
+        content.innerHTML = `
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-brand-600">UI Kit Controls</span>
+              <h3 class="font-display font-extrabold text-base text-slate-900">Filter & Study Settings</h3>
+            </div>
+            <button onclick="closePhoneDrawer()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 text-xs font-bold">✕</button>
+          </div>
+
+          <div class="space-y-3.5 text-xs">
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Quick Tag Filter</p>
+              <div class="flex flex-wrap gap-1.5">
+                <button onclick="filterByTag('all'); closePhoneDrawer();" class="px-3 py-1.5 rounded-full bg-obsidian-900 text-white font-bold text-[10px]">ALL</button>
+                <button onclick="filterByTag('favorite'); closePhoneDrawer();" class="px-3 py-1.5 rounded-full bg-brand-600 text-white font-bold text-[10px]">FAVORITE</button>
+                <button onclick="filterByTag('shared'); closePhoneDrawer();" class="px-3 py-1.5 rounded-full border border-slate-300 text-brand-700 font-bold text-[10px]">SHARED</button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between py-2 border-y border-slate-100">
+              <span class="font-semibold text-slate-700">Include Audio Pronunciation</span>
+              <button onclick="flipToggle(this.parentElement)" data-on="true" class="w-10 h-6 rounded-full bg-brand-600 p-0.5 flex items-center">
+                <span class="w-4 h-4 rounded-full bg-white transform translate-x-4 transition"></span>
+              </button>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-slate-700">Shuffle Card Order</span>
+              <button onclick="flipToggle(this.parentElement)" data-on="true" class="w-10 h-6 rounded-full bg-brand-600 p-0.5 flex items-center">
+                <span class="w-4 h-4 rounded-full bg-white transform translate-x-4 transition"></span>
+              </button>
+            </div>
+
+            <button onclick="closePhoneDrawer(); showToast('Preferences Applied!')" class="w-full py-2.5 rounded-xl mascot-header-gradient text-white font-bold text-xs">
+              Apply Filters
+            </button>
+          </div>
+        `;
+      } else if (mode === 'quiz') {
+        renderQuizDrawerContent();
+      }
+    }
+
+    function renderQuizDrawerContent() {
+      const content = document.getElementById('phone-drawer-content');
+      const card = sampleFlashcards[activeQuizIndex];
+      content.innerHTML = `
+        <div class="flex items-center justify-between mb-3">
+          <span class="px-2.5 py-1 rounded-full bg-brand-100 text-brand-800 font-bold text-[10px] uppercase">
+            CARD ${activeQuizIndex + 1} OF ${sampleFlashcards.length}
+          </span>
+          <button onclick="closePhoneDrawer()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 text-xs font-bold">✕</button>
+        </div>
+
+        <div onclick="flipQuizCard()" class="cursor-pointer p-5 rounded-2xl ${quizFlipped ? 'mascot-header-gradient text-white' : 'bg-brand-50/90 border-2 border-brand-200 text-slate-800'} min-h-[135px] flex flex-col justify-between transition-all">
+          <span class="text-[10px] font-bold uppercase tracking-wider ${quizFlipped ? 'text-pink-300' : 'text-brand-600'}">
+            ${quizFlipped ? '✓ Answer Revealed' : 'Question (Tap Card to Flip)'}
+          </span>
+          <p class="font-display font-bold text-xs leading-relaxed my-2">
+            ${quizFlipped ? card.a : card.q}
+          </p>
+          <span class="text-[10px] opacity-75">Tap anywhere on card to flip ↻</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 mt-3">
+          <button onclick="nextQuizCard(false)" class="py-2.5 rounded-xl bg-rose-50 text-rose-700 font-bold text-xs border border-rose-200">
+            Still Learning
+          </button>
+          <button onclick="nextQuizCard(true)" class="py-2.5 rounded-xl bg-emerald-500 text-white font-bold text-xs shadow-xs">
+            Got It (+15 XP)
+          </button>
+        </div>
+      `;
+    }
+
+    function flipQuizCard() {
+      quizFlipped = !quizFlipped;
+      renderQuizDrawerContent();
+    }
+
+    function nextQuizCard(knewIt) {
+      quizFlipped = false;
+      activeQuizIndex = (activeQuizIndex + 1) % sampleFlashcards.length;
+      if (knewIt) showToast('Awesome! +15 XP added to your streak 🎓');
+      renderQuizDrawerContent();
+    }
+
+    function closePhoneDrawer() {
+      const backdrop = document.getElementById('phone-drawer-backdrop');
+      const sheet = document.getElementById('phone-drawer-sheet');
+      backdrop.classList.add('opacity-0', 'pointer-events-none');
+      sheet.classList.add('translate-y-full');
+    }
+
+    // Handle Creating a New Deck inside the Phone Drawer
+    function handleCreateDeck(e) {
+      e.preventDefault();
+      const titleInput = document.getElementById('new-deck-title');
+      const catInput = document.getElementById('new-deck-cat');
+      const sharedInput = document.getElementById('new-deck-shared');
+
+      const newDeck = {
+        id: Date.now(),
+        title: titleInput.value.trim(),
+        category: catInput.value,
+        stepTag: '1 OF 12',
+        cardsCount: 12,
+        progress: 10,
+        favorite: true,
+        shared: sharedInput.checked,
+        author: 'You (Scholar)'
+      };
+
+      studyDecks.unshift(newDeck);
+      currentTab = 'library';
+      currentTagFilter = 'all';
+      closePhoneDrawer();
+      renderMobileScreen();
+      showToast(`Created "${newDeck.title}" in My Library!`);
+    }
+
+    // =====================================================================
+    // UI KIT BOARD INTERACTIVE HANDLERS (DROPDOWN, CHECKBOX, RADIO, TOGGLE)
+    // =====================================================================
+    function toggleKitDropdown() {
+      const menu = document.getElementById('kit-dropdown-menu');
+      const chevron = document.getElementById('kit-dropdown-chevron');
+      menu.classList.toggle('hidden');
+      chevron.classList.toggle('rotate-180');
+    }
+
+    function selectKitDropdown(val) {
+      document.getElementById('kit-dropdown-selected').textContent = val;
+      document.getElementById('kit-dropdown-menu').classList.add('hidden');
+      document.getElementById('kit-dropdown-chevron').classList.remove('rotate-180');
+      showToast(`Selected Mode: ${val}`);
+    }
+
+    function toggleCheckbox(labelEl) {
+      const box = labelEl.querySelector('.kit-checkbox');
+      const svg = box.querySelector('svg');
+      const isChecked = !svg.classList.contains('hidden');
+
+      if (isChecked) {
+        box.classList.remove('bg-brand-600', 'border-brand-600');
+        box.classList.add('bg-white', 'border-slate-300');
+        svg.classList.add('hidden');
+      } else {
+        box.classList.add('bg-brand-600', 'border-brand-600');
+        box.classList.remove('bg-white', 'border-slate-300');
+        svg.classList.remove('hidden');
+      }
+    }
+
+    function selectRadio(index) {
+      [0, 1].forEach(i => {
+        const outer = document.getElementById(`kit-radio-${i}`);
+        const dot = outer.querySelector('div');
+        if (i === index) {
+          outer.className = 'w-6 h-6 rounded-full border-2 border-brand-600 bg-white flex items-center justify-center transition shadow-2xs';
+          dot.classList.remove('scale-0');
+          dot.classList.add('scale-100');
+        } else {
+          outer.className = 'w-6 h-6 rounded-full border border-slate-300 bg-white flex items-center justify-center transition group-hover:border-brand-500';
+          dot.classList.remove('scale-100');
+          dot.classList.add('scale-0');
+        }
+      });
+    }
+
+    function flipToggle(wrapperEl) {
+      const btn = wrapperEl.querySelector('button');
+      const knob = btn.querySelector('span');
+      const textEl = wrapperEl.querySelector('.toggle-text');
+      const isOn = btn.getAttribute('data-on') === 'true';
+
+      if (isOn) {
+        btn.setAttribute('data-on', 'false');
+        btn.className = 'w-12 h-7 rounded-full bg-slate-200/90 border border-slate-300/80 p-0.5 flex items-center transition-colors duration-200';
+        knob.className = 'w-5 h-5 rounded-full bg-white shadow-sm transform translate-x-0 transition-transform duration-200';
+        if (textEl) textEl.textContent = 'Off';
+      } else {
+        btn.setAttribute('data-on', 'true');
+        btn.className = 'w-12 h-7 rounded-full bg-brand-600 border border-brand-600 p-0.5 flex items-center transition-colors duration-200';
+        knob.className = 'w-5 h-5 rounded-full bg-white shadow-sm transform translate-x-5 transition-transform duration-200';
+        if (textEl) textEl.textContent = 'On';
+      }
+    }
+
+    const tooltipMessages = [
+      'Helper Text: Streak Shield Active',
+      'Spaced Recall boosts memory by 2.4x',
+      'Click Create Orb to add AI cards!'
+    ];
+    let tooltipIdx = 0;
+    function cycleTooltipText() {
+      tooltipIdx = (tooltipIdx + 1) % tooltipMessages.length;
+      document.getElementById('tooltip-text').textContent = tooltipMessages[tooltipIdx];
+    }
+
+    function toggleCardFavorite(btn) {
+      const active = btn.textContent.includes('★');
+      if (active) {
+        btn.textContent = '☆ FAVORITE';
+        btn.className = 'px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 font-bold text-[10px] tracking-wider uppercase transition';
+      } else {
+        btn.textContent = '★ FAVORITE';
+        btn.className = 'px-2.5 py-1 rounded-full bg-brand-600 text-white font-bold text-[10px] tracking-wider uppercase transition';
+      }
+    }
+
+    // Copy HEX Token using fallback-safe execCommand
+    function copyToken(value, label) {
+      const tempInput = document.createElement('textarea');
+      tempInput.value = value;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      showToast(`Copied ${label} (${value})`);
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toast-notification');
+      const text = document.getElementById('toast-message');
+      text.textContent = msg;
+      toast.classList.remove('opacity-0', 'translate-y-3');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-3');
+      }, 2400);
+    }
+
+    // Initialize Mobile Screen on Load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderMobileScreen();
+    });
+  </script>
+</body>
+</html>

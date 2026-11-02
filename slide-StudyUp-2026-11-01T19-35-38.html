@@ -34,8 +34,11 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: var(--bg-canvas);
       background-color: #f2f3f4;
+      background-image: 
+        radial-gradient(ellipse 65% 85% at 98% 50%, rgba(238, 130, 190, 0.22) 0%, rgba(179, 140, 216, 0.14) 40%, rgba(99, 142, 242, 0.05) 70%, transparent 100%),
+        radial-gradient(circle at 92% 12%, rgba(238, 130, 190, 0.18) 0%, transparent 55%);
+      background-attachment: fixed;
       font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       min-height: 100vh;
       display: flex;
@@ -62,7 +65,8 @@
     .phone-frame {
       width: 356px;
       height: 768px;
-      background: #f2f3f4;
+      background-color: #f2f3f4;
+      background-image: radial-gradient(ellipse 70% 85% at 100% 50%, rgba(238, 130, 190, 0.20) 0%, rgba(179, 140, 216, 0.12) 42%, rgba(99, 142, 242, 0.04) 75%, transparent 100%);
       border-radius: 38px;
       box-shadow:
         0 26px 54px -12px rgba(24, 21, 45, 0.16),
